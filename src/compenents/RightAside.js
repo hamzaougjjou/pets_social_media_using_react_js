@@ -1,5 +1,5 @@
 import React from 'react'
-import Friends from './profile/Friends';
+import Friends from './friends/Friends';
 
 function RightAside() {
     return (
