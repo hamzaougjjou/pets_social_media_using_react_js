@@ -48,7 +48,7 @@ export default class NavPages extends Component {
                 <Route exact path='/videos' element={<Videos />} ></Route>
                 <Route exact path='/settings' element={<Settings />} ></Route>
                 <Route exact path='/people' element={<People />} ></Route>
-                <Route exact path='/messanger' element={<Messanger />} ></Route>
+                <Route exact path='/messanger/*' element={<Messanger />} ></Route>
                 <Route exact path='/messanger/:id/*' element={<Messanger />} ></Route>
                 <Route exact path='/search' element={<Search />} ></Route>
                 <Route exact path='/requests' element={<Requests />} ></Route>

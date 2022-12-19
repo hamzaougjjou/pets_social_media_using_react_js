@@ -5,12 +5,16 @@ import NoMessage from './NoMessage';
 import Users from './Users';
 
 function Messanger(props) {
-    
-    const { id } = useParams() ;
+
+
+
+    const { id } = useParams();
     console.log(id);
     let whatRender = <NoMessage />;
-    if( !(id === undefined || id===null) ){
-        whatRender = <Discussion />;
+    if (!(id === undefined || id === null)) {
+        whatRender = <>
+            <Discussion />
+        </>;
     }
 
     return (

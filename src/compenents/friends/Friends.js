@@ -1,91 +1,33 @@
 import React from 'react'
+import FrindItem from './FriendItem'
 
 function Friends() {
+    let friends = [
+        { id: '1', name: 'Whiskers 1', type: 'cat', image: './image/profile.jpg', status: 1 },
+        { id: '2', name: 'Whiskers 2', type: 'cat', image: './image/profile.jpg', status: 0 },
+        { id: '4', name: 'Whiskers 3', type: 'dog', image: null, status: 1 },
+        { id: '7', name: 'Whiskers 4', type: 'dog', image: null, status: 0},
+        { id: '15', name: 'Oscar', type: 'dog', image: null, status: 0 },
+        { id: '3', name: 'Fluffy', type: 'cat', image: './image/profile.jpg', status: 1 },
+        { id: '13', name: 'Angel', type: 'dog', image: null, status: 1 },
+        { id: '5', name: 'Smudge', type: 'cat', image: './image/profile.jpg', status: 1 },
+        { id: '6', name: 'Zoe or Zoey', type: 'cat', image: './image/profile.jpg', status: 1 },
+        { id: '14', name: 'Rocky', type: 'cat', image: null, status: 0 },
+        { id: '8', name: 'Olaa', type: 'dog', image: './image/profile.jpg', status: 1 },
+        { id: '9', name: 'Rocky', type: 'cat', image: './image/profile.jpg', status: 1 },
+        { id: '10', name: 'Charlie', type: 'cat', image: './image/profile.jpg', status: 1 },
+        { id: '11', name: 'Piper', type: 'dog', image: './image/profile.jpg', status: 0 },
+    ]
+    
+    const listItems = friends.map((friend) =>
+        <FrindItem key={friend.id} data={friend} />
+    );
     return (
         <div className="freinds">
-            <div className="freind">
-                <div className="enable bo-rad-haf"></div>
-                <img src="./image/profile.jpg" alt="" />
-                <div className="info-name">
-                    <p className="fo-name-per">Whiskers</p>
-                    <span className="fo-bot-na">cat</span>
-                </div>
-            </div>
-            <div className="freind">
-                <div className="enable bo-rad-haf"></div>
-                <img src="./image/profile.jpg" alt="" />
-                <div className="info-name">
-                    <p className="fo-name-per">Oscar</p>
-                    <span className="fo-bot-na">Cat</span>
-                </div>
-            </div>
-            <div className="freind">
-                <img src="./image/profile.jpg" alt="" />
-                <div className="info-name">
-                    <p className="fo-name-per">Fluffy</p>
-                    <span className="fo-bot-na">dog</span>
-                </div>
-            </div>
-            <div className="freind">
-                <img src="./image/profile.jpg" alt="" />
-                <div className="info-name">
-                    <p className="fo-name-per">Angel</p>
-                    <span className="fo-bot-na">dog</span>
-                </div>
-            </div>
-            <div className="freind">
-                <div className="enable bo-rad-haf"></div>
-                <img src="./image/profile.jpg" alt="" />
-                <div className="info-name">
-                    <p className="fo-name-per">Smudge</p>
-                    <span className="fo-bot-na">cat</span>
-                </div>
-            </div>
-            <div className="freind">
-                <div className="profile-friend profile-friend-color2 flex-center bo-rad">Z</div>
-                <div className="info-name">
-                    <p className="fo-name-per">Zoe or Zoey</p>
-                    <span className="fo-bot-na">online marketing</span>
-                </div>
-            </div>
-            <div className="freind">
-                <img src="./image/profile.jpg" alt="" />
-                <div className="info-name">
-                    <p className="fo-name-per">Rocky</p>
-                    <span className="fo-bot-na">cat</span>
-                </div>
-            </div>
-            <div className="freind">
-                <img src="./image/profile.jpg" alt="" />
-                <div className="info-name">
-                    <p className="fo-name-per">Olaa</p>
-                    <span className="fo-bot-na">makeup artist</span>
-                </div>
-            </div>
-            <div className="freind">
-                <div className="enable bo-rad-haf"></div>
-                <img src="./image/profile.jpg" alt="" />
-                <div className="info-name">
-                    <p className="fo-name-per">Rocky</p>
-                    <span className="fo-bot-na">Dog</span>
-                </div>
-            </div>
-            <div className="freind">
-                <div className="enable bo-rad-haf"></div>
-                <div className="profile-friend profile-friend-color1 flex-center bo-rad">C</div>
-                <div className="info-name">
-                    <p className="fo-name-per">Charlie</p>
-                    <span className="fo-bot-na">cat</span>
-                </div>
-            </div>
-            <div className="freind">
-                <div className="enable bo-rad-haf"></div>
-                <img src="./image/profile.jpg" alt="" />
-                <div className="info-name">
-                    <p className="fo-name-per">Piper</p>
-                    <span className="fo-bot-na">dog</span>
-                </div>
-            </div>
+
+            {
+                listItems
+            }
         </div>
     )
 }

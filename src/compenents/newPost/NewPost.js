@@ -1,20 +1,41 @@
 import { logDOM } from '@testing-library/react'
-import React from 'react'
+import React, { useState } from 'react'
+import AccountInfo from './AccountInfo'
+import Loading from './../Loading'
 
 function NewPost() {
 
 
+    let [file,setFile] = useState('');
+    let [ showLoading,setShowLoading ] = useState(false);
+    
 
-    // let puple_show = (puple4, effPup4, massegPuple4, start) => {
-    //     // console.log(345678345);
-    // }
+    let uploadingImageFromDevice = (e) => {
+        // alert("fuck u ...");
+        setShowLoading(true);
+        const reader = new FileReader()
+        reader.addEventListener("load", () => {
+             setFile(   reader.result );
+          })
+          reader.readAsDataURL(e.target.files[0]);
+          setShowLoading(false);
+    }
+
+    // const file = document.querySelector("#file")
+// file.addEventListener("change", function() {
+//   const reader = new FileReader()
+//   reader.addEventListener("load", () => {
+//     document.querySelector("#image").src = reader.result
+//   })
+//   reader.readAsDataURL(this.files[0]);
+// })
 
     return (
         <>
-            {/* <div className="back-puple4" id="puple4">
-                <div className="effect-puple effect-puple4 d-flex ali-center" id="eff-pup4"  > */}
+            <div className="back-puple4" id="puple4">
+                <div className="effect-puple effect-puple4 d-flex ali-center" id="eff-pup4"  >
 
-                    <div className="puple-message puple-post back-col-wh bo-rad" id="masseg-puple4" style={{opacity:'1'}}>
+                    <div className="puple-message puple-post back-col-wh bo-rad" id="masseg-puple4" style={{ opacity: '1' }}>
                         <div className="top-puple top-puple2 flex-between">
                             <h2 className="flex-center">
                                 <span className="svg-icon svg-icon-3 flex-center m-right-5">
@@ -30,37 +51,43 @@ function NewPost() {
                                 </span>
                                 New Post
                             </h2>
-                            <div className="close flex-center" >
-                                <span className="svg-icon svg-icon-1">
-                                    <svg width="25" height="25" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                            transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
-                                        <rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                            transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
-                                    </svg>
-                                </span>
-                            </div>
+
                         </div>
                         <div className="body-puple body-puple-post">
-                            <div className="image-post">
-                                <img src="./image/profile.jpg" alt="" className="bo-rad" />
-                            </div>
-                            <h3>hamza ougjjou</h3>
+
+                            <AccountInfo />
+
                             <form action="">
                                 <div className="box-wr">
                                     <textarea name="" id="" placeholder="Write your post..."
                                         className="bor-col bo-rad d-block input-shap w-full wr-post"></textarea>
                                     <div className="icon-wr-post">
-                                        <input type="file" name="" id="file-post" />
+                                        <input type="file" name="" id="file-post"  onChange={uploadingImageFromDevice}/>
+
                                         <label htmlFor="file-post"><i className="fa-solid fa-images"></i></label>
                                         <i className="fa-solid fa-user-tag"></i>
                                         <i className="fa-solid fa-face-smile"></i>
                                         <i className="fa-solid fa-location-dot"></i>
                                     </div>
                                 </div>
+                                <br />
+                                <div className="image-post d-flex justify-start" style={ {justifyContent:'start',flexWrap:'wrap',gap:'20px'}}>
+                              
+                                    <img src={file} alt="" className="bo-rad" id='image'/>
+
+                                    { showLoading ? <Loading /> : ""  }
+                                    
+                                    {/* <img src="./image/profile.jpg" alt="" className="bo-rad" />
+                                    <img src="./image/profile.jpg" alt="" className="bo-rad" />
+                                    <img src="./image/profile.jpg" alt="" className="bo-rad" />
+                                    <img src="./image/profile.jpg" alt="" className="bo-rad" />
+                                    <img src="./image/profile.jpg" alt="" className="bo-rad" />
+                                    <img src="./image/profile.jpg" alt="" className="bo-rad" /> */}
+                                </div>
+                                <br />
+
                                 <div className="submit-po d-flex">
-                                    <input type="checkbox" name="" id="check-public" className="check-box" /> {/*checked*/}
+                                    <input type="checkbox" name="" id="check-public" className="check-box" defaultChecked /> {/**/}
                                     <label htmlFor="check-public" className="check-shap">
                                         Public
                                     </label>
@@ -73,8 +100,8 @@ function NewPost() {
                         </div>
                     </div>
 
-                {/* </div>
-            </div> */}
+                </div>
+            </div>
         </>
     )
 }

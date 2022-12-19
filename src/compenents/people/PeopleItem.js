@@ -24,7 +24,10 @@ function PeopleItem() {
             </div>
             <div className="button-box-freind flex-between w-full">
                 <button className="button-cancel bot-req bot-fr bot-fr1">Deletet&nbsp;<i className="fa-solid fa-user-slash"></i></button>
-                <button className="button-ok bot-req bot-fr">Add friend&nbsp;<i className="fa-solid fa-user-plus"></i></button>
+                <button className="button-ok bot-req bot-fr">
+                    Add friend&nbsp;
+                    <i className="fa-solid fa-user-plus"></i>
+                </button>
             </div>
         </div>
 
