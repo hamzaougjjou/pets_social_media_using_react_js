@@ -19,14 +19,14 @@ function Friends() {
         { id: '11', name: 'Piper', type: 'dog', image: './image/profile.jpg', status: 0 },
     ]
     
-    const listItems = friends.map((friend) =>
+    const listFriends = friends.map((friend) =>
         <FrindItem key={friend.id} data={friend} />
     );
     return (
         <div className="freinds">
 
             {
-                listItems
+                listFriends
             }
         </div>
     )

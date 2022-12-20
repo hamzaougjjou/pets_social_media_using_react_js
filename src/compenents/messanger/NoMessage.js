@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 // import { show_new_user_box } from '../../Main'
 // import SelectNewUser from './SelectNewUser'
-function NoMessage() {
+function NoMessage(props) {
 
     // let show_box;
     // boxNewUserBoxC.addEventListener('click' , (e) => {
@@ -73,41 +73,10 @@ function NoMessage() {
                             <ul>
                                 <li>Users</li>
                                 <br />
-                                <li className="d-flex gap-10px">
-                                    <img src="./image/image1.jpg" alt="" className="image-fr bo-rad" />
-                                    <div className="desc-user">
-                                        <p>Karina Clark</p>
-                                        <span>Marketing Manager</span>
-                                    </div>
-                                </li>
-                                <li className="d-flex gap-10px">
-                                    <img src="./image/image1.jpg" alt="" className="image-fr bo-rad" />
-                                    <div className="desc-user">
-                                        <p>Karina Clark</p>
-                                        <span>Marketing Manager</span>
-                                    </div>
-                                </li>
-                                <li className="d-flex gap-10px">
-                                    <img src="./image/image1.jpg" alt="" className="image-fr bo-rad" />
-                                    <div className="desc-user">
-                                        <p>Karina Clark</p>
-                                        <span>Marketing Manager</span>
-                                    </div>
-                                </li>
-                                <li className="d-flex gap-10px">
-                                    <img src="./image/image1.jpg" alt="" className="image-fr bo-rad" />
-                                    <div className="desc-user">
-                                        <p>Karina Clark</p>
-                                        <span>Marketing Manager</span>
-                                    </div>
-                                </li>
-                                <li className="d-flex gap-10px">
-                                    <img src="./image/image1.jpg" alt="" className="image-fr bo-rad" />
-                                    <div className="desc-user">
-                                        <p>Karina Clark</p>
-                                        <span>Marketing Manager</span>
-                                    </div>
-                                </li>
+                                {
+                                    props.res
+                                }
+                                
                             </ul>
 
                         </div>

@@ -3,7 +3,7 @@ import React from 'react'
 function Comments() {
     function height_comm(name_id, heit) {
         // height_comm('comments','662px')
-        if (document.getElementById(name_id).style.height == '0px') {
+        if (document.getElementById(name_id).style.height === '0px') {
             document.getElementById(name_id).style.height = heit;
         }
         else {
