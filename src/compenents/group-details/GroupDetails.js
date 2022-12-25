@@ -1,17 +1,17 @@
 import React from 'react'
 import { Route, Routes, useParams } from 'react-router-dom';
 import NotFound from '../NotFound';
-import About from './About';
 import GroupDetailsHeader from './GroupDetailsHeader';
-import Managers from './Managers';
-import Mumbers from './Mumbers';
+import {About} from './About';
+import {Managers} from './Managers';
+import {Mumbers} from './Mumbers';
 import Posts from './GroupDetailsPosts';
-import Settings from './Settings';
+import {Settings} from './Settings';
 
 function GroupDetails(props) {
 
     const { groupId } = useParams();
-    // console.log(groupId);
+    console.log(groupId);
 
     return (
         <>

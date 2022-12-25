@@ -29,7 +29,7 @@ function Messanger(props) {
     );
 
     const { id } = useParams();
-    console.log(id);
+    // console.log(id);
     let whatRender = <NoMessage res={listItems} />;
     if (!(id === undefined || id === null)) {
         whatRender = <>

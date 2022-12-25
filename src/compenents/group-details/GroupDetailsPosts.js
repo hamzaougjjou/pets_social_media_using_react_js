@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import Posts from '../posts/Posts'
-import VideoItem from '../videos/VideoItem'
+import VideoItem from '../posts/videos/VideoItem'
 function GroupDetailsPosts() {
     return (
         <div className="body-posts d-flex po-rel">

@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 function Profile() {
     const activeLink = " el-menu active";
@@ -16,7 +16,7 @@ function Profile() {
                     <img src="./image/profile.jpg" alt="" className="image-50 bo-rad" />
                     <div className="info-top-my-pro">
                         <span className="d-block">luna cat</span>
-                        <a href="#">@lunaCat.com</a>
+                        <Link to="/profile">@lunaCat.com</Link>
                     </div>
                 </div>
                 <div className="mid-my-pro">
@@ -26,19 +26,19 @@ function Profile() {
                                 My Profile
                             </NavLink>
                         </li>
-                        <li><a href="#">My Projects</a></li>
-                        <li><a href="#">My Subscription</a></li>
-                        <li><a href="#">My Statements</a></li>
+                        <li><NavLink to="#">My Projects</NavLink></li>
+                        <li><NavLink to="#">My Subscription</NavLink></li>
+                        <li><NavLink to="#">My Statements</NavLink></li>
                     </ul>
                 </div>
                 <div className="bor-bott"></div>
                 <div className="bot-my-pro">
                     <ul className="prof">
-                        <li><a href="#" className="langauge">langauge<span className="lang-prof d-flex ali-center gap-10px">Arabic
+                        <li><NavLink to="#" className="langauge">langauge<span className="lang-prof d-flex ali-center gap-10px">Arabic
                             <img src="./image/Flag_of_Yemen.svg" alt="" className="image-fr-30 bo-rad-haf" />
-                        </span></a></li>
-                        <li><a href="#">Account Sitting</a></li>
-                        <li><a href="./login.html">Sign Out</a></li>
+                        </span></NavLink></li>
+                        <li><NavLink to="profile/about">Account Sitting</NavLink></li>
+                        <li><NavLink to="/auth">Sign Out</NavLink></li>
                     </ul>
                 </div>
             </div>

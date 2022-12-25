@@ -1,14 +1,15 @@
 /* @import url("./header.css");
 @import url("./footer.css"); */
-/* img-prof profile.jpg back-puple4 img-prof-media pup4 img-cont-pos line-bott
+/* ./../../../public/image/profile.jpg back-puple4 img-prof-media pup4 img-cont-pos line-bott
 left-chat-side
 notices
 notices-box
 notices-top
 box-search
 effect-puple
-border
-freind
+borde./../../../public/image/profile.jpg
+input
+effect-left-side
 */
 :root {
     --main-color: #0094FF;
@@ -734,7 +735,7 @@ flex-direction: column;
 .image-profile{
     width: 160px;
     height: 160px;
-    background-image: url("../image/profile.jpg");
+    background-image: url("./../../../public/image/profile.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -1072,7 +1073,7 @@ left: 8px;
 .img-pro-pos{
     width: 55px;
     height: 56px;
-    background-image: url("../image/profile.jpg");
+    background-image: url("./../../../public/image/profile.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -1619,6 +1620,7 @@ color: var(--color-font);
 .contain-input{
     padding: 20px 0px;
     padding-top: 35px;
+    width: 100%;
 }
 .titl{
     text-align: center;
@@ -1674,11 +1676,12 @@ color: var(--color-font);
     color: #A1A5B7;
     padding: 10px;
 }
-.form-inp input{
+/* //left-sign-in */
+.form-inp input{ 
     border-radius: var(--main-radius);
     border: 1px solid #E4E6EF;
     padding: 10px 15px;
-    width: 100%;
+    width: 100% !important;
     color: #5E6278;
     -webkit-border-radius: var(--main-radius);
     -moz-border-radius: var(--main-radius);
@@ -1720,6 +1723,7 @@ color: var(--color-font);
 }
 .form-inp{
     margin-bottom: 25px;
+    width: 100%;
 }
 .form-inp button{
     display: block;

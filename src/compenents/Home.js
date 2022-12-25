@@ -2,7 +2,7 @@
 
 import React from 'react'
 import LeftAside from './LeftAside'
-import VideoItem from './videos/VideoItem'
+import VideoItem from './posts/videos/VideoItem'
 import Posts from './posts/Posts'
 import RightAside from './RightAside'
 
@@ -12,7 +12,7 @@ function Home() {
         <div className="body d-flex">
             <LeftAside />
             <main>
-                <Posts show='0' />
+                <Posts show='1' />
                 <VideoItem />
                 <Posts show='1' />
                 <Posts show='0' />

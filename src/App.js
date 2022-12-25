@@ -1,29 +1,27 @@
 import './App.css';
 
 import { BrowserRouter } from 'react-router-dom';
-import Header from './compenents/header/Header';
-import NavPages from './compenents/NavPages';
+import NavPages from './NavPages';
+import { Provider } from 'react-redux';
+// import { createStore } from 'redux';
+// import reducer from './auth/reducer/Reducer';
 // import css files
 
 
 
+// let store = createStore(reducer);
 function App() {
-
-
 
   return (
 
-    <BrowserRouter className="container">
-
-      <Header />
-      <NavPages />
-
+    <BrowserRouter>
+      {/* <Provider stire={ store }> */}
+        <NavPages />
+      {/* </Provider> */}
     </BrowserRouter>
+
 
   );
 }
 
 export default App;
-
-// activeClassName="active"
-// activeClassName="active"

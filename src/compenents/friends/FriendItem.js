@@ -81,7 +81,7 @@ function FrindItem(props) {
                         <span className="fo-bot-na">{props.data.type}</span>
                     </div>
                     <NavLink to={`/messanger/${props.data.id}`}>
-                        <i class="fa-solid fa-paper-plane"></i>
+                        <i className="fa-solid fa-paper-plane"></i>
                     </NavLink>
 
                 </div>

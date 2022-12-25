@@ -6,4 +6,4 @@ function Settings() {
   )
 }
 
-export default Settings
+export {Settings}

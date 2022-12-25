@@ -209,9 +209,14 @@ function ProfileHeader() {
                     </NavLink>
                 </li>
 
-                <li>
+                <li>                                                          
                     <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./pages">
                         Pages
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./files">
+                        Files
                     </NavLink>
                 </li>
 

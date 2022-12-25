@@ -28,11 +28,8 @@ class GroupHeader extends Component {
                 document.getElementById(box_id).style.transitionDuration = ".6s";
                 document.getElementById(box_id).style.zIndex = -1;
             }
-        }
-    componentDidMount() {
-       console.log("hello from componentDidMount");
     }
-
+    
     render() {
         return (
             <div className="icon-post-right icon-frei-right  flex-between  w-full ali-center">

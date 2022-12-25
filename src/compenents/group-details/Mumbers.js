@@ -64,4 +64,4 @@ function Mumbers() {
   )
 }
 
-export default Mumbers
+export { Mumbers }

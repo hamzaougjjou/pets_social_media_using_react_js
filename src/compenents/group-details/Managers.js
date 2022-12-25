@@ -17,4 +17,4 @@ function Managers() {
   )
 }
 
-export default Managers
+export { Managers }
