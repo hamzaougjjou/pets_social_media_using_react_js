@@ -1,5 +1,5 @@
 
-import React, { Component, useEffect } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom';
 import Profile from './Profile';
 
@@ -118,13 +118,13 @@ function Header() {
                         </div>
                     </NavLink>
 
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/store">
+                    {/* <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/store">
                         <div className="not" >
                             <span className="svg-icon svg-icon-1">
                                 <i className="fas fa-store"></i>
                             </span>
                         </div>
-                    </NavLink>
+                    </NavLink> */}
 
 
                     <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/requests">

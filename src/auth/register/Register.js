@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Page1 from './Page1';
 import Page2 from './Page2';
+import Page3 from './Page3';
+import "./../../assets/css/regProfileImg.css";
 
 function Register() {
 
@@ -9,37 +11,51 @@ function Register() {
 
     const [pageNumber, setPageNumber] = useState(1);
     let [whatRender, setWhatRender] = useState(<Page1 />);
+    let [btnContText, setBtnContText] = useState(['Continue Registration', '']); //[button text , btn redirect to ]
 
-    let registerHander = async (e) => {
+    let registerHander = (e) => {
         e.preventDefault();
-        setPageNumber(pageNumber + 1);
-        if (pageNumber === 1)
-            setWhatRender(<Page1 />)
-        else if (pageNumber === 2)
-            setWhatRender(<Page2 />)
-        console.log(pageNumber);
+        if (pageNumber < 3) {
+            setPageNumber(pageNumber + 1);
+            if (pageNumber === 1)
+                setWhatRender(<Page1 />)
+            else if (pageNumber === 2)
+                setWhatRender(<Page2 />)
+        }
+
     }
     let goBackHandler = () => {
         if (pageNumber > 1) {
             setPageNumber(pageNumber - 1);
-
         }
     }
 
     useEffect(() => {
-        if (pageNumber === 1)
-            setWhatRender(<Page1 />)
-        else if (pageNumber === 2)
-            setWhatRender(<Page2 />)
+        switch (pageNumber) {
+            case 1:
+                setWhatRender(<Page1 />)
+                break;
+            case 2:
+                setWhatRender(<Page2 />)
+                break;
+            case 3:
+                setWhatRender(<Page3 />)
+                setBtnContText(['Complete', '/auth/virify-email'])
+                break;
+            default:
+                setWhatRender(<Page1 />)
+                break;
+        }
+
     }, [pageNumber])
 
+
     useEffect(() => {
-        if (pageNumber == 1)
+        if (pageNumber === 1)
             goBackArrow.current.style.opacity = "0";
         else
             goBackArrow.current.style.opacity = "1";
     })
-
     return (
         <div className="container container-input d-flex po-rel">
             <div className="left-sign-in flex-center">
@@ -61,15 +77,15 @@ function Register() {
                         <span>Create acccout to contact with beutiful pets</span>
                     </div>
 
-                    <form action="" className="form-inp">
+                    <form action="" id='reg-form-inp' className="form-inp">
+                            {whatRender}
 
-                        {whatRender}
 
                         <button type="submit" onClick={registerHander}>
-                            {/* <Link to="./" className="button-ok butt-inpt w-full"> */}
-                            {/* Continue Registration */}
-                            {/* </Link> */}
-                            Next
+                            <Link to={btnContText[1]} className="button-ok butt-inpt w-full">
+                                {btnContText[0]}
+                            </Link>
+                            {/* Next */}
                         </button>
 
                     </form>

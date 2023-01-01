@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom'
 function FrindItem(props) {
 
 
-    if (props.data.image == null) {
-        if (props.data.status == 1) {
+    if (props.data.image === null) {
+        if (props.data.status === 1) {
             return (
 
                 <div className="freind">
@@ -22,7 +22,7 @@ function FrindItem(props) {
                         </span>
                     </div>
                     <NavLink to={`/messanger/${props.data.id}`}>
-                        <i class="fa-solid fa-paper-plane"></i>
+                        <i className="fa-solid fa-paper-plane"></i>
                     </NavLink>
                 </div>
             )
@@ -43,7 +43,7 @@ function FrindItem(props) {
                         </span>
                     </div>
                     <NavLink to={`/messanger/${props.data.id}`}>
-                        <i class="fa-solid fa-paper-plane"></i>
+                        <i className="fa-solid fa-paper-plane"></i>
                     </NavLink>
                 </div>
             )
@@ -51,7 +51,7 @@ function FrindItem(props) {
 
     }
     else {
-        if (props.data.status == 1) {
+        if (props.data.status === 1) {
             return (
 
                 <div className="freind">
@@ -64,7 +64,7 @@ function FrindItem(props) {
                         <span className="fo-bot-na">{props.data.type}</span>
                     </div>
                     <NavLink to={`/messanger/${props.data.id}`}>
-                        <i class="fa-solid fa-paper-plane"></i>
+                        <i className="fa-solid fa-paper-plane"></i>
                     </NavLink>
                 </div>
             )

@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roman;
+  }
+  .main_container {
+    height: 100%;
+    width: 100%;
+  }
+  .profile_container {
+    height: 500px;
+    width: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .background_img {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    transform: scale(0.9);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+  }
+  .user_img {
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+    border: 6px solid white;
+    margin-top: -100px;
+    z-index: 123;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+  }
+  .profile_container h1 {
+    background: none;
+    color: #333333;
+    font-size: 25px;
+  }
+  .profile_container p {
+    background: none;
+    text-align: center;
+    transform: scale(0.9);
+    font-size: 20px;
+    font-weight: 400;
+    color: #383838;
+  }
+.frgt-pss-reg-c{
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+  .sub-reg-c{
+    /* position: absolute; */
+     animation-name: reg_anim;
+    animation-duration: .5s;
+    width: 100%;
+    height: max-content;
+    opacity: 1;
+  } 
+
+   @keyframes reg_anim{
+    from{
+      opacity: 0.001;
+      width: 0;
+    }
+    to{
+      opacity: 1;
+      width: 100%;
+    }
+  }

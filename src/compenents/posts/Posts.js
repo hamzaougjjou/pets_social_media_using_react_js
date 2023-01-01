@@ -39,7 +39,8 @@ export default function Posts(props) {
                     <div className="like-comm d-flex">
                         <div className="like flex-center bo-rad">
                             <div className="tooltip bo-rad flex-center">50.3K</div>
-                            <i className="fa-solid fa-thumbs-up"></i>
+                            {/* <i className="fa-solid fa-thumbs-up"></i> */}
+                            <img src='./image/like.png' alt='like' height='25px' width='25px' />
                         </div>
                         <div className="comment-post flex-center bo-rad" >
                             <div className="tooltip bo-rad flex-center">10.4K</div>

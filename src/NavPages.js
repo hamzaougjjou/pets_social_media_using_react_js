@@ -32,6 +32,9 @@ import ForgotPassword from './auth/reset-pass/ForgotPassword';
 import InsertResetCode from './auth/reset-pass/InsertResetCode';
 import ChangePassword from './auth/reset-pass/ChangePassword';
 import Register from './auth/register/Register';
+import ValidateEmail from './auth/validateEmail/ValidateEmail';
+import ChangePasswordSettings from './compenents/settings/ChangePassword';
+import EditProfileName from './compenents/settings/EditeProfileName';
 
 export default class NavPages extends Component {
     render() {
@@ -53,6 +56,8 @@ export default class NavPages extends Component {
                     </Route>
                     <Route exact path='/videos' element={<Videos />} ></Route>
                     <Route exact path='/settings' element={<Settings />} ></Route>
+                    <Route exact path='/settings/change-password' element={<ChangePasswordSettings />} ></Route>
+                    <Route exact path='/settings/edite-profile-name' element={<EditProfileName />} ></Route>
                     <Route exact path='/people' element={<People />} ></Route>
                     <Route exact path='/messanger/*' element={<Messanger />} ></Route>
                     <Route exact path='/messanger/:id/*' element={<Messanger />} ></Route>
@@ -90,6 +95,9 @@ export default class NavPages extends Component {
                 </Route>
                 <Route path='auth/register' element={<AuthMain />}>
                     <Route path='' element={<Register />} ></Route>
+                </Route>
+                <Route path='auth/virify-email' element={<AuthMain />}>
+                    <Route path='' element={<ValidateEmail />} ></Route>
                 </Route>
 
             </Routes>

@@ -12,8 +12,8 @@ function Login() {
                     </div>
                     {/* <!-- <div className="line-titl flex-center"></div> --> */}
                     <form action="" className="form-inp">
-                        <input type="email" name="" id="" placeholder="Email" />
-                        <input type="password" name="" id="" placeholder="Password" />
+                        <input type="email" name="" id="email" placeholder="Email" />
+                        <input type="password" name="" id="pass" placeholder="Password" />
                         <NavLink to="forget-password">Forgot Password ?</NavLink>
                         <button type="submit"><a href="./" className="button-ok butt-inpt w-full">Sign in</a></button>
                     </form>

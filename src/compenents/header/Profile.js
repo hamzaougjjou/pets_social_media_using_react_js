@@ -26,9 +26,9 @@ function Profile() {
                                 My Profile
                             </NavLink>
                         </li>
-                        <li><NavLink to="#">My Projects</NavLink></li>
-                        <li><NavLink to="#">My Subscription</NavLink></li>
-                        <li><NavLink to="#">My Statements</NavLink></li>
+                        <li><NavLink to="">My Projects</NavLink></li>
+                        <li><NavLink to="">My Subscription</NavLink></li>
+                        <li><NavLink to="">My Statements</NavLink></li>
                     </ul>
                 </div>
                 <div className="bor-bott"></div>
