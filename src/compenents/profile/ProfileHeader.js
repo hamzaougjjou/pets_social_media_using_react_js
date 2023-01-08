@@ -72,7 +72,7 @@ function ProfileHeader() {
                                 </span>
                             </div>
                             <div className="address-prof d-flex gap-5px">
-                                <a href="#" className="d-flex ali-center"><span className="svg-icon svg-icon-4 me-1">
+                                <span className="d-flex ali-center"><span className="svg-icon svg-icon-4 me-1">
                                     <svg width="17" height="17" viewBox="0 0 18 18" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path opacity="0.3"
@@ -84,8 +84,8 @@ function ProfileHeader() {
                                         <rect x="7" y="6" width="4" height="4" rx="2" fill="currentColor">
                                         </rect>
                                     </svg>
-                                </span>Developer</a>
-                                <a href="#" className="d-flex ali-center">
+                                </span>Developer</span>
+                                <span className="d-flex ali-center">
                                     <span className="svg-icon svg-icon-4 me-1">
                                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -97,8 +97,8 @@ function ProfileHeader() {
                                                 fill="currentColor"></path>
                                         </svg>
                                     </span>
-                                    Taiz, Yemen Area</a>
-                                <a href="#" className="d-flex ali-center">
+                                    Taiz, Yemen Area</span>
+                                <span className="d-flex ali-center">
                                     <span className="svg-icon svg-icon-4 me-1">
                                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +110,7 @@ function ProfileHeader() {
                                                 fill="currentColor"></path>
                                         </svg>
                                     </span>
-                                    Alazy@gmail.com</a>
+                                    Alazy@gmail.com</span>
                             </div>
                         </div>
                         <div className="button-prof button1-prof d-flex">
@@ -184,43 +184,35 @@ function ProfileHeader() {
             <ul className="bott-prof d-flex">
 
                 <li> 
-                <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./posts">
+                <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="posts">
                     Posts
                 </NavLink>
                 </li>
 
                 <li>
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./about">
+                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="about">
                         About
                     </NavLink>
                 </li>
 
-
                 <li>
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./friends">
+                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="friends">
                         Friends
                     </NavLink>
                 </li>
 
 
                 <li>
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./groups">
+                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="groups">
                         Groups
                     </NavLink>
                 </li>
 
-                <li>                                                          
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./pages">
-                        Pages
-                    </NavLink>
-                </li>
                 <li>
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./files">
+                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="files">
                         Files
                     </NavLink>
                 </li>
-
-
             </ul>
         </div>
     )

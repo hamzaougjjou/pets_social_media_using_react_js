@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Routes, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { Route, Routes, useNavigate, useNavigation, useParams } from 'react-router-dom';
 import NotFound from '../NotFound';
 import GroupDetailsHeader from './GroupDetailsHeader';
 import {About} from './About';
@@ -8,7 +8,7 @@ import {Mumbers} from './Mumbers';
 import Posts from './GroupDetailsPosts';
 import {Settings} from './Settings';
 
-function GroupDetails(props) {
+function GroupDetails() {
 
     const { groupId } = useParams();
     console.log(groupId);

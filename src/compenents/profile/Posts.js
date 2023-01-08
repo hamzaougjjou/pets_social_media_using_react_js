@@ -1,5 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import VideoItem from '../posts/videos/VideoItem'
+import {MainPost} from '../posts/Posts'
 
 function Posts() {
     return (
@@ -9,7 +11,8 @@ function Posts() {
                     <button className="new-post button-ok w-full">New Post</button>
                 </NavLink>
                 <ul className="posts-option">
-                    <li><a href="#" className="active-pos">
+                    <li>
+                    <span className="active-pos">
                         <span className="svg-icon svg-icon-2 m-0">
                             <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -18,9 +21,9 @@ function Posts() {
                                 <rect x="3" y="6" width="14" height="16" rx="3" fill="currentColor"></rect>
                             </svg>
                         </span>All Posts
-                    </a></li>
+                    </span></li>
                     <li>
-                        <a href="#">
+                        <span>
                             <span className="svg-icon svg-icon-3">
                                 <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -33,10 +36,10 @@ function Posts() {
                                 </svg>
                             </span>
                             New Posts
-                        </a>
+                        </span>
                     </li>
                     <li>
-                        <a href="#">
+                        <span>
                             <span className="svg-icon svg-icon-2 me-3">
                                 <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -49,10 +52,10 @@ function Posts() {
                                 </svg>
                             </span>
                             Old Posts
-                        </a>
+                        </span>
                     </li>
                     <li>
-                        <a href="#">
+                        <span>
                             <span className="svg-icon svg-icon-2 me-3">
                                 <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -65,9 +68,9 @@ function Posts() {
                                 </svg>
                             </span>
                             Favourites Posts
-                        </a>
+                        </span>
                     </li>
-                    <li> <a href="#">
+                    <li> <span href="#">
                         <span className="svg-icon svg-icon-2 me-3">
                             <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -82,417 +85,24 @@ function Posts() {
                                     fill="currentColor"></path>
                             </svg>
                         </span>
-                        Trash</a></li>
+                        Trash</span></li>
                 </ul>
             </div>
 
             <div className="right-post-side main-box">
-
                 <div className="container-pos">
                     <h3>Trip Reminder. Thank you for flying with us!</h3>
-
-                    <div className="post-opt bor-bott-col" id="pos-page">
-                        <div className="info-post-opt flex-between" id="inf">
-                            <div className="text-info-po d-flex flex-1">
-                                <div className="img-pro-pos bo-rad"></div>
-                                <div className="name-pos">
-                                    <div><span>Abdulaziz Najeeb</span><span className="bo-rad-haf"></span><span
-                                        className="last">1 day ago</span></div>
-                                    <p className="para" id="para">With resrpect, i must disagree with Mr.Zinsser. We
-                                        all know
-                                        the most part of important part....</p>
-                                    <p className="para2" id="para2">Read Less&nbsp;
-                                        <span className="svg-icon svg-icon-5 m-0">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                                                    fill="currentColor"></path>
-                                            </svg>
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="ico-righ-po d-flex ali-center gap-10px">
-                                <span>24 Jun 2022, 5:30 pm</span>
-                                <a href="#"><span className="svg-icon svg-icon-2 m-0 d-flex">
-                                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M11.1359 4.48359C11.5216 3.82132 12.4784 3.82132 12.8641 4.48359L15.011 8.16962C15.1523 8.41222 15.3891 8.58425 15.6635 8.64367L19.8326 9.54646C20.5816 9.70867 20.8773 10.6186 20.3666 11.1901L17.5244 14.371C17.3374 14.5803 17.2469 14.8587 17.2752 15.138L17.7049 19.382C17.7821 20.1445 17.0081 20.7069 16.3067 20.3978L12.4032 18.6777C12.1463 18.5645 11.8537 18.5645 11.5968 18.6777L7.69326 20.3978C6.99192 20.7069 6.21789 20.1445 6.2951 19.382L6.7248 15.138C6.75308 14.8587 6.66264 14.5803 6.47558 14.371L3.63339 11.1901C3.12273 10.6186 3.41838 9.70867 4.16744 9.54646L8.3365 8.64367C8.61089 8.58425 8.84767 8.41222 8.98897 8.16962L11.1359 4.48359Z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                </span></a>
-                                <a href="#"><span className="svg-icon svg-icon-2 m-0 d-flex">
-                                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M16.0077 19.2901L12.9293 17.5311C12.3487 17.1993 11.6407 17.1796 11.0426 17.4787L6.89443 19.5528C5.56462 20.2177 4 19.2507 4 17.7639V5C4 3.89543 4.89543 3 6 3H17C18.1046 3 19 3.89543 19 5V17.5536C19 19.0893 17.341 20.052 16.0077 19.2901Z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                </span></a>
-                                <a href="#"><span className="svg-icon svg-icon-2 m-0 d-flex">
-                                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                            d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                            fill="currentColor"></path>
-                                        <path
-                                            d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                            fill="currentColor"></path>
-                                        <path
-                                            d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                </span></a>
-                                <a href="#">
-                                    <span className="svg-icon svg-icon-2 m-0 d-flex">
-                                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor">
-                                            </rect>
-                                            <rect x="10" y="3" width="4" height="4" rx="2" fill="currentColor">
-                                            </rect>
-                                            <rect x="10" y="17" width="4" height="4" rx="2" fill="currentColor">
-                                            </rect>
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                        {/* <!-- ///////////// --> */}
-
-                        <div className="post-image d-flex bor bo-rad post2-image">
-                            <div className="top-post d-flex bor-bott-col">
-                                <div className="left-post d-flex">
-                                    <div className="content-post">
-                                        <div className="fo-pos fo-pos2">Lorem ipsum dolor sit amet consectetur
-                                            adipisicing elit.
-                                            Corporis,
-                                            atque assumenda non quis dignissimos aperiam hic consectetur.
-                                            Praesentium accusamus est odit architecto saepe repellendus.
-                                            Odit quod expedita quibusdam. Consequuntur, commodi.<br /><br />
-                                            Corporis,
-                                            atque assumenda non quis dignissimos aperiam hic consectetur.
-                                            Praesentium accusamus est odit architecto saepe repellendus.
-                                            Odit quod expedita quibusdam. Consequuntur, commodi.
-                                            Corporis,
-                                            atque assumenda non quis dignissimos aperiam hic consectetur.
-                                            Praesentium accusamus est odit architecto saepe repellendus.
-                                            atque assumenda non quis dignissimos aperiam hic consectetur.
-                                            Praesentium accusamus est odit architecto saepe repellendus.
-                                            Odit quod expedita quibusdam. Consequuntur, commodi.
-                                            Corporis,
-                                            atque assumenda non quis dignissimos aperiam hic consectetur.
-                                            Praesentium accusamus est odit architecto saepe repellendus.
-                                            atque assumenda non quis dignissimos aperiam hic consectetur.
-                                            Praesentium accusamus est odit architecto saepe repellendus.
-                                            Odit quod expedita quibusdam. Consequuntur, commodi.
-                                            Corporis,
-                                            atque assumenda non quis dignissimos aperiam hic consectetur.
-                                            Praesentium accusamus est odit architecto saepe repellendus.
-                                            atque assumenda non quis dignissimos aperiam hic consectetur.
-                                            Praesentium accusamus est odit architecto saepe repellendus.
-                                            Odit quod expedita quibusdam. Consequuntur, commodi.
-                                            Corporis,
-                                            atque assumenda non quis dignissimos aperiam hic consectetur.
-                                            Praesentium accusamus est odit architecto saepe repellendus.
-                                            Odit quod expedita quibusdam. Consequuntur, commodi.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="bottom-post">
-                                <div className="like-comm d-flex">
-                                    <div className="like flex-center bo-rad">
-                                        <div className="tooltip bo-rad flex-center">1.3K</div>
-                                        <i className="fa-solid fa-thumbs-up"></i>
-                                    </div>
-                                    <div className="comment-post flex-center bo-rad">
-                                        <div className="tooltip bo-rad flex-center">500</div>
-                                        <i className="fa-solid fa-comment"></i>
-                                    </div>
-                                    <div className="shar flex-center bo-rad">
-                                        <div className="tooltip bo-rad flex-center">10</div>
-                                        <i className="fa-solid fa-share-from-square"></i>
-                                    </div>
-                                </div>
-                                <div className="write-comm" id="comments3">
-                                    <div className="form d-flex bo-rad">
-                                        <textarea name="" id="" placeholder="Write a comment..."
-                                            className="bor-col bo-rad d-block input-shap"></textarea>
-                                        <div className="emoje"><i className="fa-solid fa-face-smile"></i></div>
-                                        <label htmlFor="inputTag">
-                                            <i className="fa-solid fa-camera"></i>
-                                            <input id="inputTag" type="file" />
-                                        </label>
-                                        <button><i className="fa-solid fa-paper-plane"></i></button>
-                                    </div>
-                                    <div className="comments">
-                                        <div className="com d-flex">
-                                            <img src="./image/image11.jpg" alt="" className="image-fr bo-rad" />
-                                            <div className="text-com fo-pos bo-rad">
-                                                <div className="name-com fo-name-per">Alex Moreno</div>
-                                                <div className="tx-com">
-                                                    Lorem ipsum dolor sit amet consectetur&#128515;
-                                                </div>
-                                                <div className="time-com d-flex">
-                                                    <span>Reply</span>
-                                                    <span>10m</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="com d-flex">
-                                            <img src="./image/image12.jpg" alt="" className="image-fr bo-rad" />
-                                            <div className="text-com fo-pos bo-rad">
-                                                <div className="name-com fo-name-per">Alex Moreno</div>
-                                                <div className="tx-com">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                    Illo ab quisquam eum unde tempora, &#128513; suscipit earum
-                                                    laudantium
-                                                    voluptatum possimus? Ut.
-                                                </div>
-                                                <div className="time-com d-flex">
-                                                    <span>Reply</span>
-                                                    <span>20m</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="com reply d-flex">
-                                            <img src="./image/image1.jpg" alt="" className="image-fr bo-rad" />
-                                            <div className="text-com fo-pos bo-rad">
-                                                <div className="name-com fo-name-per">Alex Moreno</div>
-                                                <div className="tx-com">
-                                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit
-                                                    &#128516;
-                                                </div>
-                                                <div className="time-com d-flex">
-                                                    <span>Reply</span>
-                                                    <span>25m</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="com d-flex">
-                                            <img src="./image/image6.jpg" alt="" className="image-fr bo-rad" />
-                                            <div className="text-com fo-pos bo-rad">
-                                                <div className="name-com fo-name-per">Alex Moreno</div>
-                                                <div className="tx-com">
-                                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                                    &#9996;
-                                                    Repellat corrupti similique dolores? Illo.
-                                                </div>
-                                                <div className="time-com d-flex">
-                                                    <span>Reply</span>
-                                                    <span>40m</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* <!-- //////////////////////////////////////////////// --> */}
-                    <div className="post-opt bor-bott-col" id="pos2-page">
-                        <div className="info-post-opt flex-between" id="inf2" >
-                            <div className="text-info-po d-flex flex-1">
-                                <div className="img-pro-pos bo-rad"></div>
-                                <div className="name-pos">
-                                    <div><span>Abdulaziz Najeeb</span><span className="bo-rad-haf"></span><span
-                                        className="last">5 day ago</span></div>
-                                    <p className="para" id="para_2">With resrpect, i must disagree with Mr.Zinsser.
-                                        We all know
-                                        the most part of important part....</p>
-                                    <p className="para2" id="para2_2">Read Less&nbsp;
-                                        <span className="svg-icon svg-icon-5 m-0">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                                                    fill="currentColor"></path>
-                                            </svg>
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="ico-righ-po d-flex ali-center gap-10px">
-                                <span>19 Jun 2022, 5:30 pm</span>
-                                <a href="#" className="star"><span className="svg-icon svg-icon-2 m-0 d-flex">
-                                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M11.1359 4.48359C11.5216 3.82132 12.4784 3.82132 12.8641 4.48359L15.011 8.16962C15.1523 8.41222 15.3891 8.58425 15.6635 8.64367L19.8326 9.54646C20.5816 9.70867 20.8773 10.6186 20.3666 11.1901L17.5244 14.371C17.3374 14.5803 17.2469 14.8587 17.2752 15.138L17.7049 19.382C17.7821 20.1445 17.0081 20.7069 16.3067 20.3978L12.4032 18.6777C12.1463 18.5645 11.8537 18.5645 11.5968 18.6777L7.69326 20.3978C6.99192 20.7069 6.21789 20.1445 6.2951 19.382L6.7248 15.138C6.75308 14.8587 6.66264 14.5803 6.47558 14.371L3.63339 11.1901C3.12273 10.6186 3.41838 9.70867 4.16744 9.54646L8.3365 8.64367C8.61089 8.58425 8.84767 8.41222 8.98897 8.16962L11.1359 4.48359Z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                </span></a>
-                                <a href="#"><span className="svg-icon svg-icon-2 m-0 d-flex">
-                                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M16.0077 19.2901L12.9293 17.5311C12.3487 17.1993 11.6407 17.1796 11.0426 17.4787L6.89443 19.5528C5.56462 20.2177 4 19.2507 4 17.7639V5C4 3.89543 4.89543 3 6 3H17C18.1046 3 19 3.89543 19 5V17.5536C19 19.0893 17.341 20.052 16.0077 19.2901Z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                </span></a>
-                                <a href="#"><span className="svg-icon svg-icon-2 m-0 d-flex">
-                                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                            d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                            fill="currentColor"></path>
-                                        <path
-                                            d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                            fill="currentColor"></path>
-                                        <path
-                                            d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                </span></a>
-                                <a href="#">
-                                    <span className="svg-icon svg-icon-2 m-0 d-flex">
-                                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor">
-                                            </rect>
-                                            <rect x="10" y="3" width="4" height="4" rx="2" fill="currentColor">
-                                            </rect>
-                                            <rect x="10" y="17" width="4" height="4" rx="2" fill="currentColor">
-                                            </rect>
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                        {/* <!-- ///////////// --> */}
-                        <div className="post-image d-flex bor bo-rad post2-image">
-                            <div className="top-post d-flex bor-bott-col">
-                                <div className="left-post d-flex">
-                                    <div className="content-post">
-                                        <div className="fo-pos fo-pos2">Lorem ipsum dolor sit amet consectetur
-                                            adipisicing elit.
-                                            Corporis,
-                                            atque assumenda non quis dignissimos aperiam hic consectetur.
-                                            Praesentium accusamus est odit architecto saepe repellendus.
-                                            Odit quod expedita quibusdam. Consequuntur, commodi.
-                                        </div>
-                                        <div className="img-cont-pos bo-rad">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="bottom-post">
-                                <div className="like-comm d-flex">
-                                    <div className="like flex-center bo-rad">
-                                        <div className="tooltip bo-rad flex-center">50.3K</div>
-                                        <i className="fa-solid fa-thumbs-up"></i>
-                                    </div>
-                                    <div className="comment-post flex-center bo-rad" >
-                                        <div className="tooltip bo-rad flex-center">10.4K</div>
-                                        <i className="fa-solid fa-comment"></i>
-                                    </div>
-                                    <div className="shar flex-center bo-rad">
-                                        <div className="tooltip bo-rad flex-center">5.8K</div>
-                                        <i className="fa-solid fa-share-from-square"></i>
-                                    </div>
-                                </div>
-                                {/* <!-- /////////////////////////////////// --> */}
-                                <div className="write-comm" id="comments">
-                                    <div className="form d-flex bo-rad">
-                                        <textarea name="" id="" placeholder="Write a comment..."
-                                            className="bor-col bo-rad d-block input-shap"></textarea>
-                                        <div className="emoje"><i className="fa-solid fa-face-smile"></i></div>
-                                        <label htmlFor="inputTag">
-                                            <i className="fa-solid fa-camera"></i>
-                                            <input id="inputTag" type="file" />
-                                        </label>
-                                        <button><i className="fa-solid fa-paper-plane"></i></button>
-                                    </div>
-                                    <div className="comments">
-                                        <div className="com d-flex">
-                                            <img src="./image/image11.jpg" alt="" className="image-fr bo-rad" />
-                                            <div className="text-com fo-pos bo-rad">
-                                                <div className="name-com fo-name-per">Alex Moreno</div>
-                                                <div className="tx-com">
-                                                    Lorem ipsum dolor sit amet consectetur&#128515;
-                                                </div>
-                                                <div className="time-com d-flex">
-                                                    <span>Reply</span>
-                                                    <span>10m</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="com d-flex">
-                                            <img src="./image/image12.jpg" alt="" className="image-fr bo-rad" />
-                                            <div className="text-com fo-pos bo-rad">
-                                                <div className="name-com fo-name-per">Alex Moreno</div>
-                                                <div className="tx-com">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                    Illo ab quisquam eum unde tempora, &#128513; suscipit earum
-                                                    laudantium
-                                                    voluptatum possimus? Ut.
-                                                </div>
-                                                <div className="time-com d-flex">
-                                                    <span>Reply</span>
-                                                    <span>20m</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="com reply d-flex">
-                                            <img src="./image/image1.jpg" alt="" className="image-fr bo-rad" />
-                                            <div className="text-com fo-pos bo-rad">
-                                                <div className="name-com fo-name-per">Alex Moreno</div>
-                                                <div className="tx-com">
-                                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit
-                                                    &#128516;
-                                                </div>
-                                                <div className="time-com d-flex">
-                                                    <span>Reply</span>
-                                                    <span>25m</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="com d-flex">
-                                            <img src="./image/image6.jpg" alt="" className="image-fr bo-rad" />
-                                            <div className="text-com fo-pos bo-rad">
-                                                <div className="name-com fo-name-per">Alex Moreno</div>
-                                                <div className="tx-com">
-                                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                                    &#9996;
-                                                    Repellat corrupti similique dolores? Illo.
-                                                </div>
-                                                <div className="time-com d-flex">
-                                                    <span>Reply</span>
-                                                    <span>40m</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="com d-flex">
-                                            <img src="./image/image5.jpg" alt="" className="image-fr bo-rad" />
-                                            <div className="text-com fo-pos bo-rad">
-                                                <div className="name-com fo-name-per">Alex Moreno</div>
-                                                <div className="tx-com">
-                                                    Lorem ipsum dolor sit amet
-                                                </div>
-                                                <div className="time-com d-flex">
-                                                    <span>Reply</span>
-                                                    <span>50m</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* <!-- ////////////////////////////////////////// --> */}
+                    <MainPost />
+                    <VideoItem />
+                    <VideoItem />
+                    <MainPost />
+                    <MainPost />
+                    <VideoItem />
+                    <MainPost />
+                    <VideoItem />
                 </div>
 
             </div>
-            {/* <!-- ///////////////in media //////////////// --> */}
-
-
-
-            {/* <!-- //////////////////////////////////////// for--> */}
         </div>
     )
 }

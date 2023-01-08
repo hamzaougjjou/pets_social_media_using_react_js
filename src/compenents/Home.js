@@ -7,17 +7,18 @@ import Posts from './posts/Posts'
 import RightAside from './RightAside'
 
 function Home() {
+
     return (
 
         <div className="body d-flex">
             <LeftAside />
             <main>
-                <Posts show='1' />
+                <Posts />
                 <VideoItem />
-                <Posts show='1' />
-                <Posts show='0' />
+                <Posts />
+                <Posts />
                 <VideoItem />
-                <Posts show='0' />
+                <Posts />
             </main>
             <RightAside />
         </div>

@@ -1,5 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import profile from "./../../assets/img/profile.jpg"
+import cat1 from "./../../assets/img/cat1.jpg"
 
 function GroupItem() {
     return (
@@ -11,7 +13,7 @@ function GroupItem() {
 
                 <div className="img-box-freind img-box-group flex-between w-full">
                     <div className="img-group">
-                        <img src="./image/cat1.jpg" alt="" className="bo-rad" />
+                        <img src={ cat1 } alt="" className="bo-rad" />
                     </div>
                     <div className="type-group">Cats</div>
                 </div>
@@ -37,11 +39,11 @@ function GroupItem() {
                     <span style={{ width: "50%" }} className="bo-rad"></span>
                 </div> */}
                 <div className="member-group d-flex w-full">
-                    <div><img src="./image/profile.jpg" alt="" className="image-fr bo-rad-haf" /></div>
-                    <div><img src="./image/profile.jpg" alt="" className="image-fr bo-rad-haf" /></div>
-                    <div><img src="./image/profile.jpg" alt="" className="image-fr bo-rad-haf" /></div>
-                    <div><img src="./image/profile.jpg" alt="" className="image-fr bo-rad-haf" /></div>
-                    <div><img src="./image/profile.jpg" alt="" className="image-fr bo-rad-haf" /></div>
+                    <div><img src={ profile } alt="" className="image-fr bo-rad-haf" /></div>
+                    <div><img src={ profile } alt="" className="image-fr bo-rad-haf" /></div>
+                    <div><img src={ profile } alt="" className="image-fr bo-rad-haf" /></div>
+                    <div><img src={ profile } alt="" className="image-fr bo-rad-haf" /></div>
+                    <div><img src={ profile } alt="" className="image-fr bo-rad-haf" /></div>
                     <div className="num-memb flex-center bo-rad-haf">+15</div>
                 </div>
                 <div className="button-box-freind flex-between w-full">

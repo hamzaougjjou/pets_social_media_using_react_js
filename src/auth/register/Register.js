@@ -4,6 +4,9 @@ import Page1 from './Page1';
 import Page2 from './Page2';
 import Page3 from './Page3';
 import "./../../assets/css/regProfileImg.css";
+import img_input from "./../../assets/img/img_input.jpg"
+import icons8_bing_256 from "./../../assets/img/icons8_bing_256.png"
+
 
 function Register() {
 
@@ -56,6 +59,10 @@ function Register() {
         else
             goBackArrow.current.style.opacity = "1";
     })
+    //get ant store data instore redux
+
+    // const regState = useSelector( state => state.RegisterReducer );
+
     return (
         <div className="container container-input d-flex po-rel">
             <div className="left-sign-in flex-center">
@@ -96,9 +103,9 @@ function Register() {
                 </div>
             </div>
             <div className="right-sign-in">
-                <img src="image/img-input.jpg" alt="" />
+                <img src={ img_input } alt="" />
                 <div className="icon-log po-abs">
-                    <img src="image/icons8_bing_256.png" alt="" />
+                    <img src={ icons8_bing_256 } alt="" />
                     <span>Slash Pets</span>
                 </div>
             </div>

@@ -1,16 +1,7 @@
 /* @import url("./header.css");
 @import url("./footer.css"); */
 /* ./../../../public/image/profile.jpg back-puple4 img-prof-media pup4 img-cont-pos line-bott
-left-chat-side
-notices
-notices-box
-notices-top
-box-search
-effect-puple
-borde./../../../public/image/profile.jpg
-input
-effect-left-side
-line
+posts-option
 */
 :root {
     --main-color: #0094FF;
@@ -856,7 +847,8 @@ main {
     flex-wrap: wrap;
 }
 
-.address-prof a {
+.address-prof a,
+.address-prof span {
     color: #B5B5C3;
     font-size: 14px;
     font-weight: 500;
@@ -864,10 +856,12 @@ main {
     margin-right: 10px;
 }
 
+.address-prof span:hover ,
 .address-prof a:hover {
     color: var(--color-font);
 }
 
+.address-prof span span ,
 .address-prof a span {
     display: contents;
 }
@@ -1076,9 +1070,11 @@ main {
     margin-bottom: 20px;
 }
 
-.posts-option li a {
+.posts-option li a ,
+.posts-option li > span {
     display: inline-block;
     padding: 8px 10px;
+    cursor: pointer;
     margin-bottom: 10px;
     color: #181C32;
     font-size: 14px;
@@ -1093,15 +1089,18 @@ main {
     -o-border-radius: var(--main-radius);
 }
 
+.posts-option li span span ,
 .posts-option li a span {
     color: var(--color-font-tit);
 }
 
-.posts-option li a:hover {
+.posts-option li a:hover ,
+.posts-option li span:hover {
     background-color: #F4F6FA;
     color: var(--color-font);
 }
 
+.posts-option li span:hover span ,
 .posts-option li a:hover span {
     color: var(--color-font);
 }
@@ -2007,7 +2006,7 @@ main {
     width: 100%;
 }
 
-.form-inp button a {
+.form-inp button span {
     display: block;
 }
 
@@ -2165,6 +2164,9 @@ main {
     right: 20px;
     z-index: 99;
     cursor: pointer;
+}
+.w-full{
+    width: 100% !important;
 }
 @media screen and (max-width: 700px ) {
     .setting-boxes-c {

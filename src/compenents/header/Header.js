@@ -6,10 +6,7 @@ import Profile from './Profile';
 
 function Header() {
 
-
-    const activeLink = " el-menu active";
-    const normalLink = " el-menu";
-   
+    const myClass = ({ isActive }) => isActive ? "el-menu active" : "el-menu" ;
 
     let show_menu = () => {
         console.log("show menu func is clicked ... from header");
@@ -42,28 +39,28 @@ function Header() {
 
                     <li className="el-m2">
                         {/* el-menu */}
-                        <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/" >
+                        <NavLink className={ myClass } to="/" >
                             <i className="fa-solid fa-house">
                             </i>
                         </NavLink>
                     </li>
 
                     <li className="el-m2">
-                        <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/videos">
+                        <NavLink className={ myClass } to="/videos">
                             <i className="fa-solid fa-circle-play">
                             </i>
                         </NavLink>
                     </li>
 
                     <div className="el-m2">
-                        <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/people">
+                        <NavLink className={ myClass } to="/people">
                             <i className="fa-solid fa-users">
                             </i>
                         </NavLink>
                     </div>
 
                     <li className="el-m2">
-                        <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/settings">
+                        <NavLink className={ myClass } to="/settings">
                             <i className="fa-solid fa-gear">
                             </i>
                         </NavLink>
@@ -83,7 +80,7 @@ function Header() {
                 </div>
                 <div className="nav-right flex-center po-rel">
 
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/search">
+                    <NavLink className={ myClass } to="/search">
                         <div className="sh" id="sh">
                             <span className="svg-icon svg-icon-1">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,13 +94,13 @@ function Header() {
                         </div>
                     </NavLink>
 
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/posting">
+                    <NavLink className={ myClass } to="/posting">
                         <div className="new">
                             <i className="fa-solid fa-plus"></i>
                         </div>
                     </NavLink>
 
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/messanger">
+                    <NavLink className={ myClass } to="/messanger">
                         <div className="mes" >
                             <div className="point bo-rad-haf center-el-vr"></div>
                             <span className="svg-icon svg-icon-1">
@@ -118,7 +115,7 @@ function Header() {
                         </div>
                     </NavLink>
 
-                    {/* <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/store">
+                    {/* <NavLink className={ myClass } to="/store">
                         <div className="not" >
                             <span className="svg-icon svg-icon-1">
                                 <i className="fas fa-store"></i>
@@ -127,12 +124,12 @@ function Header() {
                     </NavLink> */}
 
 
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/requests">
+                    <NavLink className={ myClass } to="/requests">
 
                         <div className="icon-menu" id="req" ><i className="fa-solid fa-user-group"></i></div>
                     </NavLink>
 
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="/notifications">
+                    <NavLink className={ myClass } to="/notifications">
                         <div className="nt" >
                             <span className="svg-icon svg-icon-1">
                                 <i className="fas fa-bell"></i>

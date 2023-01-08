@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import img_input from "./../../assets/img/img_input.jpg"
+import icons8_bing_256 from "./../../assets/img/icons8_bing_256.png"
 function ValidateEmail() {
   return (
     <div className="container container-input d-flex po-rel">
@@ -26,9 +27,9 @@ function ValidateEmail() {
         </div>
       </div>
       <div className="right-sign-in">
-        <img src="./image/img-input.jpg" alt="" />
+        <img src = { img_input } alt="" />
         <div className="icon-log po-abs">
-          <img src="./image/icons8_bing_256.png" alt="" />
+          <img src={ icons8_bing_256 }  alt="" />
           <span>Slash Pets</span>
         </div>
       </div>

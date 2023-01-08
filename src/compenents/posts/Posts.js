@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import Comments from './Comments'
 import SimplePostHeader from './SimplePostHeader';
+import like from "./../../assets/img/like.png"
+import cat1 from "./../../assets/img/cat1.jpg"
 
-export default function Posts(props) {
+function Posts() {
     const [comm, setComment] = useState('');
     const [isCommShow, setIsCommShow] = useState(false);
 
@@ -30,7 +32,7 @@ export default function Posts(props) {
                                 Praesentium accusamus est odit architecto saepe repellendus.
                                 Odit quod expedita quibusdam. Consequuntur, commodi.</div>
 
-                            <div className="img-cont-pos bo-rad" style={{ backgroundImage: "url('/image/cat1.jpg')" }}></div>
+                            <div className="img-cont-pos bo-rad" style={{ backgroundImage: `url('${cat1}')` }}></div>
                         </div>
                     </div>
                 </div>
@@ -40,7 +42,7 @@ export default function Posts(props) {
                         <div className="like flex-center bo-rad">
                             <div className="tooltip bo-rad flex-center">50.3K</div>
                             {/* <i className="fa-solid fa-thumbs-up"></i> */}
-                            <img src='./image/like.png' alt='like' height='25px' width='25px' />
+                            <img src={like} alt='like' height='25px' width='25px' />
                         </div>
                         <div className="comment-post flex-center bo-rad" >
                             <div className="tooltip bo-rad flex-center">10.4K</div>
@@ -63,3 +65,8 @@ export default function Posts(props) {
         </div>
     )
 }
+
+
+
+export default Posts;
+export { Posts as MainPost} ;

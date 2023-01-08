@@ -14,7 +14,7 @@ import About from './compenents/profile/About';
 import Posts from './compenents/profile/Posts';
 import Friends from './compenents/profile/Friends';
 import Groups from './compenents/profile/Groups';
-import Pages from './compenents/profile/Pages';
+import Files from './compenents/profile/Files';
 import Requests from './compenents/requests/Requests';
 import Store from './compenents/store/Store';
 import NewPost from './compenents/newPost/NewPost';
@@ -52,7 +52,7 @@ export default class NavPages extends Component {
                         <Route exact path='posts' element={<Posts />} ></Route>
                         <Route exact path='friends' element={<Friends />} ></Route>
                         <Route exact path='groups' element={<Groups />} ></Route>
-                        <Route exact path='pages' element={<Pages />} ></Route>
+                        <Route exact path='files' element={<Files />} ></Route>
                     </Route>
                     <Route exact path='/videos' element={<Videos />} ></Route>
                     <Route exact path='/settings' element={<Settings />} ></Route>

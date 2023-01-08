@@ -1,9 +1,17 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom';
+
+import { useNavigate } from 'react-router-dom';
 
 function EditProfileName() {
     const [currentPassState, setCurrentPassState] = useState('password');
     let y = true;
+
+    const navigate = useNavigate();
+    const goBackHandler = () => {
+        navigate('./../')
+    }
+
+
     const showCurrentPass = () => {
         y = !y;
         if (!y)
@@ -12,8 +20,6 @@ function EditProfileName() {
             setCurrentPassState('password');
     }
 
-    let goBackHandler = () => {
-    }
     return (
         <div className="container container-input d-flex po-rel">
             <div className="left-sign-in flex-center" style={{ maxWidth: "600px" }}>
@@ -48,10 +54,10 @@ function EditProfileName() {
                         </span>
 
                         {/* <NavLink to="/auth/forget-password">Forgot Password ?</NavLink> */}
-                        <button type="submit">
-                            <a className="button-ok butt-inpt w-full">
+                        <button type="submit" >
+                            <span className="button-ok butt-inpt w-full" >
                                 Confirme Changes
-                            </a>
+                            </span>
                         </button>
                     </form>
 

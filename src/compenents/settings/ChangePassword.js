@@ -1,13 +1,14 @@
-import React, { useRef, useState } from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function ChangePasswordSettings() {
 
     const [currentPassState, setCurrentPassState] = useState('password');
     const [newPassState, setNewPassState] = useState('password');
+    const navigate = useNavigate();
 
     const goBackHandler = () => {
-        console.log("go back func");
+        navigate('./../')
     }
 
     let x = true;
@@ -66,9 +67,9 @@ function ChangePasswordSettings() {
 
                         <NavLink to="/auth/forget-password">Forgot Password ?</NavLink>
                         <button type="submit">
-                            <a className="button-ok butt-inpt w-full">
+                            <span className="button-ok butt-inpt w-full">
                                 Confirme
-                            </a>
+                            </span>
                         </button>
                     </form>
 

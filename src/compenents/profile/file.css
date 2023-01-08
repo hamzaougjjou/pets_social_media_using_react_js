@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .row h2{
+    color: #0094FF;
+    padding-left: 10px;
+  }
+  
+  /* Create two equal columns that sits next to each other */
+  .column {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+    padding: 20px 50px;
+    gap: 25px;
+  }
+  .column img{
+    width: 120px;
+    border-radius: 5px;
+    border: #0095ff77 1px solid;
+    padding: 5px;
+  }
+  .column video{
+    max-width: 220px;
+    border-radius: 5px;
+    border: #0095ff77 1px solid;
+    padding: 5px;
+  }
+  
+  .column img {
+    margin-top: 8px;
+    vertical-align: middle;
+  }
+  

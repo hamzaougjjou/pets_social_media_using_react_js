@@ -5,7 +5,7 @@ import Posts from './Posts';
 import NotFound from "./../NotFound"
 import Friends from './Friends';
 import Groups from './Groups';
-import Pages from './Pages';
+import Files from './Files';
 import ProfileHeader from './ProfileHeader';
 
 function Profile() {
@@ -26,8 +26,7 @@ function Profile() {
                     <Route exact path='/About' element={<About />} ></Route>
                     <Route exact path='/friends' element={<Friends />} ></Route>
                     <Route exact path='/groups' element={<Groups />} ></Route>
-                    <Route exact path='/pages' element={<Pages />} ></Route>
-
+                    <Route exact path='/files' element={<Files />}></Route>
                     <Route exact path='/*' element={<NotFound />}></Route>
                     
                 </Routes>

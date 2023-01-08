@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom';
+import profile from "./../../assets/img/profile.jpg";
 
 function Profile() {
     const activeLink = " el-menu active";
@@ -10,10 +11,13 @@ function Profile() {
                 <span>Hello</span>
                 <p>luna cat</p>
             </div>
-            <div className="my-profile-img bo-rad" style={{ backgroundImage: 'url("./image/profile.jpg")' }}></div>
+            <div className="my-profile-img bo-rad" style={{ backgroundImage: `url("${profile}")` }}></div>
+          
             <div className="my-profile bo-rad">
                 <div className="top-my-pro d-flex gap-10px">
-                    <img src="./image/profile.jpg" alt="" className="image-50 bo-rad" />
+                
+                    <img src={ profile } alt="" className="image-50 bo-rad" />
+
                     <div className="info-top-my-pro">
                         <span className="d-block">luna cat</span>
                         <Link to="/profile">@lunaCat.com</Link>
