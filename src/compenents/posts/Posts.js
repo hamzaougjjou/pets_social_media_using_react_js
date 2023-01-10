@@ -20,7 +20,6 @@ function Posts() {
     
     return (
         <div className="posts-container">
-
             <div className="post-image d-flex bor bo-rad">
                 <div className="top-post d-flex bor-bott-col">
                     <div className="left-post d-flex">
@@ -60,8 +59,6 @@ function Posts() {
 
                 </div>
             </div>
-            {/* <div className="line-bott"></div> */}
-
         </div>
     )
 }

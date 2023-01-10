@@ -18,8 +18,10 @@ function ForgotPassword() {
                         <input type="email" name="" id="" placeholder="Email" />
                         <a href="/auth">Back to Login ?</a>
                         <button type="submit">
-                            <Link to="/auth/insert-reset-code" className="button-ok butt-inpt w-full">
+                            <Link to="/auth/insert-reset-code" >
+                            <span  className="button-ok butt-inpt w-full">
                                 Send
+                                </span>
                             </Link>
                         </button>
                     </form>

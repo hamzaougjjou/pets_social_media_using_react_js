@@ -1,4 +1,4 @@
-/* //////////////////media for header notices/////////////////////////////////////// */
+/* //////////////////media for header notices comm-notic/////////////////////////////////////// */
 @media (max-width:1200px) {
     
     .body{
@@ -275,6 +275,7 @@
     .txt-notic > span {
         font-size: 14px;
     }
+    /* ==================== */
     .comm-notic::before {
         width: 40px;
         height: 40px;
@@ -289,6 +290,9 @@
     .comm-notic > span:first-child svg{
         width: 20px;
     }
+    /* ==================== */
+  
+
     .info-notic span {
         font-size: 12px;
     }

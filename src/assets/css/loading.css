@@ -1,0 +1,176 @@
+
+ .box{
+    max-width: 300px;
+    width: 100%;
+    padding: 0 15px;
+}
+.square {
+    height: 80px;
+    border-radius: 5px;
+    background: rgba(130, 130, 130, 0.2);
+    background: -webkit-gradient(linear, left top, right top, color-stop(8%, rgba(130, 130, 130, 0.2)), color-stop(18%, rgba(130, 130, 130, 0.3)), color-stop(33%, rgba(130, 130, 130, 0.2)));
+    background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%);
+    background-size: 800px 100px;
+    animation: wave-squares 1s infinite ease-out;
+}
+.line {
+   display: block;
+    height: 12px;
+    margin-bottom:6px;
+    border-radius: 2px;
+    background: rgba(130, 130, 130, 0.2);
+    background: -webkit-gradient(linear, left top, right top, color-stop(8%, rgba(130, 130, 130, 0.2)), color-stop(18%, rgba(130, 130, 130, 0.3)), color-stop(33%, rgba(130, 130, 130, 0.2)));
+    background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%);
+    background-size: 800px 100px;
+    animation: wave-lines 1s infinite ease-out;
+}
+.skeleton-right{
+   flex:1;
+}
+.skeleton-left{
+   flex:2;
+   padding-right:15px;
+}
+.flex1{
+   flex: 1;
+}
+.flex2{
+   flex: 2;
+}
+.skeleton .line:last-child{
+   margin-bottom: 0;
+}
+.h8{
+   height: 8px !important;
+}
+.h10{
+   height: 10px !important;
+}
+.h12{
+   height: 12px !important;
+}
+.h15{
+   height: 15px !important;
+}
+.h17{
+   height: 17px !important;
+}
+.h20{
+   height: 20px !important;
+}
+.h25{
+   height: 25px !important;
+}
+.h30{
+   height: 30px !important;
+}
+.h40{
+   height: 40px !important;
+}
+.h45{
+   height: 45px !important;
+}
+.h50{
+   height: 50px !important;
+}
+.h60{
+   height: 60px !important;
+}
+.h70{
+   height: 70px !important;
+}
+.h80{
+   height: 80px !important;
+}
+.h90{
+   height: 90px !important;
+}
+.h100{
+   height: 100px !important;
+}
+.h300p{
+   height: 300px;
+}
+.w25{
+   width: 25% !important
+}
+.w40{
+   width:40% !important;
+}
+.w50{
+   width: 50% !important
+}
+.w60{
+   width: 60% !important
+}
+.w70{
+   width: 70% !important
+}
+.w75{
+   width: 75% !important
+}
+.w10p{ width: 10px !important; }
+.w15p{ width: 15px !important; }
+.w20p{ width: 20px !important; }
+.w25p{ width: 25px !important; }
+.w30p{ width: 30px !important; }
+.w40p{ width: 40px !important; }
+.w45p{ width: 45px !important; }
+.w50p{ width: 50px !important; }
+.w60p{ width: 60px !important; }
+.w70p{ width: 70px !important; }
+.w80p{ width: 80px !important; }
+.w90p{ width: 900px !important; }
+.w100p{ width: 100px !important; }
+.w150p{ width: 150px !important; }
+.w200p{ width: 200px !important; }
+.w300p{ width: 300px !important; }
+.w400p{ width: 400px !important; }
+
+.m10{
+   margin-bottom: 10px !important;
+}
+.circle{
+   border-radius: 50% !important;
+}
+@keyframes wave-lines {
+   0% {
+       background-position: -468px 0;
+   }
+    100% {
+       background-position: 468px 0;
+   }
+}
+@keyframes wave-squares {
+   0% {
+       background-position: -468px 0;
+   }
+    100% {
+       background-position: 468px 0;
+   }
+}
+
+/* 
+ */
+
+@media screen and (min-width:1000px) {
+   .h300p{
+      height: 450px !important;
+   }
+}
+ .flex-around{
+   justify-content: space-around;
+ }
+ .w-full{
+   width: 100% !important;
+ }
+
+   /* ==================== */
+   .comm-notic2{
+      position: relative !important;
+  }
+  .comm-notic2 > span{
+      position: absolute !important;
+      left: -55.5px !important;
+  }
+  /* ==================== */

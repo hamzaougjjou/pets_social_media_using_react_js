@@ -85,12 +85,14 @@ function Register() {
                     </div>
 
                     <form action="" id='reg-form-inp' className="form-inp">
-                            {whatRender}
+                        {whatRender}
 
 
                         <button type="submit" onClick={registerHander}>
-                            <Link to={btnContText[1]} className="button-ok butt-inpt w-full">
-                                {btnContText[0]}
+                            <Link to={btnContText[1]} >
+                                <span className="button-ok butt-inpt w-full">
+                                    {btnContText[0]}
+                                </span>
                             </Link>
                             {/* Next */}
                         </button>
@@ -103,9 +105,9 @@ function Register() {
                 </div>
             </div>
             <div className="right-sign-in">
-                <img src={ img_input } alt="" />
+                <img src={img_input} alt="" />
                 <div className="icon-log po-abs">
-                    <img src={ icons8_bing_256 } alt="" />
+                    <img src={icons8_bing_256} alt="" />
                     <span>Slash Pets</span>
                 </div>
             </div>

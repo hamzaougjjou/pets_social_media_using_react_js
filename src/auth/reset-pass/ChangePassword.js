@@ -16,10 +16,12 @@ function ChangePassword() {
                     <form action="" className="form-inp">
                         <input type="password" name="" id="" placeholder="Password" />
                         <input type="password" name="" id="" placeholder="confirme Password" />
-                        <a href="login.html">Back to Login ?</a>
+                        <Link to="/auth">Back to Login ?</Link>
                         <button type="submit">
-                            <Link to="/" className="button-ok butt-inpt w-full">
-                                change password
+                            <Link to="/">
+                                <span className="button-ok butt-inpt w-full">
+                                    change password
+                                </span>
                             </Link>
                         </button>
                     </form>
@@ -28,7 +30,7 @@ function ChangePassword() {
             <div className="right-sign-in">
                 <img src={img_input} alt="" />
                 <div className="icon-log po-abs">
-                    <img src={ icons8_bing_256 } alt="" />
+                    <img src={icons8_bing_256} alt="" />
                     <span>Slash Pets</span>
                 </div>
             </div>

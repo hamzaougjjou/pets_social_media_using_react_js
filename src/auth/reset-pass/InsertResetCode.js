@@ -17,8 +17,10 @@ function InsertResetCode() {
                         {/* <!-- <input type="password" name="" id="" placeholder="Password"> --> */}
                         <a href="login.html">Back to Login ?</a>
                         <button type="submit">
-                            <Link to="/auth/change-password" className="button-ok butt-inpt w-full">
-                                Change password
+                            <Link to="/auth/change-password">
+                                <span className="button-ok butt-inpt w-full">
+                                    Change password
+                                </span>
                             </Link>
                         </button>
                     </form>
@@ -30,7 +32,7 @@ function InsertResetCode() {
             <div className="right-sign-in">
                 <img src={img_input} alt="" />
                 <div className="icon-log po-abs">
-                    <img src={ icons8_bing_256 } alt="" />
+                    <img src={icons8_bing_256} alt="" />
                     <span>Slash Pets</span>
                 </div>
             </div>

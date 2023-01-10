@@ -1,5 +1,5 @@
 import React from 'react'
-
+import profile from "./../../assets/img/profile.jpg"
 function NewPostNotic() {
     return (
         <div className="notice-text">
@@ -19,21 +19,10 @@ function NewPostNotic() {
                     <span>There are 2 new posts</span>
                     <div className="info-notic d-flex ali-center gap-5px">
                         <span>Added at 4:23 PM by</span>
-                        <img src="./image/profile.jpg" alt="" className="bo-rad-haf image-fr-30" />
+                        <img src={profile} alt="" className="bo-rad-haf image-fr-30" />
                     </div>
                 </div>
             </div>
-            {/* <div className="repley flex-between ali-center">
-                <span>Meeting with customer</span>
-                <span className="bo-rad flex-center">Application Design</span>
-                <div className="img-repley d-flex ali-center">
-                    <img src="./image/image2.jpg" alt="" className="bo-rad-haf image-fr-30" />
-                    <img src="./image/image3.jpg" alt="" className="bo-rad-haf image-fr-30" />
-                    <img src="./image/image4.jpg" alt="" className="bo-rad-haf image-fr-30" />
-                </div>
-                <span className="bo-rad flex-center">In Progress</span>
-                <button className="but-view">View</button>
-            </div> */}
         </div>
     )
 }

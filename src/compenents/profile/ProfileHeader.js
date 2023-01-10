@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
+import profile from "./../../assets/img/profile.jpg"
 // Hamza ougjjou img
 function ProfileHeader() {
     let activeLink = "active-prof";
@@ -7,8 +8,8 @@ function ProfileHeader() {
     return (
         <div className="photo-div main-box d-flex">
             <div className="top-profile d-flex gap-20px">
-                <div className="img-prof-media" style={{background:"url('./image/pprofile.jpeg') "}}>
-                    <div className="image-profile bo-rad po-rel">
+                <div className="img-prof-media" >
+                    <div className="image-profile bo-rad po-rel" style={{backgroundImage:`url('${profile}') `}}>
                         <div className="green enable bo-rad-haf"></div>
                     </div>
                     {/* <!-- ////////////////////in media////////////////// --> style*/}

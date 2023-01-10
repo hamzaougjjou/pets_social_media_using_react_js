@@ -16,8 +16,10 @@ function ValidateEmail() {
             <input type="number" name="" id="" placeholder="Code ..." />
             {/* <!-- <input type="password" name="" id="" placeholder="Password"> --> */}
             <button type="submit">
-              <Link to="/" className="button-ok butt-inpt w-full">
-                Complete register
+              <Link to="/">
+                <span className="button-ok butt-inpt w-full">
+                  Complete register
+                </span>
               </Link>
             </button>
           </form>
@@ -27,9 +29,9 @@ function ValidateEmail() {
         </div>
       </div>
       <div className="right-sign-in">
-        <img src = { img_input } alt="" />
+        <img src={img_input} alt="" />
         <div className="icon-log po-abs">
-          <img src={ icons8_bing_256 }  alt="" />
+          <img src={icons8_bing_256} alt="" />
           <span>Slash Pets</span>
         </div>
       </div>

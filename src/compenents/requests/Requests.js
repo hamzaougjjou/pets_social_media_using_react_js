@@ -1,14 +1,16 @@
 import React from 'react'
 import RequestItem from './RequestItem'
+import profile from "./../../assets/img/profile.jpg"
+import { RequestItemLoading } from '../loading/Index'
 
 function Requests() {
     let requestsData = [
-        { userId: '234234', userProfile: "./image/image1.jpg", userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
-        { userId: '453454', userProfile: "./image/image2.jpg", userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
-        { userId: '34534', userProfile: "./image/image3.jpg", userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
-        { userId: '45345345', userProfile: "./image/image4.jpg", userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
-        { userId: '4564545', userProfile: "./image/image5.jpg", userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
-        { userId: '45645456', userProfile: "./image/image6.jpg", userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" }
+        { userId: '234234', userProfile: { profile }, userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
+        { userId: '453454', userProfile: { profile }, userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
+        { userId: '34534', userProfile: { profile }, userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
+        { userId: '45345345', userProfile: { profile }, userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
+        { userId: '4564545', userProfile: { profile }, userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
+        { userId: '45645456', userProfile: { profile }, userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" }
     ]
     return (
 
@@ -29,12 +31,14 @@ function Requests() {
 
                     {
                         requestsData.map((data, index) => {
-                           return <RequestItem key={data.userId} data={data} /> ;
+                            return <RequestItem key={data.userId} data={data} />;
                         })
                     }
+                    <RequestItemLoading />
+                    <RequestItemLoading />
+                    <RequestItemLoading />
 
 
- 
 
                 </ul>
 

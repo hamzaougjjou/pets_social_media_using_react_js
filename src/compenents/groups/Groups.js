@@ -1,6 +1,7 @@
 import React from 'react'
 import GroupItem from './GroupItem';
 import GroupHeader from './GroupHeader';
+import { GroupItemLoading } from '../loading/Index';
 
 function MainGroups() {
   return (
@@ -10,7 +11,8 @@ function MainGroups() {
         <GroupHeader />
 
         <div className="boxs-freind boxs-group">
-
+          <GroupItemLoading />
+          <GroupItemLoading />
           <GroupItem />
           <GroupItem />
           <GroupItem />
@@ -32,7 +34,7 @@ function MainGroups() {
         </div>
       </div>
     </div>
-    
+
   );
 
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
+import profile from "./../../assets/img/profile.jpg"
 function FrindItem(props) {
 
 
@@ -56,7 +56,7 @@ function FrindItem(props) {
 
                 <div className="freind">
                     <div className="enable bo-rad-haf"></div>
-                    <img src="./image/profile.jpg" alt="" />
+                    <img src={ profile } alt="" />
                     <div className="info-name">
                         <p className="fo-name-per">
                             {props.data.name}
@@ -73,7 +73,7 @@ function FrindItem(props) {
             return (
 
                 <div className="freind">
-                    <img src="./image/profile.jpg" alt="" />
+                    <img src={ profile } alt="" />
                     <div className="info-name">
                         <p className="fo-name-per">
                             {props.data.name}

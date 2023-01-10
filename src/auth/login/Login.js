@@ -17,7 +17,7 @@ function Login() {
                         <input type="email" name="" id="email" placeholder="Email" />
                         <input type="password" name="" id="pass" placeholder="Password" />
                         <NavLink to="forget-password">Forgot Password ?</NavLink>
-                        <button type="submit"><a href="./" className="button-ok butt-inpt w-full">Sign in</a></button>
+                        <button type="submit"><span className="button-ok butt-inpt w-full">Sign in</span></button>
                     </form>
                     <div className="sign-up">
                         You don’t have Account? <NavLink to="/auth/register">Sign up</NavLink>

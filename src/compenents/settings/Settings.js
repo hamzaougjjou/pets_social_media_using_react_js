@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import profile from "./../../assets/img/profile.jpg"
 
 function Settings() {
   return (
@@ -8,7 +9,7 @@ function Settings() {
       <div className="main-box d-flex" >
         <div className="top-profile d-flex gap-20px">
           <div className="img-prof-media" style={{ height: "120px !important" }}>
-            <div className="image-profile bo-rad po-rel" style={{ height: "80px", width: '80px' }}>
+            <div className="image-profile bo-rad po-rel" style={{ height: "80px", width: '80px' , backgroundImage: `url('${profile}')`}}>
             </div>
           </div>
           <div className="all-info-prof">

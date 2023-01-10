@@ -5,6 +5,7 @@ import LeftAside from './LeftAside'
 import VideoItem from './posts/videos/VideoItem'
 import Posts from './posts/Posts'
 import RightAside from './RightAside'
+import { PostItemLoading } from './loading/Index'
 
 function Home() {
 
@@ -19,6 +20,9 @@ function Home() {
                 <Posts />
                 <VideoItem />
                 <Posts />
+                <VideoItem />
+                <Posts />
+                <PostItemLoading />
             </main>
             <RightAside />
         </div>

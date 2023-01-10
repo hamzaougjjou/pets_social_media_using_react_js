@@ -1,5 +1,6 @@
 import React from 'react'
 import Loading from '../Loading'
+import { PeapleItemLoading } from '../loading/Index'
 import PeopleItem from './PeopleItem'
 import SearchPeople from './SearchPeople'
 
@@ -21,9 +22,12 @@ function People() {
         <PeopleItem />
         <PeopleItem />
         <PeopleItem />
-        <PeopleItem />
+        <PeopleItem />      
+        
+        <PeapleItemLoading />
+        <PeapleItemLoading />
+        <PeapleItemLoading />
       </div>
-      <Loading />
     </div>
 
   )

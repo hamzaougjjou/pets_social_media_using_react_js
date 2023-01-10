@@ -1,4 +1,5 @@
 import React from 'react'
+import profile from "./../../assets/img/profile.jpg"
 
 function BirthDayNotice() {
     return (
@@ -13,7 +14,7 @@ function BirthDayNotice() {
                         incidunt, beatae rem quas obcaecati et non magni iste!</span>
                     <div className="info-notic d-flex ali-center gap-5px">
                         <span>Added at 4:23 PM by</span>
-                        <img src="./image/profile.jpg" alt="" className="bo-rad-haf image-fr-30" />
+                        <img src={profile} alt="" className="bo-rad-haf image-fr-30" />
                     </div>
                 </div>
             </div>

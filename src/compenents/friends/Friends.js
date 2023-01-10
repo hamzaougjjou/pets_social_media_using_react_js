@@ -1,4 +1,5 @@
 import React from 'react'
+import { FriendItemLoading } from '../loading/Index';
 import FrindItem from './FriendItem'
 
 function Friends() {
@@ -28,6 +29,9 @@ function Friends() {
             {
                 listFriends
             }
+            <FriendItemLoading />
+            <FriendItemLoading />
+            <FriendItemLoading />
         </div>
     )
 }

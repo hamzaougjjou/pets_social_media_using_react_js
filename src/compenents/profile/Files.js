@@ -1,5 +1,5 @@
 import React from 'react'
-import "./file.css";
+import "./../../assets/css/file.css";
 import profile from "./../../assets/img/profile.jpg";
 import cat1 from "./../../assets/img/cat1.jpg";
 import v1 from "./../../assets/videos/v1.mp4";

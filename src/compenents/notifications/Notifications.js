@@ -1,6 +1,6 @@
 import React from 'react'
-import { NavLink, Route, Routes } from 'react-router-dom'
-import Loading from '../Loading'
+import { NavLink } from 'react-router-dom'
+import { NotificationItemLoading } from '../loading/Index'
 import BirthDayNotice from './BirthDayNotice'
 import LikeNotic from './LikeNotic'
 import MentionNotic from './MentionNotic'
@@ -18,9 +18,18 @@ function Notifications() {
                 </div>
                 <div className="body-notices">
                     <div className="body-notic-bo">
+
+                        <NotificationItemLoading />
+                        <NotificationItemLoading />
+                        <NotificationItemLoading />
+
                         <NavLink to='./home' style={{ color: 'black' }}>
                             <NewPostNotic />
                         </NavLink>
+
+                        <NotificationItemLoading />
+
+
                         <NavLink to='./home' style={{ color: 'black' }}>
                             <LikeNotic />
                         </NavLink>

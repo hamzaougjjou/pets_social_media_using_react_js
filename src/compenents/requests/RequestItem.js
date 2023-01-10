@@ -1,11 +1,12 @@
 import React from 'react'
+import profile from "./../../assets/img/profile.jpg"
 
 function RequestItem(props) {
     // { userId: '234234', userProfile: "./image/image1.jpg", userName: 'Karina Clark', userType: 'Marketing Manager', reqDate: '10 Mar 2022', reqTime: "9:23 pm" },
     return (
         <li className="d-flex gap-10px">
             <div className="info-r d-flex gap-10px">
-                <img src={props.data.userProfile} alt="" className="bo-rad" />
+                <img src={profile} alt="" className="bo-rad" />
                 <div className="info-req flex-between flex-1">
                     <div className="desc-user-req">
                         <p>

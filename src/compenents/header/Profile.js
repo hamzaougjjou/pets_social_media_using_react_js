@@ -30,15 +30,15 @@ function Profile() {
                                 My Profile
                             </NavLink>
                         </li>
-                        <li><NavLink to="">My Projects</NavLink></li>
-                        <li><NavLink to="">My Subscription</NavLink></li>
-                        <li><NavLink to="">My Statements</NavLink></li>
+                        {/* <li><NavLink to="/som">My Projects</NavLink></li>
+                        <li><NavLink to="/som">My Subscription</NavLink></li>
+                        <li><NavLink to="/som">My Statements</NavLink></li> */}
                     </ul>
                 </div>
                 <div className="bor-bott"></div>
                 <div className="bot-my-pro">
                     <ul className="prof">
-                        <li><NavLink to="#" className="langauge">langauge<span className="lang-prof d-flex ali-center gap-10px">Arabic
+                        <li><NavLink to="/som" className="langauge">langauge<span className="lang-prof d-flex ali-center gap-10px">Arabic
                             <img src="./image/Flag_of_Yemen.svg" alt="" className="image-fr-30 bo-rad-haf" />
                         </span></NavLink></li>
                         <li><NavLink to="profile/about">Account Sitting</NavLink></li>
