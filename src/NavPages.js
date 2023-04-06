@@ -35,6 +35,10 @@ import Register from './auth/register/Register';
 import ValidateEmail from './auth/validateEmail/ValidateEmail';
 import ChangePasswordSettings from './compenents/settings/ChangePassword';
 import EditProfileName from './compenents/settings/EditeProfileName';
+import { GroupRequests } from './compenents/group-details/Requests';
+import { Members as GroupMembers} from './compenents/group-details/Members';
+import CreatePost from './compenents/group-details/CreatePost';
+import PostItem from './compenents/post/PostItem';
 
 export default class NavPages extends Component {
     render() {
@@ -42,7 +46,6 @@ export default class NavPages extends Component {
 
             <Routes>
                 <Route path='/*' element={<NotFound />}></Route>
-
                 <Route path='/' element={<HomeMain />} >
                     <Route exact path='' element={<Home />} ></Route>
                     <Route path="/profile/*" element={<Profile />}>
@@ -66,13 +69,17 @@ export default class NavPages extends Component {
                     <Route exact path='/store' element={<Store />} ></Route>
                     <Route exact path='/posting' element={<NewPost />} ></Route>
                     <Route exact path='/groups' element={<MainGroups />} ></Route>
-                    <Route exact path='/groups/:groupId/*' element={<GroupDetails />} >
+                    <Route exact path='/post/:id' element={<PostItem />} ></Route>
+                    <Route exact path='/group/:groupId/*' element={<GroupDetails />} >
                         <Route exact path='' element={<GroupDetailsPosts />} ></Route>
                         <Route exact path='posts' element={<GroupDetailsPosts />} ></Route>
                         <Route exact path='about' element={<groupDetailsAbout />} ></Route>
-                        <Route exact path='mumbers' element={<groupDetailsMumbers />} ></Route>
+                        <Route exact path='members' element={<GroupMembers />} ></Route>
                         <Route exact path='managers' element={<groupDetailsManager />} ></Route>
                         <Route exact path='settings' element={<groupDetailsSettings />} ></Route>
+                        <Route exact path='requests' element={<GroupRequests />} ></Route>
+                        <Route exact path='new-post' element={<CreatePost />}></Route>
+
                         <Route exact path='./*' element={<NotFound />}></Route>
                     </Route>
                     <Route exact path='/help' element={<Help />} ></Route>

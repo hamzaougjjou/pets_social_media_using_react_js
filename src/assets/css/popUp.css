@@ -1,0 +1,85 @@
+.group-item-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  transition: opacity 5s;
+  z-index: 999;
+}
+
+.group-item-popup {
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 500px;
+  max-width: calc(100% - 20px);
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all .5s ease-in-out;
+}
+
+.group-item-overlay>.btn-close {
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #fff;
+  background-color: rgb(223, 13, 48);
+}
+
+.group-item-overlay .btn-prev,
+.group-item-overlay .btn-next {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translate(0, -50%);
+  background-color: rgba(51, 51, 51);
+  padding: 15px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 9999;
+}
+.group-item-overlay .btn-next {
+  left: initial;
+  right: 10px;
+}
+
+.group-item-overlay .overlay-content {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.group-item-overlay .overlay-content > img{
+  max-width: 450px;
+  width: 400px;
+  max-height: 450px;
+  height: 400px;
+  object-fit: cover;
+}
+
+.group-item-popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+  padding: 10px 0;
+}
+
+.group-item-popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+.group-item-popup-btns {
+  padding: 30px 0 10px 0;
+}

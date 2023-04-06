@@ -1,13 +1,57 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import Posts from '../posts/Posts'
-import VideoItem from '../posts/videos/VideoItem'
-function GroupDetailsPosts() {
+import { mainUrl } from '../../API';
+import { PostItemLoading } from '../loading/Index'
+import Post from './../posts/Post';
+
+function GroupDetailsPosts({ groupId }) {
+
+    const [groupPosts, setGroupPosts] = useState([]);
+    const [groupPostsLoading, setGroupPostsLoading] = useState(false);
+    useEffect(() => {
+        // posts/friends
+        const getPostsInfo = async () => {
+            setGroupPostsLoading(true);
+            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+            let token = authInfo.token;
+            let config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+            await axios.post(`${mainUrl}/group/${groupId}/posts`, null, config)
+                .then(info => {
+                    console.log(info.data);
+                    setGroupPosts(info.data.posts)
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+                .finally(() => {
+                    setGroupPostsLoading(false);
+                })
+        }
+        getPostsInfo();
+
+    }, []);
+
+    //scrolling down handler 
+    console.log("you are scrolling right now out");
+    document.body.onscroll = (event) => {
+        const { scrollHeight, scrollTop, clientHeight } = document.body;
+        // console.log(window.scrollY , document.body.scrollHeight);
+
+        if (window.scrollY > document.body.scrollHeight-1000 ) {
+            console.log('scrolled');
+        }
+
+    }
+
     return (
         <div className="body-posts d-flex po-rel">
-
             <div className="left-post-side left-post-side1 main-box ">
-                <NavLink to="/posting">
+                <NavLink to="../new-post">
                     <button className="new-post button-ok w-full">New Post</button>
                 </NavLink>
                 <ul className="posts-option">
@@ -88,15 +132,36 @@ function GroupDetailsPosts() {
                 </ul>
             </div>
 
-            <div className="container-pos">
-               <Posts />
-               <VideoItem />
-               <VideoItem />
-               <Posts /> 
-               <Posts />
-               <VideoItem />
-               <Posts />
-               <VideoItem />
+            <div className="container-pos" style={{ width: "100%" }}>
+                {
+                    groupPostsLoading ?
+                        <>
+                            <PostItemLoading />
+                            <PostItemLoading />
+                            <PostItemLoading />
+                        </>
+                        :
+                        groupPosts.length > 0 ?
+                            groupPosts.map((post, i) => {
+                                if (post.post_type === "text") {
+                                    return <Post key={i} postType="text" post={post} user={post.user} />;
+                                }
+                                else if (post.post_type === "image") {
+                                    return <Post key={i} postType="image" post={post} user={post.user} />;
+                                }
+                            })
+                            :
+                            <div className="main-box w-full" style={{ width: "100%" }}>
+                                <h3 className='txt-center'>There is not posts for this group</h3>
+
+                                <div className='flex-center'>
+                                    <NavLink to="../new-post">
+                                        <button className="new-post button-ok">Create New Post</button>
+                                    </NavLink>
+                                </div>
+                            </div>
+                }
+
             </div>
 
         </div>

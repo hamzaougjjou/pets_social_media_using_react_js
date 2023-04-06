@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SearchUser() {
+function SearchUser2() {
     return (
         <div className="inp po-rel inp-search w-full">
             <span
@@ -20,4 +20,4 @@ function SearchUser() {
     )
 }
 
-export default SearchUser
+export default SearchUser2

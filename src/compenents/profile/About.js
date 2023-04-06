@@ -1,62 +1,26 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 // clipRule
 function About() {
+
+    const { loading, user, error } = useSelector(state => state.getUser);
+    // let profile_img = user.profile_img === null ? profile : storageUrl + "/" + user.profile_img;
+    console.log(user);
+
     return (
         <div className="body d-flex">
             <main className="main-profile">
                 <div className="body-posts d-flex">
 
                     <div className="right-Freind-side main-box flex-1">
-                        {/* ============================ */}
 
-                        <div className="icon-post-right icon-frei-right  flex-between  w-full ali-center">
-                            <a href="#"><span className="svg-icon svg-icon-1 m-0 d-flex">
-                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect opacity="0.5" x="6" y="11" width="13" height="2" rx="1"
-                                        fill="currentColor"></rect>
-                                    <path
-                                        d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                            </span>
-                            </a>
-                            <div className="d-flex gap-10px po-rel about-mm">
-                                <div className="inp po-rel"><span className="svg-icon svg-icon-2 ms-4 po-abs center-el-hr">
-                                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2"
-                                            rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor">
-                                        </rect>
-                                        <path
-                                            d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                </span>
-                                    <input type="text" placeholder="Search Group..." />
-                                </div>
-                                <button className="flex-between bo-rad about-men" id="menu-ic-si"><span className="svg-icon svg-icon-3 m-0 d-flex">
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                        <rect x="17" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                        <rect x="3" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                    </svg>
-                                </span>
-                                </button>
-
-                            </div>
-                        </div>
-
-                        {/* ============================ */}
-
-                        {/* +++++++++++++++++++++++++++++++++++++++ */}
                         <div className="boxs-freind boxs-group">
                             {/* ----------------------------------------*/}
                             <div className="box-about main-box">
                                 <div className="top-box-about bor-bott-col flex-between ali-center">
                                     <h3>Basic information</h3>
-                                    <button className="button-ok butt-about d-flex ali-center">
+                                    {/* <button className="button-ok butt-about d-flex ali-center">
                                         <span className="svg-icon follow svg-icon-3 d-flex">
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -67,7 +31,7 @@ function About() {
                                             </svg>
                                         </span>
                                         Add Information
-                                    </button>
+                                    </button> */}
                                 </div>
                                 <div className="info-about w-full">
                                     <ul className="ul-about w-full">
@@ -89,23 +53,23 @@ function About() {
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="d-block">Abdualaziz Najeeb</span>
-                                                    <span>Full Name</span>
+                                                    {
+                                                        loading ?
+                                                            <>
+                                                                <span className="line h15 w150p"></span>
+                                                                <span className="line h10 w50p"></span>
+                                                            </>
+
+                                                            :
+                                                            <>
+                                                                <span className="d-block">{user.name}</span>
+                                                                <span>Full Name</span>
+                                                            </>
+                                                    }
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
@@ -116,23 +80,28 @@ function About() {
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="d-block">Male</span>
-                                                    <span>Gender</span>
+                                                    {
+                                                        loading ?
+                                                            <>
+                                                                <span className="line h15 w150p"></span>
+                                                                <span className="line h10 w50p"></span>
+                                                            </>
+
+                                                            :
+                                                            <>
+                                                                {
+                                                                    user.gender != null ?
+                                                                        <span className="d-block">{user.gender}</span>
+                                                                        :
+                                                                        <span className="d-block color-warning">Gender not exist</span>
+                                                                }
+                                                                <span>Gender</span>
+                                                            </>
+                                                    }
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
@@ -143,50 +112,49 @@ function About() {
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="d-block">July 16, 2022</span>
-                                                    <span>Birth Day</span>
+                                                    {
+                                                        loading ?
+                                                            <>
+                                                                <span className="line h15 w150p"></span>
+                                                                <span className="line h10 w50p"></span>
+                                                            </>
+
+                                                            :
+                                                            <>
+                                                                <span className="d-block">{user.birthday}</span>
+                                                                <span>Birth Day</span>
+                                                            </>
+                                                    }
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
                                             <div className="left-info d-flex ali-center">
                                                 <div>
                                                     <span className="svg-icon svg-icon-3 d-flex">
-                                                        <i className="fa-solid fa-language" style={{ fontSize: '18' }} ></i>
+                                                        <i className="fa-solid fa-paw"></i>
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="d-block">Arabic</span>
-                                                    <span>Language</span>
+                                                    {
+                                                        loading ?
+                                                            <>
+                                                                <span className="line h15 w150p"></span>
+                                                                <span className="line h10 w50p"></span>
+                                                            </>
+                                                            :
+                                                            <>
+                                                                <span className="d-block">{user.breed}</span>
+                                                                <span>breed</span>
+                                                            </>
+                                                    }
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
@@ -198,23 +166,30 @@ function About() {
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="d-block">Yemen</span>
-                                                    <span>Country</span>
+                                                    {
+                                                        loading ?
+                                                            <>
+                                                                <span className="line h15 w150p"></span>
+                                                                <span className="line h10 w50p"></span>
+                                                            </>
+
+                                                            :
+                                                            <>
+                                                                {
+                                                                    user.address != null ?
+                                                                        <span className="d-block">{user.address}</span>
+                                                                        :
+                                                                        <span className="d-block color-warning">Adress not exist</span>
+                                                                }
+
+                                                                <span>Address</span>
+                                                            </>
+                                                    }
+
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                     </ul>
@@ -222,7 +197,8 @@ function About() {
                             </div>
 
                             {/* ------------------------------------------ */}
-                            <div className="box-about main-box">
+
+                            {/* <div className="box-about main-box">
                                 <div className="top-box-about bor-bott-col flex-between ali-center">
                                     <h3>Work</h3>
                                     <button className="button-ok butt-about d-flex ali-center">
@@ -261,18 +237,7 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
@@ -296,18 +261,7 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
@@ -331,25 +285,16 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> */}
+
                             {/* <!-- ---------------------------------> */}
-                            <div className="box-about main-box">
+
+                            {/* <div className="box-about main-box">
                                 <div className="top-box-about bor-bott-col flex-between ali-center">
                                     <h3>Education</h3>
                                     <button className="button-ok butt-about d-flex ali-center">
@@ -380,18 +325,7 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
@@ -407,18 +341,7 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
@@ -427,7 +350,6 @@ function About() {
                                                     <span className="svg-icon svg-icon-3 d-flex">
                                                         <i className="fa-solid fa-graduation-cap"></i>
                                                     </span>
-                                                    {/* </span> */}
                                                 </div>
                                                 <div>
                                                     <span className="d-block">Developer for ADH Company</span>
@@ -435,25 +357,15 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div>  */}
+
                             {/* <!-- ----------------------------------------- --> */}
-                            <div className="box-about main-box">
+                            {/* <div className="box-about main-box">
                                 <div className="top-box-about bor-bott-col flex-between ali-center">
                                     <h3>Places Lived</h3>
                                     <button className="button-ok butt-about d-flex ali-center">
@@ -484,18 +396,7 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
@@ -511,28 +412,18 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> */}
+
                             {/* <!-- ----------------------------------- --> */}
                             <div className="box-about main-box">
                                 <div className="top-box-about bor-bott-col flex-between ali-center">
                                     <h3>Contact</h3>
-                                    <button className="button-ok butt-about d-flex ali-center">
+                                    {/* <button className="button-ok butt-about d-flex ali-center">
                                         <span className="svg-icon follow svg-icon-3 d-flex">
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -543,7 +434,7 @@ function About() {
                                             </svg>
                                         </span>
                                         Add Contact
-                                    </button>
+                                    </button> */}
                                 </div>
                                 <div className="info-about w-full">
                                     <ul className="ul-about w-full">
@@ -555,23 +446,23 @@ function About() {
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="d-block">+66773948430</span>
-                                                    <span>Mobile</span>
+                                                    {
+                                                        loading ?
+                                                            <>
+                                                                <span className="line h15 w150p"></span>
+                                                                <span className="line h10 w50p"></span>
+                                                            </>
+
+                                                            :
+                                                            <>
+                                                                <span className="d-block">{user.phone}</span>
+                                                                <span>Mobile</span>
+                                                            </>
+                                                    }
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
@@ -590,23 +481,24 @@ function About() {
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="d-block">email@example.com</span>
-                                                    <span>Email</span>
+                                                    {
+                                                        loading ?
+                                                            <>
+                                                                <span className="line h15 w150p"></span>
+                                                                <span className="line h10 w50p"></span>
+                                                            </>
+
+                                                            :
+                                                            <>
+                                                                <span className="d-block">{user.email}</span>
+                                                                <span>Email</span>
+                                                            </>
+                                                    }
+
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
@@ -626,29 +518,33 @@ function About() {
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="d-block">@alazy_example</span>
-                                                    <span>Message</span>
+                                                    {
+                                                        loading ?
+                                                            <>
+                                                                <span className="line h15 w150p"></span>
+                                                                <span className="line h10 w50p"></span>
+                                                            </>
+
+                                                            :
+                                                            <>
+                                                                <NavLink to={"/messanger/" + user.id}>
+                                                                    <span className="d-block">@{user.id}</span>
+                                                                </NavLink>
+                                                                <span>Message</span>
+                                                            </>
+                                                    }
+
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             {/* <!-- ------------------------------------------ --> */}
+                            {/*
                             <div className="box-about main-box">
                                 <div className="top-box-about bor-bott-col flex-between ali-center">
                                     <h3>Social links</h3>
@@ -665,13 +561,13 @@ function About() {
                                         Add Link
                                     </button>
                                 </div>
-                               <div className="info-about w-full">
+                                <div className="info-about w-full">
                                     <ul className="ul-about w-full">
                                         <li className="flex-between w-full">
                                             <div className="left-info d-flex ali-center">
                                                 <div>
                                                     <span className="svg-icon svg-icon-3 d-flex">
-                                                        <i className="fa-brands fa-facebook-f" style={{fontSize:"18px"}}></i>
+                                                        <i className="fa-brands fa-facebook-f" style={{ fontSize: "18px" }}></i>
                                                     </span>
                                                 </div>
                                                 <div>
@@ -697,12 +593,12 @@ function About() {
                                                 </svg>
                                             </span>
                                         </li>
-                                        
+
                                         <li className="flex-between w-full">
                                             <div className="left-info d-flex ali-center">
                                                 <div>
                                                     <span className="svg-icon svg-icon-3 d-flex">
-                                                        <i className="fa-brands fa-twitter" style={{fontSize:"18px"}}></i>
+                                                        <i className="fa-brands fa-twitter" style={{ fontSize: "18px" }}></i>
                                                     </span>
                                                 </div>
                                                 <div>
@@ -711,25 +607,14 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
                                             <div className="left-info d-flex ali-center">
                                                 <div>
                                                     <span className="svg-icon svg-icon-3 d-flex">
-                                                        <i className="fa-brands fa-instagram" style={{fontSize:"18px"}}></i>
+                                                        <i className="fa-brands fa-instagram" style={{ fontSize: "18px" }}></i>
                                                     </span>
                                                 </div>
                                                 <div>
@@ -738,25 +623,14 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
                                         <li className="flex-between w-full">
                                             <div className="left-info d-flex ali-center">
                                                 <div>
                                                     <span className="svg-icon svg-icon-3 d-flex">
-                                                        <i className="fa-brands fa-linkedin-in" style={{fontSize:"18px"}}></i>
+                                                        <i className="fa-brands fa-linkedin-in" style={{ fontSize: "18px" }}></i>
                                                     </span>
                                                 </div>
                                                 <div>
@@ -765,32 +639,20 @@ function About() {
                                                 </div>
                                             </div>
                                             <span className="svg-icon svg-icon-2 m-0">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                                        fill="currentColor"></path>
-                                                    <path
-                                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
+                                                <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                         </li>
-                                   {/* */}
                                     </ul>
-                                </div> 
-                            </div>
+                                </div>
+                            </div> */}
                             {/* +++++++++++++++++++++++++++++++++++++++ */}
                         </div>
                     </div>
                 </div>
             </main>
         </div>
-                
+
     )
 }
 
-                export default About
+export default About

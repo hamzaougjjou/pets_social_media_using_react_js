@@ -1,10 +1,12 @@
 import React from 'react'
+import { PostItemLoading } from '../../loading/Index'
 import VideoItem from './VideoItem'
 
 function Videos() {
   return (
-    <div style={{ maxWidth: "1200px", marginInline: "auto", padding: "20px" }}>
+    <div className='body2 body' style={{ marginInline: "auto", padding: "20px" }}>
 
+      {/* <VideoItem />
       <VideoItem />
       <VideoItem />
       <VideoItem />
@@ -14,8 +16,11 @@ function Videos() {
       <VideoItem />
       <VideoItem />
       <VideoItem />
-      <VideoItem />
-      <VideoItem />
+      <VideoItem /> */}
+      <PostItemLoading />
+      <PostItemLoading />
+      <PostItemLoading />
+      <PostItemLoading />
     
     </div>
   )

@@ -13,8 +13,8 @@ function Profile() {
     return (
 
 
-        <div className='body d-flex'>
-            <main className="main-profile">
+        <div className='body d-flex' style={{ maxWidth: "100%" }}>
+            <main className="main-profile" style={{ maxWidth: "100%" }}>
                 <h1>Account Overview</h1>
 
                 <ProfileHeader />

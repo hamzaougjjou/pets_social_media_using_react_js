@@ -4,21 +4,10 @@ import Friends from './friends/Friends';
 function RightAside() {
     return (
         <aside className="aside-right">
-            <div className="search-right">
-                <span
-                    className="search-icon center-el-hr svg-icon svg-icon-2 svg-icon-gray-700 position-absolute top-50 translate-middle-y ms-4">
-                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
-                            transform="rotate(45 17.0365 15.1223)" fill="currentColor"></rect>
-                        <path
-                            d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                            fill="currentColor"></path>
-                    </svg>
-                </span>
-                <input type="text" name="" id="" placeholder="Search..." className="bor-col bo-rad trans" />
-            </div>
+            
+            <Friends />
 
-            {/* <div className="popular-Hashtag bo-rad">
+            <div className="popular-Hashtag bo-rad">
                 <h3>Popular Hashtag #</h3>
                 <ul className="hash">
                     <li className="d-flex">
@@ -32,7 +21,7 @@ function RightAside() {
                                     fill="currentColor"></path>
                             </svg>
                         </span>
-                        <a href="#">#How_to_use_Django </a>
+                        <a href="#">#How_to_use_laravel </a>
                     </li>
                     <li className="d-flex">
                         <span className="d-flex svg-icon svg-icon-2 mt-0 me-2">
@@ -45,7 +34,7 @@ function RightAside() {
                                     fill="currentColor"></path>
                             </svg>
                         </span>
-                        <a href="#">#Republic_of_Yemen </a>
+                        <a href="#">#Republic_of_Morocco</a>
                     </li>
                     <li className="d-flex">
                         <span className="d-flex svg-icon svg-icon-2 mt-0 me-2">
@@ -87,8 +76,9 @@ function RightAside() {
                         <a href="#">#How_to_use_React </a>
                     </li>
                 </ul>
-            </div> */}
-            {/* <div className="popular-word bo-rad">
+            </div> 
+
+            <div className="popular-word bo-rad">
                 <h3>Key Words</h3>
                 <span className="bo-rad">Yemen</span>
                 <span className="bo-rad">Programming</span>
@@ -99,9 +89,7 @@ function RightAside() {
                 <span className="bo-rad">React</span>
                 <span className="bo-rad">Bootstrap</span>
                 <span className="bo-rad">Alazy</span>
-            </div> */}
-
-            <Friends />
+            </div>
         </aside>
     )
 }

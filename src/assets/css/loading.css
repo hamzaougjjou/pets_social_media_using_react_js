@@ -64,6 +64,9 @@
 .h30{
    height: 30px !important;
 }
+.h35{
+   height: 35px !important;
+}
 .h40{
    height: 40px !important;
 }
@@ -87,6 +90,18 @@
 }
 .h100{
    height: 100px !important;
+}
+.h150{
+   height: 150px !important;
+}
+.h170{
+   height: 170px !important;
+}
+.h180{
+   height: 180px !important;
+}
+.h200{
+   height: 200px !important;
 }
 .h300p{
    height: 300px;
@@ -114,15 +129,19 @@
 .w20p{ width: 20px !important; }
 .w25p{ width: 25px !important; }
 .w30p{ width: 30px !important; }
+.w35p{ width: 35px !important; }
 .w40p{ width: 40px !important; }
 .w45p{ width: 45px !important; }
 .w50p{ width: 50px !important; }
 .w60p{ width: 60px !important; }
 .w70p{ width: 70px !important; }
 .w80p{ width: 80px !important; }
-.w90p{ width: 900px !important; }
+.w90p{ width: 90px !important; }
 .w100p{ width: 100px !important; }
+.w140p{ width: 140px !important; }
 .w150p{ width: 150px !important; }
+.w170p{ width: 170px !important; }
+.w180p{ width: 180px !important; }
 .w200p{ width: 200px !important; }
 .w300p{ width: 300px !important; }
 .w400p{ width: 400px !important; }

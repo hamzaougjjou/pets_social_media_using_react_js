@@ -6,12 +6,13 @@ import Page3 from './Page3';
 import "./../../assets/css/regProfileImg.css";
 import img_input from "./../../assets/img/img_input.jpg"
 import icons8_bing_256 from "./../../assets/img/icons8_bing_256.png"
-
+import axios from 'axios';
+import { mainUrl } from './../../API';
 
 function Register() {
 
     let goBackArrow = useRef();
-
+    const [breeds, setBreeds] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
     let [whatRender, setWhatRender] = useState(<Page1 />);
     let [btnContText, setBtnContText] = useState(['Continue Registration', '']); //[button text , btn redirect to ]
@@ -23,7 +24,7 @@ function Register() {
             if (pageNumber === 1)
                 setWhatRender(<Page1 />)
             else if (pageNumber === 2)
-                setWhatRender(<Page2 />)
+                setWhatRender(<Page2 data={breeds} />)
         }
 
     }
@@ -39,7 +40,7 @@ function Register() {
                 setWhatRender(<Page1 />)
                 break;
             case 2:
-                setWhatRender(<Page2 />)
+                setWhatRender(<Page2 data={breeds} />)
                 break;
             case 3:
                 setWhatRender(<Page3 />)
@@ -59,7 +60,17 @@ function Register() {
         else
             goBackArrow.current.style.opacity = "1";
     })
-    //get ant store data instore redux
+    
+    // get all breeds from back end
+    useEffect( ()=>{
+        const getAnimalsBredds = async () => {
+            await axios.get(mainUrl + "/animales/breeds")
+                .then(info => {
+                    setBreeds(info.data);
+                })
+        }
+        getAnimalsBredds();
+    },[]);
 
     // const regState = useSelector( state => state.RegisterReducer );
 

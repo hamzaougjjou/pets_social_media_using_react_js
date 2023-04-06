@@ -1,184 +1,396 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom';
+import { mainUrl, storageUrl } from '../../API';
+import { GroupDetailsHeaderLoading } from '../loading/Index';
+import group from "./../../assets/img/group.jpg";
 // Hamza ougjjou img
-function GroupDetailsHeader() {
-    let activeLink = "active-prof";
-    let normalLink = "";
+function GroupDetailsHeader({ groupId, groupInfoLoading, groupInfo, joined, setJoined }) {
+
+    const [joinGroupLoading, setJoinGroupLoading] = useState(false);
+    const [leaveGroupLoading, setLeaveGroupLoading] = useState(false);
+    const [showPopUp, setShowPopUP] = useState(false);
+    const [reqCountLoading, setReqCountLoading] = useState(false);
+    const [reqCount, setReqCount] = useState(-1);
+    const [postsReqCount, setPostsReqCount] = useState(-1);
+    const [postsReqCountLoading, setPostsReqCountLoading] = useState(false);
+
+    const navigate = useNavigate();
+    let profile_img = group;
+    if (!groupInfoLoading && groupInfo.profile_img != null)
+        profile_img = storageUrl + "/" + groupInfo.profile_img;
+
+    //join and leave group logic
+
+    const joinGroupFunc = async () => {
+        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+        let token = authInfo.token;
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }
+        setJoinGroupLoading(true);
+        await axios.post(`${mainUrl}/group/${groupId}/join`, null, config)
+            .then(info => {
+                console.log(info.data);
+                if (info.data.success) {
+                    setJoined(0);
+                }
+            }).catch(err => {
+
+            }).finally(() => {
+                setJoinGroupLoading(false)
+            })
+    }
+    const leaveGroupBackFunc = async () => {
+        ///group/{
+        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+        let token = authInfo.token;
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }
+        setLeaveGroupLoading(true);
+        await axios.post(`${mainUrl}/group/${groupId}/leave`, null, config)
+            .then(info => {
+                setShowPopUP(false);
+                setJoined(-1);
+            }).catch(err => {
+
+            }).finally(() => {
+                setLeaveGroupLoading(false)
+            })
+    } //leave a group from db func
+
+    const leaveGroupUiFunc = () => {
+        setShowPopUP(true);
+    }
+
+    let loadRequestsFunc = () => {
+        navigate("./requests")
+    }
+    let loadPostsRequestsFunc = () => {
+        navigate("./posts/requests")
+    }
+
+    //get join group requests requests count
+    const getReqCountFun = async () => {
+        setReqCountLoading(true);
+        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+        let token = authInfo.token;
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }
+        setJoinGroupLoading(true);
+        await axios.get(`${mainUrl}/group/${groupId}/requests/count`, config)
+            .then(info => {
+                setReqCount(info.data.count);
+            }).catch(err => {
+                console.log(err);
+                setReqCount(-1);
+            }).finally(() => {
+                setReqCountLoading(false);
+            })
+    }
+    const getPostsReqCountFun = async () => {
+        setPostsReqCountLoading(true);
+        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+        let token = authInfo.token;
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }
+        setJoinGroupLoading(true);
+        await axios.get(`${mainUrl}/group/${groupId}/posts/requests/count`, config)
+            .then(info => {
+                setPostsReqCount(info.data.count);
+            }).catch(err => {
+                console.log(err);
+                setPostsReqCount(-1);
+            }).finally(() => {
+                setPostsReqCountLoading(false);
+            })
+    }
+
+    useEffect(() => {
+        //check if current user is admin
+        if (groupInfo.is_admin) {
+            getReqCountFun();
+            getPostsReqCountFun();
+            setInterval(() => {
+                getReqCountFun();
+                getPostsReqCountFun();
+            }, 10000)
+        }
+    }, [groupInfo.is_admin]);
+
+
     return (
-        <div className="photo-div main-box d-flex">
-            <div className="top-profile d-flex gap-20px">
-                <div className="img-prof-media" >
-                    <div className="image-profile bo-rad po-rel" style={{ backgroundImage: "url('./../image/profile.jpg')" }}>
-                        {/* <div className="green enable bo-rad-haf"></div> */}
-                    </div>
-                    {/* <!-- ////////////////////in media////////////////// --> style*/}
-                    <div className="button-prof button2-prof d-flex">
-                        <button className="button-cancel d-flex ali-center"><span
-                            className="svg-icon follow svg-icon-3 d-flex">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                    transform="rotate(-90 11.364 20.364)" fill="currentColor"></rect>
-                                <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
-                                    fill="currentColor"></rect>
-                            </svg>
-                        </span>&nbsp;Follow</button>
-                        <button className="button-ok d-flex ali-center">
-                            <span className="svg-icon svg-icon-2 m-0 d-flex">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd"
-                                        d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
-                                        fill="currentColor"></path>
-                                    <path
-                                        d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
-                                        fill="currentColor"></path>
-                                    <path
-                                        d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                            </span>
-                            Edit Profile
-                        </button>
-                        <button className="button-cancel">
-                            <span className="svg-icon svg-icon-3 m-0 d-flex">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor">
-                                    </rect>
-                                    <rect x="17" y="10" width="4" height="4" rx="2" fill="currentColor">
-                                    </rect>
-                                    <rect x="3" y="10" width="4" height="4" rx="2" fill="currentColor">
-                                    </rect>
-                                </svg>
-                            </span>
-                        </button>
-                    </div>
-                    {/* <!-- //////////////////////////////////////////////// --> */}
-                </div>
-                <div className="all-info-prof">
-                    <div className="infor-profile flex-between">
-                        <div className="inf-prof-addr">
-                            <div className="my-name d-flex ali-center gap-5px">
-                                Cats group officiel
+        <>
+            {
+                showPopUp ?
+                    <div id="group-item-popup" className="group-item-overlay" >
+                        <div className="group-item-popup" >
+                            <h2> leave a group </h2>
+                            <div className="content">
+                                Are you sure you want leave a group ?
                             </div>
+                            <div className='group-item-popup-btns flex-between w-full'>
+                                <button onClick={leaveGroupBackFunc} className="button-cancel bot-req bot-fr bot-fr1 flex-center btn-err">
+                                    Leave group&nbsp;
 
-                            <div className="address-prof d-flex gap-5px">
-                                <span href="#" className="d-flex ali-center">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex neque rerum voluptas
-                                    repellendus ullam et distinctio incidunt sint quo voluptates, consequuntur quisquam,
-                                    a rem consectetur esse ea, voluptatum eos sed excepturi error! Eligendi numquam mollitia
-                                    nesciunt sint repellendus ea veniam, distinctio blanditiis dolore molestias
-                                    vel dolor repudiandae eos ipsum magni recusandae hic in iusto debitis?
-                                </span>
+                                    {
+                                        leaveGroupLoading ?
+                                            <i style={{ color: '#fff' }} className="fas fa-spinner fa-pulse"></i>
+                                            :
+                                            <span className="svg-icon svg-icon-2 m-0 d-flex">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" width="12" height="2" rx="1" transform="matrix(-1 0 0 1 15.5 11)" fill="currentColor"></rect>
+                                                    <path d="M13.6313 11.6927L11.8756 10.2297C11.4054 9.83785 11.3732 9.12683 11.806 8.69401C12.1957 8.3043 12.8216 8.28591 13.2336 8.65206L16.1592 11.2526C16.6067 11.6504 16.6067 12.3496 16.1592 12.7474L13.2336 15.3479C12.8216 15.7141 12.1957 15.6957 11.806 15.306C11.3732 14.8732 11.4054 14.1621 11.8756 13.7703L13.6313 12.3073C13.8232 12.1474 13.8232 11.8526 13.6313 11.6927Z" fill="currentColor"></path>
+                                                    <path d="M8 5V6C8 6.55228 8.44772 7 9 7C9.55228 7 10 6.55228 10 6C10 5.44772 10.4477 5 11 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H11C10.4477 19 10 18.5523 10 18C10 17.4477 9.55228 17 9 17C8.44772 17 8 17.4477 8 18V19C8 20.1046 8.89543 21 10 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H10C8.89543 3 8 3.89543 8 5Z" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                    }
+
+                                </button>
+                                <button onClick={() => setShowPopUP(false)} className="button-ok bot-req bot-fr bot-gro">
+                                    Cancel
+                                </button>
                             </div>
                         </div>
-
-                        {/* ================================================ */}
-                        <div className="button-prof button1-prof d-flex">
-                            <button className="button-cancel d-flex ali-center"><span
-                                className="svg-icon follow svg-icon-3 d-flex">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                        transform="rotate(-90 11.364 20.364)" fill="currentColor"></rect>
-                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
-                                        fill="currentColor"></rect>
-                                </svg>
-                            </span>&nbsp;Follow</button>
-                            <button className="button-ok d-flex ali-center">
-                                <span className="svg-icon svg-icon-2 m-0 d-flex">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                            transform="rotate(-90 11.364 20.364)" fill="currentColor"></rect>
-                                        <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
-                                            fill="currentColor"></rect>
-                                    </svg>
-                                </span>
-                                Join Group</button>
-                            <button className="button-cancel">
-                                <span className="svg-icon svg-icon-3 m-0 d-flex">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor">
-                                        </rect>
-                                        <rect x="17" y="10" width="4" height="4" rx="2" fill="currentColor">
-                                        </rect>
-                                        <rect x="3" y="10" width="4" height="4" rx="2" fill="currentColor">
-                                        </rect>
-                                    </svg>
-                                </span>
-                            </button>
-                        </div>
-                        {/* ================================================ */}
                     </div>
-                    <div className="follow-info flex-between">
-                        <div className="number d-flex gap-20px">
-                            <div className="Friends-num bo-rad flex-center">
-                                <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./mumbers">
+                    :
+                    null
+            }
 
-                                    <span className="d-block">3.6K</span>
-                                    <span>Mumbers</span>
-                                </NavLink>
-
+            <div className="photo-div main-box d-flex w-full" style={{ width: '100%' }}>
+                {
+                    groupInfoLoading ?
+                        <GroupDetailsHeaderLoading />
+                        :
+                        <div className="top-profile d-flex gap-20px">
+                            <div className="img-prof-media" >
+                                <div className="image-profile bo-rad po-rel" style={{ backgroundImage: `url('${profile_img}')` }}>
+                                    {/* <div className="green enable bo-rad-haf"></div> */}
+                                </div>
+                                {/* <!-- //////////////////////////////////////////////// --> */}
                             </div>
-                            <div className="followers bo-rad flex-center">
-                                <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./managers">
-                                    <span className="d-block">22.8K</span>
-                                    <span>Managers</span>
-                                </NavLink>
+                            <div className="all-info-prof">
+                                <div className="infor-profile flex-between">
+                                    <div className="inf-prof-addr">
+                                        <div className="my-name d-flex ali-center gap-5px">
+                                            {groupInfo.name}
+                                        </div>
 
-                            </div>
-                            <div className="Posts bo-rad flex-center">
-                                <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./posts">
-                                    <span className="d-block">20</span>
-                                    <span>Posts</span>
-                                </NavLink>
+                                        <div className="address-prof d-flex gap-5px">
+                                            <span href="#" className="d-flex ali-center">
 
+                                                {groupInfo.description}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* ================================================ */}
+
+
+                                    <div className="button-prof button1-prof d-flex">
+
+                                        {
+                                            groupInfo.is_admin &&
+                                            <button onClick={loadRequestsFunc} className="button-cancel btn-mmbrs d-flex ali-center btn-group-req">
+                                                &nbsp;Requests
+                                                <span className="svg-icon follow svg-icon-3 d-flex">
+                                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                                                            transform="rotate(-90 11.364 20.364)" fill="currentColor"></rect>
+                                                        <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
+                                                            fill="currentColor"></rect>
+                                                    </svg>
+                                                </span>
+
+                                                {
+                                                    (reqCount != 0) ?
+                                                        (reqCount === -1) ?
+                                                            reqCountLoading ?
+                                                                null
+                                                                :
+                                                                reqCount > 9 ?
+                                                                    <span className='group-req-count'>9<sup>+</sup></span>
+                                                                    :
+                                                                    <span className='group-req-count'>{reqCount}</span>
+                                                            :
+                                                            reqCount > 9 ?
+                                                                <span className='group-req-count'>9<sup>+</sup></span>
+                                                                :
+                                                                <span className='group-req-count'>{reqCount}</span>
+                                                        :
+                                                        null
+                                                }
+                                            </button>
+                                        }
+
+                                        {/*======================================================== */}
+                                        {
+                                            !groupInfo.is_admin ?
+                                                (joined == 1) ?
+                                                    <button onClick={leaveGroupUiFunc} className="button-cancel bot-req bot-fr bot-fr1 flex-center btn-err">
+                                                        Leave&nbsp;
+                                                        <span className="svg-icon svg-icon-2 m-0 d-flex">
+                                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <rect opacity="0.3" width="12" height="2" rx="1" transform="matrix(-1 0 0 1 15.5 11)" fill="currentColor"></rect>
+                                                                <path d="M13.6313 11.6927L11.8756 10.2297C11.4054 9.83785 11.3732 9.12683 11.806 8.69401C12.1957 8.3043 12.8216 8.28591 13.2336 8.65206L16.1592 11.2526C16.6067 11.6504 16.6067 12.3496 16.1592 12.7474L13.2336 15.3479C12.8216 15.7141 12.1957 15.6957 11.806 15.306C11.3732 14.8732 11.4054 14.1621 11.8756 13.7703L13.6313 12.3073C13.8232 12.1474 13.8232 11.8526 13.6313 11.6927Z" fill="currentColor"></path>
+                                                                <path d="M8 5V6C8 6.55228 8.44772 7 9 7C9.55228 7 10 6.55228 10 6C10 5.44772 10.4477 5 11 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H11C10.4477 19 10 18.5523 10 18C10 17.4477 9.55228 17 9 17C8.44772 17 8 17.4477 8 18V19C8 20.1046 8.89543 21 10 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H10C8.89543 3 8 3.89543 8 5Z" fill="currentColor"></path>
+                                                            </svg>
+                                                        </span>
+                                                    </button>
+                                                    :
+                                                    (joined === -1) ?
+                                                        <button onClick={joinGroupFunc} className="button-ok bot-req bot-fr bot-gro">
+                                                            Join Group&nbsp;
+                                                            {
+                                                                joinGroupLoading ?
+                                                                    <i style={{ color: '#fff' }} className="fas fa-spinner fa-pulse"></i>
+                                                                    :
+                                                                    <i className="fa-solid fa-plus"></i>
+                                                            }
+
+                                                        </button>
+                                                        :
+                                                        <button onClick={leaveGroupUiFunc} className="button-ok bot-req bot-fr bot-gro bg-warning">
+                                                            cancel join Group&nbsp;
+                                                            <i className="fa-solid fa-plus"></i>
+                                                        </button>
+                                                :
+                                                groupInfo.is_admin &&
+                                                <button onClick={loadPostsRequestsFunc}
+                                                    className="button-cancel btn-mmbrs d-flex ali-center btn-group-req txt-center"
+                                                    style={{ width: "max-content" }}>
+                                                    &nbsp;posts not accepted
+                                                    {
+                                                        (postsReqCount != 0) ?
+                                                            (postsReqCount === -1) ?
+                                                                postsReqCountLoading ?
+                                                                    null
+                                                                    :
+                                                                    postsReqCount > 9 ?
+                                                                        <span className='group-req-count'>9<sup>+</sup></span>
+                                                                        :
+                                                                        <span className='group-req-count'>{postsReqCount}</span>
+                                                                :
+                                                                postsReqCount > 9 ?
+                                                                    <span className='group-req-count'>9<sup>+</sup></span>
+                                                                    :
+                                                                    <span className='group-req-count'>{postsReqCount}</span>
+                                                            :
+                                                            null
+                                                    }
+                                                </button>
+                                        }
+                                        {/*======================================================== */}
+
+
+                                        <button className="button-cancel">
+                                            <span className="svg-icon svg-icon-3 m-0 d-flex">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor">
+                                                    </rect>
+                                                    <rect x="17" y="10" width="4" height="4" rx="2" fill="currentColor">
+                                                    </rect>
+                                                    <rect x="3" y="10" width="4" height="4" rx="2" fill="currentColor">
+                                                    </rect>
+                                                </svg>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    {/* ================================================ */}
+                                </div>
+
+                                <div className="follow-info flex-between">
+                                    <div className="number d-flex gap-20px">
+                                        <div className="Friends-num bo-rad flex-center txt-center">
+                                            <NavLink className={({ isActive }) => isActive ? "active-prof" : ''} to="./members">
+
+                                                <span className="d-block">
+                                                    {groupInfo.members_count}
+                                                </span>
+                                                <span>Mumbers</span>
+                                            </NavLink>
+                                        </div>
+                                        <div className="followers bo-rad flex-center txt-center">
+                                            <NavLink className={({ isActive }) => isActive ? "active-prof" : ''} to="./managers">
+                                                <span className="d-block">
+                                                    {groupInfo.admins_count}
+                                                </span>
+                                                <span>Managers</span>
+                                            </NavLink>
+
+                                        </div>
+                                        <div className="Posts bo-rad flex-center txt-center">
+                                            <NavLink className={({ isActive }) => isActive ? "active-prof" : ''} to="./posts">
+                                                <span className="d-block">
+                                                    {groupInfo.posts_count}
+                                                </span>
+                                                <span>Posts</span>
+                                            </NavLink>
+
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
+                }
 
-                    </div>
-                </div>
+
+                {
+                    joined === 1 &&
+                    <ul className="bott-prof d-flex">
+                        <li>
+                            <NavLink className={({ isActive }) => isActive ? "active-prof" : ''} to="./posts">
+                                Posts
+                            </NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink className={({ isActive }) => isActive ? "active-prof" : ''} to="./about">
+                                About
+                            </NavLink>
+                        </li>
+
+
+                        <li>
+                            <NavLink className={({ isActive }) => isActive ? "active-prof" : ''} to="./members">
+                                Mumbers
+                            </NavLink>
+                        </li>
+
+
+                        <li>
+                            <NavLink className={({ isActive }) => isActive ? "active-prof" : ''} to="./managers">
+                                Managers
+                            </NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink className={({ isActive }) => isActive ? "active-prof" : ''} to="./settings">
+                                Settings
+                            </NavLink>
+                        </li>
+
+
+                    </ul>
+                }
+
+
             </div>
-            <ul className="bott-prof d-flex">
-
-                <li>
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./posts">
-                        Posts
-                    </NavLink>
-                </li>
-
-                <li>
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./about">
-                        About
-                    </NavLink>
-                </li>
-
-
-                <li>
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./mumbers">
-                        Mumbers
-                    </NavLink>
-                </li>
-
-
-                <li>
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./managers">
-                        Managers
-                    </NavLink>
-                </li>
-
-                <li>
-                    <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to="./settings">
-                        Settings
-                    </NavLink>
-                </li>
-
-
-            </ul>
-        </div>
+        </>
     )
 }
 

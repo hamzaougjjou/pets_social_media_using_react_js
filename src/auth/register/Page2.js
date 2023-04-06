@@ -2,10 +2,10 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 
 
-function Page2() {
+function Page2( props ) {
 
   const regState = useSelector(state => state.RegisterReducer);
-
+  console.log(props.data);
   const updateBirthDay = (e)=>{
     
   }
@@ -14,10 +14,9 @@ function Page2() {
     <div className='sub-reg-c'>
       <label>Type : </label>
       <select >
-        <option value="dog">Dog</option>
-        <option value="cat">Cat</option>
-        <option value="sish">Fish</option>
-        <option value="bird">Bird</option>
+      {
+        props.data.breeds.map( (breed , index)=> <option key={index} value={breed.id} > { breed.name } </option> )
+      }
       </select>
 
       <label>Gender : </label>

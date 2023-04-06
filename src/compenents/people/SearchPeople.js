@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
-function SearchPeople() {
+function SearchPeople({ setSearchQuery }) {
+    const searchInpt = useRef()
+    let searchFunc = ()=>{
+        console.log( searchInpt.current.value.trim() );
+        setSearchQuery( searchInpt.current.value.trim() )
+    }
+    const inptOnChange = (e)=>{
+        if( e.target.value.trim().length === 0)
+        setSearchQuery('')
+    }
     return (
         <div className='peaple-search-c'>
             <div className="search-right">
@@ -14,12 +23,15 @@ function SearchPeople() {
                             fill="currentColor"></path>
                     </svg>
                 </span>
-                <input type="text" name="" id="" placeholder="Search..." className="bor-col bo-rad trans" />
+                <input onChange={ inptOnChange } ref={searchInpt} type="text" name="" id="" placeholder="Search..." className="bor-col bo-rad trans" />
             </div>
-            <button className="button-ok bot-req bot-fr">Search someone&nbsp;<i className="fa-solid fa-search"></i></button>
+            <button onClick={searchFunc} className="button-ok bot-req bot-fr">
+                Search someone&nbsp;
+                <i className="fa-solid fa-search"></i>
+            </button>
         </div>
 
     )
 }
 
-export default SearchPeople ;
+export default SearchPeople;

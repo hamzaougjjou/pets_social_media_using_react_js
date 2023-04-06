@@ -1,28 +1,42 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
+import { ProfileSttingsLoading } from '../loading/Index';
 import profile from "./../../assets/img/profile.jpg"
-
+import { storageUrl } from './../../API'
 function Settings() {
+
+  const { loading, error, user } = useSelector(state => state.getUser);
+  let profile_img = user.profile_img === null ? profile : storageUrl + "/" + user.profile_img ;
   return (
-    <div className='body' style={{ maxWidth: '1200px', margin: '0 auto', overflow: 'hidden' }}>
-
-      <div className="main-box d-flex" >
-        <div className="top-profile d-flex gap-20px">
-          <div className="img-prof-media" style={{ height: "120px !important" }}>
-            <div className="image-profile bo-rad po-rel" style={{ height: "80px", width: '80px' , backgroundImage: `url('${profile}')`}}>
+    <div className='body2 body' style={{ margin: '0 auto', overflow: 'hidden' }}>
+      {
+        !error ?
+          loading ? <ProfileSttingsLoading />
+            :
+            <div className="main-box d-flex" >
+              <div className="top-profile d-flex gap-20px">
+                <div className="img-prof-media" style={{ height: "120px !important" }}>
+                  <div className="image-profile bo-rad po-rel" style={{ height: "80px", width: '80px', backgroundImage: `url('${profile_img}')` }}>
+                  </div>
+                </div>
+                <div className="all-info-prof">
+                  <div className="my-name">
+                    <h2> {user.name} </h2>
+                    <NavLink to='/profile'>
+                      <span style={{ display: 'block', marginTop: '10px' }}>View Your Profile</span>
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="all-info-prof">
-            <div className="my-name">
-              <h2>Hamza ougjjou</h2>
-              <NavLink to='/profile'>
-                <span style={{ display: 'block', marginTop: '10px' }}>View Your Profile</span>
-              </NavLink>
-            </div>
-          </div>
-        </div>
-      </div>
+          :
+          <p style={{ fontSize: '10px', padding: '6px', color: 'red' }}>
+            <b>somthing went wrong</b>
+            <a href="/">Reaload Page</a>
+          </p>
 
+      }
       {/* ===================================== */}
 
       <div className="main-box">

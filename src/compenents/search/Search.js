@@ -8,7 +8,6 @@ import PeopleItem from "./../people/PeopleItem";
 function Search() {
     let stl = {
         opacity: '1',
-        maxWidth: '1200px',
         width: '100%',
         margin: '0px auto',
         justifyContent: 'center',
@@ -64,13 +63,13 @@ function Search() {
                             <br />
                             <h2>Users</h2>
                             <li className='body boxs-freind boxs-group'>
+                                {/* <PeopleItem />
                                 <PeopleItem />
                                 <PeopleItem />
                                 <PeopleItem />
                                 <PeopleItem />
                                 <PeopleItem />
-                                <PeopleItem />
-                                <PeopleItem />
+                                <PeopleItem /> */}
                             </li>
                             <br />
                             <div className="flex-center">
@@ -85,12 +84,12 @@ function Search() {
                             <br />
                             <h2>Groups</h2>
                             <div className='body boxs-freind boxs-group'>
+                                {/* <GroupItem />
                                 <GroupItem />
                                 <GroupItem />
                                 <GroupItem />
                                 <GroupItem />
-                                <GroupItem />
-                                <GroupItem />
+                                <GroupItem /> */}
                             </div>
                             <br />
                             <div className="flex-center">
@@ -104,11 +103,11 @@ function Search() {
                             <br />
                             <h2>Posts</h2>
                             <div className='body'>
+                                {/* <Posts />
                                 <Posts />
                                 <Posts />
                                 <Posts />
-                                <Posts />
-                                <Posts />
+                                <Posts /> */}
                             </div>
                             <br />
                             <div className="flex-center">

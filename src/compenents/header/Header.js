@@ -1,23 +1,109 @@
 
-import React from 'react'
-import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { mainUrl } from '../../API';
+import { getCurrentUser, getFriendsFun, refreshLogin } from '../../redux/api';
 import Profile from './Profile';
 
 
-function Header() {
-
-    const myClass = ({ isActive }) => isActive ? "el-menu active" : "el-menu" ;
-
-    let show_menu = () => {
-        console.log("show menu func is clicked ... from header");
+function Header(props) {
+    const navigate = useNavigate();
+    //check if user loged in
+    const refreshLoginInfo = useSelector(state => state.refreshLogin);
+    if (!refreshLoginInfo.loading && refreshLoginInfo.error) {
+        navigate('/auth');
     }
 
+    // get current user info
+    const dispach = useDispatch();
+    useEffect(() => {
+        getCurrentUser(dispach);
+        refreshLogin(dispach);
+        getFriendsFun(dispach);
+    }, []);
+
+
+    // const { token, loading } = useSelector(state => state.refreshLogin);
+
+    //css class for active item in main menu 
+    const myClass = ({ isActive }) => isActive ? "el-menu active" : "el-menu";
+
+    //load friend requests count
+    const [requestsCount, setRequestsCount] = useState(0);
+    const [loadingRequestsCount, setLoadingRequestsCount] = useState(false);
+
+    useEffect(() => { //get requests count
+        const getRequestsCount = async () => {
+
+            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+            let token = authInfo.token;
+
+            let config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+            if (!loadingRequestsCount) {
+                setLoadingRequestsCount(true);
+                await axios.get(mainUrl + '/friends/requests/count', config)
+                    .then(info => {
+                        // console.log("info => " , info );
+                        let x = info.data.requests_count;
+                        if (x != requestsCount)
+                            setRequestsCount(x);
+                        setLoadingRequestsCount(false)
+                    }).catch(() => {
+                        setRequestsCount(0);
+                        setLoadingRequestsCount(false)
+                    }
+                    )
+            }
+        }
+        getRequestsCount();
+        setInterval(() => {
+            if (!loadingRequestsCount) {
+                getRequestsCount();
+                setLoadingRequestsCount(true)
+            }
+        }, 10000);
+
+    }, [])
+
+
+    useEffect(() => {
+        const refreshLastLogin = async () => {
+            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+            let token = authInfo.token;
+            let config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+            await axios.put(mainUrl + '/login/last/update', null, config)
+                .then(info => {
+                    // console.log(info.data);
+                }).catch(err => {
+                    // console.log(err);
+                })
+        }
+        setInterval(() => {
+            refreshLastLogin();
+        }, 15000);
+
+    }, []);
+
+    const showMainMenuFunc = () => {
+        props.leftAsideShowState.setLeftAsideShow(!props.leftAsideShowState.leftAsideShow);
+    }
     return (
         <header className="header d-flex ali-center pad-top-2rem pad-bot-2rem bor-bot back-col-wh">
             {/* <!-- ////////////////////////// --> */}
             <div className="father-logo flex-center">
                 <div className="logo flex-center">
-                    <div className="menu-side-ic menu-side-ic1 bo-rad" onClick={() => { show_menu() }}>
+
+                    <div className="menu-side-ic menu-side-ic1 bo-rad" onClick={showMainMenuFunc}>
                         <span className="svg-icon svg-icon-1">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z" fill="currentColor"></path>
@@ -25,6 +111,7 @@ function Header() {
                             </svg>
                         </span>
                     </div>
+
                     <span className="fo-col-wh d-block fo-16">Slash</span><span
                         className="fo-20">Pet<span className="las-sp">s</span>
                     </span>
@@ -39,28 +126,28 @@ function Header() {
 
                     <li className="el-m2">
                         {/* el-menu */}
-                        <NavLink className={ myClass } to="/" >
+                        <NavLink className={myClass} to="/" >
                             <i className="fa-solid fa-house">
                             </i>
                         </NavLink>
                     </li>
 
                     <li className="el-m2">
-                        <NavLink className={ myClass } to="/videos">
+                        <NavLink className={myClass} to="/videos">
                             <i className="fa-solid fa-circle-play">
                             </i>
                         </NavLink>
                     </li>
 
                     <div className="el-m2">
-                        <NavLink className={ myClass } to="/people">
+                        <NavLink className={myClass} to="/people">
                             <i className="fa-solid fa-users">
                             </i>
                         </NavLink>
                     </div>
 
                     <li className="el-m2">
-                        <NavLink className={ myClass } to="/settings">
+                        <NavLink className={myClass} to="/settings">
                             <i className="fa-solid fa-gear">
                             </i>
                         </NavLink>
@@ -70,7 +157,8 @@ function Header() {
 
             </nav>
             <div className="nav-rig flex-center po-rel back-col-wh">
-                <div className="menu-side-ic menu-side-ic2 bo-rad" >
+
+                <div className="menu-side-ic menu-side-ic2 bo-rad" onClick={showMainMenuFunc}>
                     <span className="svg-icon svg-icon-1">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z" fill="currentColor"></path>
@@ -78,9 +166,10 @@ function Header() {
                         </svg>
                     </span>
                 </div>
+
                 <div className="nav-right flex-center po-rel">
 
-                    <NavLink className={ myClass } to="/search">
+                    <NavLink className={myClass} to="/search">
                         <div className="sh" id="sh">
                             <span className="svg-icon svg-icon-1">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,13 +183,13 @@ function Header() {
                         </div>
                     </NavLink>
 
-                    <NavLink className={ myClass } to="/posting">
+                    <NavLink className={myClass} to="/posting">
                         <div className="new">
                             <i className="fa-solid fa-plus"></i>
                         </div>
                     </NavLink>
 
-                    <NavLink className={ myClass } to="/messanger">
+                    <NavLink className={myClass} to="/messanger">
                         <div className="mes" >
                             <div className="point bo-rad-haf center-el-vr"></div>
                             <span className="svg-icon svg-icon-1">
@@ -124,12 +213,24 @@ function Header() {
                     </NavLink> */}
 
 
-                    <NavLink className={ myClass } to="/requests">
+                    <NavLink className={myClass} to="/requests">
+                        <div className="icon-menu" id="req" >
+                            <i className="fa-solid fa-user-group"></i>
 
-                        <div className="icon-menu" id="req" ><i className="fa-solid fa-user-group"></i></div>
+                            {
+                                requestsCount > 0 ?
+                                    requestsCount < 10 ?
+                                        <p> {requestsCount} </p>
+                                        :
+                                        <p> +9</p>
+                                    :
+                                    ''
+                            }
+
+                        </div>
                     </NavLink>
 
-                    <NavLink className={ myClass } to="/notifications">
+                    <NavLink className={myClass} to="/notifications">
                         <div className="nt" >
                             <span className="svg-icon svg-icon-1">
                                 <i className="fas fa-bell"></i>

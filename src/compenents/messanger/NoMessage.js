@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import Friends from '../friends/Friends';
 // import { show_new_user_box } from '../../Main'
-import SelectNewUser from './SelectNewUser'
 function NoMessage(props) {
 
     const [slectNewUser, setSlectNewUser] = useState('')
 
     function show_box() {
         document.getElementById("box-new-user-box-c").style.display = 'block';
-        setSlectNewUser(<SelectNewUser res={props.res} />);
+        setSlectNewUser(<Friends />);
     }
     useEffect(() => {
         let boxNewUserBoxC = document.getElementById("box-new-user-box-c");
-        boxNewUserBoxC.addEventListener('click',(e)=>{
-            if (e.target == boxNewUserBoxC ) {
+        boxNewUserBoxC.addEventListener('click', (e) => {
+            if (e.target == boxNewUserBoxC) {
                 boxNewUserBoxC.style.display = 'none';
             }
-            
+
         })
     })
 
@@ -38,8 +38,11 @@ function NoMessage(props) {
                 </div>
             </div>
             {/* ===================== */}
+
             <div id='box-new-user-box-c'>
-                {slectNewUser}
+                <div className='box-new-user-box-content'>
+                    {slectNewUser}
+                </div>
             </div>
 
 

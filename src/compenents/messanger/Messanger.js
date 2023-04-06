@@ -1,40 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import FrindItem from '../friends/FriendItem';
 import Discussion from './Discussion';
 import NoMessage from './NoMessage';
 import Users from './Users';
 import profile from "./../../assets/img/profile.jpg"
+import { useSelector } from 'react-redux';
 
-function Messanger(props) {
+function Messanger() {
 
-    let friends = [
-        { id: '1', name: 'Whiskers 1', type: 'cat', image: `'${profile}'`, status: 1 },
-        { id: '2', name: 'Whiskers 2', type: 'cat', image: `'${profile}'`, status: 0 },
-        { id: '4', name: 'Whiskers 3', type: 'dog', image: null, status: 1 },
-        { id: '7', name: 'Whiskers 4', type: 'dog', image: null, status: 0},
-        { id: '15', name: 'Oscar', type: 'dog', image: null, status: 0 },
-        { id: '3', name: 'Fluffy', type: 'cat', image: `'${profile}'`, status: 1 },
-        { id: '13', name: 'Angel', type: 'dog', image: null, status: 1 },
-        { id: '5', name: 'Smudge', type: 'cat', image: `'${profile}'`, status: 1 },
-        { id: '6', name: 'Zoe or Zoey', type: 'cat', image: `'${profile}'`, status: 1 },
-        { id: '14', name: 'Rocky', type: 'cat', image: null, status: 0 },
-        { id: '8', name: 'Olaa', type: 'dog', image: `'${profile}'`, status: 1 },
-        { id: '9', name: 'Rocky', type: 'cat', image: `'${profile}'`, status: 1 },
-        { id: '10', name: 'Charlie', type: 'cat', image: `'${profile}'`, status: 1 },
-        { id: '11', name: 'Piper', type: 'dog', image: `'${profile}'`, status: 0 },
-    ]
-    
-    const listItems = friends.map((friend) =>
-        <FrindItem key={friend.id} data={friend} />
-    );
+    const [friendsInfo, setFriendsInfo] = useState([]);
+    const friendsData = useSelector(state => state.getFriends);
 
     const { id } = useParams();
+    const [paramId, setParamId] = useState(id);
+    
+    useEffect(() => {
+        if (friendsData.loading === false && friendsData.error === false) {
+            setFriendsInfo(friendsData.friends)
+        }
+    }, [friendsData.friends]);
+
+    const listItems = friendsInfo.map((friend) =>
+        <FrindItem key={friend.user_id} friend={friend} />
+    );
+
     // console.log(id);
     let whatRender = <NoMessage res={listItems} />;
-    if (!(id === undefined || id === null)) {
+    if ( paramId != undefined || paramId!=null){
         whatRender = <>
-            <Discussion />
+            <Discussion userId={paramId} />
         </>;
     }
 
@@ -43,10 +38,9 @@ function Messanger(props) {
             <main className="main-profile main-chat">
                 <h1>Chat</h1>
                 <div className="body-posts body-ch d-flex">
-                    <Users />
+                    <Users setParamId={setParamId} />
                     {/* <!-- ///////////////////// --> */}
                     {whatRender}
-
                 </div>
             </main>
         </div>

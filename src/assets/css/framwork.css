@@ -4,8 +4,12 @@ info-chat
 message-text
 message-box
 bo-rad
-info-message
+info-message scroll
+main-box comm-notic2
 */ 
+.w-full{
+    width: 100% !important;
+}
 .d-flex{
     display: flex;
 }
@@ -452,3 +456,7 @@ info-message
     font-size: 17px;
 }
 /* end components */
+
+.txt-center{
+    text-align: center;
+}

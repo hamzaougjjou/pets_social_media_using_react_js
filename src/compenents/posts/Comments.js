@@ -1,54 +1,151 @@
-import React from 'react'
-import { CommentItemLoading, ReplyCommentItemLoading } from '../loading/Index';
-import profile from "./../../assets/img/profile.jpg"
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux';
+import { mainUrl } from '../../API';
+import { CommentItemLoading } from '../loading/Index';
+import profile from "./../../assets/img/profile.jpg";
 import CommentItem from './comments/CommentItem';
-import ReplyCommentItem from './comments/ReplyCommentItem';
 
-function Comments() {
-    function height_comm(name_id, heit) {
-        // height_comm('comments','662px')
-        if (document.getElementById(name_id).style.height === '0px') {
-            document.getElementById(name_id).style.height = heit;
+function Comments(props) {
+    const post_id = props.postId;
+    const [comments, setComments] = useState([]);
+    const [loadingComments, setLoadingComments] = useState(false);
+    const [errorComments, setErrorComments] = useState(false);
+
+    const authUser = useSelector(state => state.getUser);
+
+
+    const [createCommentLoading, setCreateCommentLoading] = useState(false);
+    const [createCommentError, setCreateCommentError] = useState(false);
+    const [startCreatingComment, setStartCreatingComment] = useState(false);
+    const [lastComments, setLastComments] = useState([]);
+
+    const [x, setX] = useState(false);
+    const contentRef = useRef();
+
+    useEffect(() => { //get all comments for post
+        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+        let token = authInfo.token;
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'multipart/form-data'
+            }
         }
-        else {
-            document.getElementById(name_id).style.height = '0px';
+        async function fetchData() {
+            setLoadingComments(true);
+            await axios.get(`${mainUrl}/post/${post_id}/comments`, config)
+                .then(res => {
+                    console.log(res.data);
+                    setComments(res.data.comments);
+                }).catch(err => {
+                    console.log(err);
+                }).finally(() => {
+                    setLoadingComments(false);
+                })
         }
+        fetchData();
+    }, [x]);
+    let allCommTemplate = comments.map((comment, i) => {
+        const user = { id: 10, name: 'hamza', profile_img: null };
+        return <CommentItem user={user} comment={comment} key={i} />
     }
-    
+    );
+
+    const createComment = async () => { //creact a new commwnt
+        let formData = new FormData();
+        if (contentRef.current.value.trim().length < 1)
+            return false;
+        formData.append("post_id", post_id); //post_id
+        formData.append("content", contentRef.current.value.trim());
+        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+        let token = authInfo.token;
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+        setStartCreatingComment(true)
+        setCreateCommentLoading(true);
+        await axios.post(`${mainUrl}/post/comment/create`, formData, config)
+            .then(res => {
+                console.log(res.data);
+                setCreateCommentError(false);
+                setLastComments([...lastComments, res.data.comment]);
+                contentRef.current.value = "";
+                props.setCommentCount(props.commentCount + 1);
+
+            }).catch(err => {
+                console.log(err);
+                setCreateCommentError(true)
+            }).finally(() => {
+                setCreateCommentLoading(false);
+            })
+    }
+
     return (
-        <div className="write-comm" id="comments" style={ {height:"662px",overflowY:'auto' } }>
+        <div className='write-comm-c'>
             <div className="form d-flex bo-rad">
-                <textarea name="" id="" placeholder="Write a comment..."
+                <textarea ref={contentRef} placeholder="Write a comment..."
                     className="bor-col bo-rad d-block input-shap"></textarea>
                 <div className="emoje"><i className="fa-solid fa-face-smile"></i></div>
                 <label htmlFor="inputTag">
                     <i className="fa-solid fa-camera"></i>
                     <input id="inputTag" type="file" />
                 </label>
-                <button><i className="fa-solid fa-paper-plane"></i></button>
+                <button onClick={createComment}>
+                    <i className="fa-solid fa-paper-plane"></i>
+                </button>
             </div>
-            <div className="comments">
-                
-                <CommentItem />
-                <CommentItem />
-                <ReplyCommentItemLoading />
-                <ReplyCommentItemLoading />
-                <CommentItem />
-                <CommentItem />
-                <ReplyCommentItem />
-                <ReplyCommentItem />
-                <ReplyCommentItem />
-                <CommentItem />
-                <CommentItem />
-                <CommentItem />
-                <ReplyCommentItem />
-                <CommentItem />
-                <CommentItemLoading />
-                <CommentItemLoading />
+            <div className="write-comm" >
 
+                <div className="comments">
+                    {
+                        startCreatingComment ?
+                            createCommentLoading ?
+                                <CommentItemLoading />
+                                :
+                                <>
+                                    {
+                                        lastComments.reverse().map((comment, i) => {
+                                            const user = { id: authUser.user.id, name: authUser.user.name, profile_img: authUser.user.profile_img };
+                                            return <CommentItem user={user} comment={comment} key={i} />
+                                        }
+                                        )
+                                    }
+
+                                </>
+                            :
+                            ""
+
+                    }
+                    {
+                        !errorComments
+                            ?
+                            loadingComments ?
+                                <>
+                                    <CommentItemLoading />
+                                    <CommentItemLoading />
+                                    <CommentItemLoading />
+                                    <CommentItemLoading />
+                                </>
+                                :
+                                comments.length <= 0 ?
+                                    lastComments.length === 0 ?
+                                        <h4 style={{ textAlign: "center" }}>there is no comments for this post</h4>
+                                        :
+                                        ''
+                                    :
+                                    allCommTemplate
+                            :
+                            <h2 style={{ textAlign: "center", color: "red" }}>Somthing went wrong</h2>
+                    }
+                </div>
             </div>
         </div>
+
     )
 }
 
-export default  Comments;
+export default Comments;

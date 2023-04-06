@@ -1,27 +1,91 @@
-import React from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
-import VideoItem from '../posts/videos/VideoItem'
-import {MainPost} from '../posts/Posts'
-
+import axios from 'axios';
+import { mainUrl } from '../../API';
+import { PostItemLoading } from '../loading/Index';
+import Post from '../posts/Post';
 function Posts() {
+    const [posts, setPosts] = useState([]);
+    const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [postsPaginate, setPostsPaginate] = useState(0);
+    const [secondLoading, setSecondLoading] = useState(false);
+    const [postsExists, setPostsExists] = useState(true);
+
+    const SCROLL_BOX_MIN_HEIGHT = 20
+    // const [scrollBoxHeight, setScrollBoxHeight] = useState(SCROLL_BOX_MIN_HEIGHT);
+    const scrollHostRef = useRef();
+
+    useEffect(() => {
+        const getPostsInfo = async () => {
+            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+            let token = authInfo.token;
+            let config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+            if (postsExists)
+                await axios.get(`${mainUrl}/profile/posts/${postsPaginate}`, config)
+                    .then(info => {
+                        if (info.data.success === true) {
+                            // if (info.data.posts.lenght === 0) {
+                            //     setPostsExists(false)
+                            //     return false;
+                            // }
+                            // let newPosts = [...posts, ...info.data.posts];
+                            console.log(info.data.data);
+                            setPosts(info.data.data.posts);
+                            setUser(info.data.data.user);
+                        }
+                        setLoading(false);
+                        setSecondLoading(true);
+                    }).catch(err => {
+                        console.log(err);
+                    })
+        }
+        getPostsInfo();
+    }, [postsPaginate]);
+
+    window.addEventListener('scroll', () => {
+
+        // ============================================
+        // console.log(document.body);
+        // if (window.scrollY < document.body.offsetHeight + 100) {
+        //     // setPostsPaginate(postsPaginate + 1);
+        //     console.log(" b => ");
+        // }
+        // console.log(" a => ", window.scrollY);
+        // console.log(" b => " , );
+
+    });
+
+    // let temp = "";
+
+    // for (let i = 0; i < posts.length; i++) {
+    //     const post = posts[i];
+    //     temp += <Post key={i} postType={post.type} post={post} />;
+    // }
+
     return (
-        <div className="body-posts d-flex po-rel">
+        // <div className="body-posts d-flex po-rel" style={{ maxWidth: "100%" }}>
+        <div className="body-posts d-flex po-relx" style={{ maxWidth: "100%" }}>
             <div className="left-post-side left-post-side1 main-box">
                 <NavLink to="/posting">
                     <button className="new-post button-ok w-full">New Post</button>
                 </NavLink>
                 <ul className="posts-option">
                     <li>
-                    <span className="active-pos">
-                        <span className="svg-icon svg-icon-2 m-0">
-                            <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <rect opacity="0.5" x="7" y="2" width="14" height="16" rx="3"
-                                    fill="currentColor"></rect>
-                                <rect x="3" y="6" width="14" height="16" rx="3" fill="currentColor"></rect>
-                            </svg>
-                        </span>All Posts
-                    </span></li>
+                        <span className="active-pos">
+                            <span className="svg-icon svg-icon-2 m-0">
+                                <svg width="21" height="21" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="7" y="2" width="14" height="16" rx="3"
+                                        fill="currentColor"></rect>
+                                    <rect x="3" y="6" width="14" height="16" rx="3" fill="currentColor"></rect>
+                                </svg>
+                            </span>All Posts
+                        </span></li>
                     <li>
                         <span>
                             <span className="svg-icon svg-icon-3">
@@ -89,21 +153,35 @@ function Posts() {
                 </ul>
             </div>
 
-            <div className="right-post-side main-box">
-                <div className="container-pos">
-                    <h3>Trip Reminder. Thank you for flying with us!</h3>
-                    <MainPost />
-                    <VideoItem />
-                    <VideoItem />
-                    <MainPost />
-                    <MainPost />
-                    <VideoItem />
-                    <MainPost />
-                    <VideoItem />
-                </div>
+            {/* <div className="right-post-side main-box" style={{ maxWidth: "100%" }}> */}
+            <div className="container-pos" style={{ width: "100%" }}>
+                {/* <div className="container-pos" ref={scrollHostRef}> */}
+                <h3>Trip Reminder. Thank you for flying with us!</h3>
+                <section style={{ maxWidth: "100% !importand" }}>
+                    {
+                        loading ?
+                            <><PostItemLoading /></>
+                            :
+                            <>
+                                {posts.map((post, i) => {
+                                    user["time"] = post.time;
+                                    return <Post key={i} postType={post.type} post={post} user={user} style={{ maxWidth: "100%" }} />
+                                })
+                                }
+                            </>
+
+                    }
+                </section>
+
+
+                {/* {
+                        secondLoading ? <><PostItemLoading /></> : ""
+                    } */}
 
             </div>
+
         </div>
+        // </div>
     )
 }
 
