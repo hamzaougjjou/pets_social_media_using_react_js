@@ -63,7 +63,8 @@ function Post(props) {
             .then(res => {
                 // console.log("like info ", res.data);
             }).catch(err => {
-                // console.error("Ooops Somthing went wrong ..");
+                // console.log(err);
+                console.error("Ooops Somthing went wrong ..");
             })
 
     }

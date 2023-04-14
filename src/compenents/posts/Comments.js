@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { mainUrl } from '../../API';
 import { CommentItemLoading } from '../loading/Index';
-import profile from "./../../assets/img/profile.jpg";
+// import profile from "./../../assets/img/profile.jpg";
 import CommentItem from './comments/CommentItem';
 
 function Comments(props) {
@@ -47,7 +47,7 @@ function Comments(props) {
         fetchData();
     }, [x]);
     let allCommTemplate = comments.map((comment, i) => {
-        const user = { id: 10, name: 'hamza', profile_img: null };
+        const user = { id:comment.user_id, name:comment.name , profile_img:comment.profile_img };
         return <CommentItem user={user} comment={comment} key={i} />
     }
     );

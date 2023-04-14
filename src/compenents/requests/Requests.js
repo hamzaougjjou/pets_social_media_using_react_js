@@ -23,6 +23,7 @@ function Requests() {
             }
             await axios.get(mainUrl + "/friends/requests/all", config)
                 .then(info => {
+                    console.log(info.data);
                     if (info.data.success === true) {
                         setRequests(info.data.requests);
                         if (info.data.requests.length === 0) {
@@ -52,14 +53,7 @@ function Requests() {
                     {/* <li></li> */}
 
                     {
-                        !loading ?
-                            !requestsExists ?
-                                <ReqNotExists />
-                                :
-                                requests.map((request, i) => {
-                                    return <RequestItem key={i} data={request} />;
-                                })
-                            :
+                        loading ?
                             <>
                                 <RequestItemLoading />
                                 <RequestItemLoading />
@@ -67,7 +61,13 @@ function Requests() {
                                 <RequestItemLoading />
                                 <RequestItemLoading />
                             </>
-
+                            :
+                            requests.length === 0 ?
+                                <ReqNotExists />
+                                :
+                                requests.map((request, i) => {
+                                    return <RequestItem key={i} data={request} />;
+                                })
                     }
 
 

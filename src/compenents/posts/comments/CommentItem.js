@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { mainUrl } from '../../../API';
+import { mainUrl, storageUrl } from '../../../API';
 import { ReplyCommentItemLoading } from '../../loading/Index';
 import profile from "./../../../assets/img/profile.jpg"
 import ReplyCommentItem from './ReplyCommentItem';
@@ -79,12 +79,14 @@ function CommentItem(props) {
     }
     );
 
+    let profile_img = props.user.profile_img === null ? profile : storageUrl + "/" + props.user.profile_img;
+
     return (
         <>
             <div className="com d-flex">
-                <img src={profile} alt="" className="image-fr bo-rad" />
+                <img src={profile_img} alt="" className="image-fr bo-rad" />
                 <div className="text-com fo-pos bo-rad">
-                    <Link to={`user/${props.user.id}`}>
+                    <Link to={`/user/${props.user.id}`}>
                         <div className="name-com fo-name-per">
                             {props.user.name}
                         </div>

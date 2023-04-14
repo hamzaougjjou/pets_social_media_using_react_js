@@ -26,7 +26,7 @@ write-comm
 .body-chat-mess
 messenger-box scroll
 header
-vv
+post-tem-container
 earch-right
 aside-right
 peaple-search-c
@@ -2384,16 +2384,19 @@ main {
 .w-full {
     width: 100% !important;
 }
-.hr{
+
+.hr {
     background-color: #5e62782c;
     width: 100%;
     margin: 10px auto;
     height: 1px;
     display: block;
 }
+
 .post-tem-container {
     display: grid;
-    grid-template-columns: 1fr 450px;
+    width: 100% !important;
+    grid-template-columns: 1fr minmax(auto, 450px);
     gap: 20px;
     align-items: flex-start;
 }
@@ -2489,6 +2492,12 @@ main {
     margin: 0 !important;
     padding: 0 0 0 20px !important;
     width: 70% !important;
+}
+
+@media (max-width:1000px) {
+    .post-tem-container {
+        display: block;
+    }
 }
 
 @media (max-width:1200px) {

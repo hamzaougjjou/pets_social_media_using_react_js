@@ -1,11 +1,10 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
 
 
-function Page2( props ) {
+function Page2( {initState , setInitState , data} ) {
 
-  const regState = useSelector(state => state.RegisterReducer);
-  console.log(props.data);
+  console.log(data);
+  console.log("page 2 " , initState );
   const updateBirthDay = (e)=>{
     
   }
@@ -15,7 +14,7 @@ function Page2( props ) {
       <label>Type : </label>
       <select >
       {
-        props.data.breeds.map( (breed , index)=> <option key={index} value={breed.id} > { breed.name } </option> )
+        data.breeds.map( (breed , index)=> <option key={index} value={breed.id} > { breed.name } </option> )
       }
       </select>
 
@@ -28,7 +27,7 @@ function Page2( props ) {
       <label>Birthday : </label>
       <input type="date" name="birthday"
         placeholder="dd-mm-yyyy"
-        max="2030-12-31" value={ regState.birthday } onChange={ updateBirthDay }></input>
+        max="2030-12-31"  onChange={ updateBirthDay }></input>
     </div>
 
   );

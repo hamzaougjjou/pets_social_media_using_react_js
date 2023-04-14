@@ -1,13 +1,69 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { NotificationItemLoading } from '../loading/Index'
-import BirthDayNotice from './BirthDayNotice'
-import LikeNotic from './LikeNotic'
-import MentionNotic from './MentionNotic'
-import NewPostNotic from './NewPostNotic'
-import ReplayCommentNotic from './ReplayCommentNotic'
+import { mainUrl } from "./../../API";
+import NotificationItem from './NotificationItem'
 
 function Notifications() {
+
+    const [notifications, setNotifications] = useState([]);
+    const [loadingNotifications, setLoadingNotifications] = useState(true);
+    //get all notifications 
+    useEffect(() => { //get requests count
+        const getAllNotic = async () => {
+            setLoadingNotifications(true);
+            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+            let token = authInfo.token;
+
+            let config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+
+            await axios.get(mainUrl + '/notifications', config)
+                .then(info => {
+                    console.log(info.data);
+                    setNotifications(info.data.notifications);
+                }).catch(err => {
+                    console.log(err);
+                }).finally(() => {
+                    setLoadingNotifications(false);
+                })
+        }
+        getAllNotic();
+
+    }, [])
+    let allNoticTemplate = '';
+
+    //set notification as read
+    const readNotice = async () => {
+        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
+        let token = authInfo.token;
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }
+        await axios.put(mainUrl + '/notifications/read', null, config)
+            .then(info => {
+                console.log(info.data);
+            }).catch(err => {
+                console.log(err);
+            })
+    }
+
+
+    if (!loadingNotifications) {
+
+        readNotice(); //set notification as read
+
+        allNoticTemplate = notifications.map((notic, i) => {
+            return <NotificationItem key={i} notic={notic} />;
+        });
+    }
+
+
     return (
         <>
             <div className="notices-box back-col-wh" id="notices-box">
@@ -18,17 +74,25 @@ function Notifications() {
                 </div>
                 <div className="body-notices">
                     <div className="body-notic-bo">
+                        {
+                            !loadingNotifications ?
+                                allNoticTemplate
+                                :
+                                <>
+                                    <NotificationItemLoading />
+                                    <NotificationItemLoading />
+                                    <NotificationItemLoading />
+                                    <NotificationItemLoading />
+                                    <NotificationItemLoading />
+                                    <NotificationItemLoading />
+                                </>
+                        }
 
-                        <NotificationItemLoading />
-                        <NotificationItemLoading />
-                        <NotificationItemLoading />
-
-                        <NavLink to='./home' style={{ color: 'black' }}>
+                        {/* <NavLink to='./home' style={{ color: 'black' }}>
                             <NewPostNotic />
                         </NavLink>
 
                         <NotificationItemLoading />
-
 
                         <NavLink to='./home' style={{ color: 'black' }}>
                             <LikeNotic />
@@ -63,7 +127,8 @@ function Notifications() {
                         </NavLink>
                         <NavLink to='./home' style={{ color: 'black' }}>
                             <NewPostNotic />
-                        </NavLink>
+                        </NavLink> */}
+
                     </div>
                 </div>
             </div>

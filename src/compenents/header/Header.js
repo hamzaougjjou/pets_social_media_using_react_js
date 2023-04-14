@@ -11,16 +11,16 @@ import Profile from './Profile';
 function Header(props) {
     const navigate = useNavigate();
     //check if user loged in
-    const refreshLoginInfo = useSelector(state => state.refreshLogin);
-    if (!refreshLoginInfo.loading && refreshLoginInfo.error) {
-        navigate('/auth');
-    }
+    // const refreshLoginInfo = useSelector(state => state.refreshLogin);
+    // if (!refreshLoginInfo.loading && refreshLoginInfo.error) {
+    //     navigate('/auth');
+    // }
 
     // get current user info
     const dispach = useDispatch();
     useEffect(() => {
         getCurrentUser(dispach);
-        refreshLogin(dispach);
+        // refreshLogin(dispach);
         getFriendsFun(dispach);
     }, []);
 

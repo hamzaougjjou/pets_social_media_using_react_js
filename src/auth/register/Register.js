@@ -11,10 +11,26 @@ import { mainUrl } from './../../API';
 
 function Register() {
 
+    const [initState, setInitState] = useState({
+        'name': null,
+        'email': null,
+        'password': null,
+        'confirm_password': null,
+        'breed_id': null,
+        'gender': null,
+        'birthday': null,
+        'adrress': null,
+        'profile_img': null,
+        'cover_img': null
+    });
+
+    console.log(initState);
+
     let goBackArrow = useRef();
     const [breeds, setBreeds] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
-    let [whatRender, setWhatRender] = useState(<Page1 />);
+    let [whatRender, setWhatRender] = useState(<Page1 initState={initState} setInitState={setInitState}/>);
+    
     let [btnContText, setBtnContText] = useState(['Continue Registration', '']); //[button text , btn redirect to ]
 
     let registerHander = (e) => {
@@ -37,17 +53,17 @@ function Register() {
     useEffect(() => {
         switch (pageNumber) {
             case 1:
-                setWhatRender(<Page1 />)
+                setWhatRender(<Page1 initState={initState} setInitState={setInitState} />)
                 break;
             case 2:
-                setWhatRender(<Page2 data={breeds} />)
+                setWhatRender(<Page2 data={breeds} initState={initState} setInitState={setInitState}/>)
                 break;
             case 3:
-                setWhatRender(<Page3 />)
+                setWhatRender(<Page3 initState={initState} setInitState={setInitState}/>)
                 setBtnContText(['Complete', '/auth/virify-email'])
                 break;
             default:
-                setWhatRender(<Page1 />)
+                setWhatRender(<Page1 initState={initState} setInitState={setInitState}/>)
                 break;
         }
 
@@ -60,9 +76,9 @@ function Register() {
         else
             goBackArrow.current.style.opacity = "1";
     })
-    
+
     // get all breeds from back end
-    useEffect( ()=>{
+    useEffect(() => {
         const getAnimalsBredds = async () => {
             await axios.get(mainUrl + "/animales/breeds")
                 .then(info => {
@@ -70,7 +86,7 @@ function Register() {
                 })
         }
         getAnimalsBredds();
-    },[]);
+    }, []);
 
     // const regState = useSelector( state => state.RegisterReducer );
 
@@ -78,7 +94,6 @@ function Register() {
         <div className="container container-input d-flex po-rel">
             <div className="left-sign-in flex-center">
                 <div className="contain-input">
-
                     <span onClick={goBackHandler} ref={goBackArrow} style={{ cursor: "pointer", opacity: "0" }} className="svg-icon svg-icon-1 m-0">
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">

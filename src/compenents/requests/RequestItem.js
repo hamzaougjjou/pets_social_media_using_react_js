@@ -27,8 +27,9 @@ function RequestItem(props) {
             .then(info => {
                 console.log(info.data);
                 setAcceptLoading(false);
-            }).catch(() => {
+            }).catch((err) => {
                 console.log("error");
+                console.log(err);
                 setAcceptLoading(false);
             });
     }

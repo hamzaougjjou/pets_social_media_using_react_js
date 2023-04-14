@@ -39,6 +39,7 @@ import { GroupRequests } from './compenents/group-details/Requests';
 import { Members as GroupMembers} from './compenents/group-details/Members';
 import CreatePost from './compenents/group-details/CreatePost';
 import PostItem from './compenents/post/PostItem';
+import User from './compenents/user/User';
 
 export default class NavPages extends Component {
     render() {
@@ -56,6 +57,15 @@ export default class NavPages extends Component {
                         <Route exact path='friends' element={<Friends />} ></Route>
                         <Route exact path='groups' element={<Groups />} ></Route>
                         <Route exact path='files' element={<Files />} ></Route>
+                    </Route>
+                    <Route path="/user/:id/*" element={<User />}>
+                        {/* <Route exact path='./*' element={<NotFound />} ></Route>
+                        <Route exact path='' element={<Posts />} ></Route>
+                        <Route exact path='about' element={<About />} ></Route>
+                        <Route exact path='posts' element={<Posts />} ></Route>
+                        <Route exact path='friends' element={<Friends />} ></Route>
+                        <Route exact path='groups' element={<Groups />} ></Route>
+                        <Route exact path='files' element={<Files />} ></Route> */}
                     </Route>
                     <Route exact path='/videos' element={<Videos />} ></Route>
                     <Route exact path='/settings' element={<Settings />} ></Route>

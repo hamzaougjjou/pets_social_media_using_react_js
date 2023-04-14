@@ -31,15 +31,15 @@ function App() {
   return (
 
     <BrowserRouter>
-    
+
       {/* {isOnline ? (
         <h1 className='online'>You Are Online</h1>
       ) : (
         <Connection />
       )} */}
-      
+
       <NavPages />
-      
+
     </BrowserRouter>
 
 
