@@ -24,6 +24,9 @@
     masseg-puple4
     opacity
     req-list
+    body-ch 
+    scroll
+    image
     */
 
 }
@@ -1137,8 +1140,8 @@ li .date-req span {
 .body-chat-container{
     height: 100%;
     overflow: scroll !important;
-    background-color: #132c24d5;
-    background-image: url("./../img/hearts_bg.svg");
+    /* background-color: #d6deef; */
+    /* background-image: url("./../img/hearts_bg.svg"); */
     background-size: contain;
     background-repeat: repeat;
     background-position: center center;
@@ -1147,7 +1150,7 @@ li .date-req span {
 .body-chat {
     height: 80%;
     overflow-y: scroll;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     scroll-behavior: smooth;
     padding: 15px;
     position: absolute;

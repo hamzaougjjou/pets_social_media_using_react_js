@@ -1,0 +1,44 @@
+/* /////////////////MESSANGER /////////////////////////////////////// */
+
+@media (min-width:800px) {
+    .messanger-header-friends {
+        display: none !important;
+    }
+
+    .no-message-co {
+        display: block !important;
+    }
+}
+
+@media (max-width:800px) {
+    .messanger {
+        /* background-color: rgb(72, 255, 0); */
+        width: 100%;
+    }
+
+    .main-chat {
+        /* background-color: red; */
+        width: 100%;
+    }
+
+    .no-message-co {
+        display: none !important;
+    }
+
+    .messanger-header-friends {
+        display: flex !important;
+    }
+
+    .chats {
+        width: 100% !important;
+        /* padding: 40px; */
+        /* background-color: dodgerblue !important; */
+    }
+
+    .discussion {
+        width: 100% !important;
+        /* background-color: green !important; */
+    }
+}
+
+/* /////////////////MESSANGER /////////////////////////////////////// */

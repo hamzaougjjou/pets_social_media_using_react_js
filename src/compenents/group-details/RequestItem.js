@@ -1,11 +1,16 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { mainUrl, storageUrl } from '../../API';
 import profile from "./../../assets/img/profile.jpg"
 
 function RequestItem({ request, groupId }) {
-
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     let profile_img = profile;
     if (request.profile_img != null) {
         profile_img = `${storageUrl}/${request.profile_img}`;
@@ -18,42 +23,40 @@ function RequestItem({ request, groupId }) {
     let acceptReqFun = async () => {
         //get auth info
         setAcceptLoading(true);
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
-        await axios.put(`${mainUrl}/group/${groupId}/request/accept`, { "user_id": request.user_id }, config)
-            .then(info => {
-                console.log(info.data);
-                setAcceptLoading(false);
-                setIsAccepted(true)
-            }).catch(() => {
-                setAcceptLoading(false);
-                alert("Somthing went wrong");
-            });
+        if (!loadingToken)
+            await axios.put(`${mainUrl}/group/${groupId}/request/accept`, { "user_id": request.user_id }, config)
+                .then(info => {
+                    console.log(info.data);
+                    setAcceptLoading(false);
+                    setIsAccepted(true)
+                }).catch(() => {
+                    setAcceptLoading(false);
+                    alert("Somthing went wrong");
+                });
     }
     const deleteReqFun = async () => {
         //get auth info
         setDeleteLoading(true);
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
-        await axios.post(`${mainUrl}/group/${groupId}/request/delete`, { "user_id": request.user_id }, config)
-            .then(info => {
-                console.log(info.data);
-                setDeleteLoading(false);
-                setIsAccepted(true);
-            }).catch(() => {
-                setDeleteLoading(false);
-                alert("Somthing went wrong");
-            });
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/group/${groupId}/request/delete`, { "user_id": request.user_id }, config)
+                .then(info => {
+                    console.log(info.data);
+                    setDeleteLoading(false);
+                    setIsAccepted(true);
+                }).catch(() => {
+                    setDeleteLoading(false);
+                    alert("Somthing went wrong");
+                });
     }
     return (
         <>

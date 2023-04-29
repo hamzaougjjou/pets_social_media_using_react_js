@@ -1,11 +1,18 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { mainUrl, storageUrl } from '../../API';
 import { GroupDetailsHeaderLoading } from '../loading/Index';
 import group from "./../../assets/img/group.jpg";
 // Hamza ougjjou img
 function GroupDetailsHeader({ groupId, groupInfoLoading, groupInfo, joined, setJoined }) {
+
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
 
     const [joinGroupLoading, setJoinGroupLoading] = useState(false);
     const [leaveGroupLoading, setLeaveGroupLoading] = useState(false);
@@ -23,45 +30,42 @@ function GroupDetailsHeader({ groupId, groupInfoLoading, groupInfo, joined, setJ
     //join and leave group logic
 
     const joinGroupFunc = async () => {
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
         setJoinGroupLoading(true);
-        await axios.post(`${mainUrl}/group/${groupId}/join`, null, config)
-            .then(info => {
-                console.log(info.data);
-                if (info.data.success) {
-                    setJoined(0);
-                }
-            }).catch(err => {
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/group/${groupId}/join`, null, config)
+                .then(info => {
+                    console.log(info.data);
+                    if (info.data.success) {
+                        setJoined(0);
+                    }
+                }).catch(err => {
 
-            }).finally(() => {
-                setJoinGroupLoading(false)
-            })
+                }).finally(() => {
+                    setJoinGroupLoading(false)
+                })
     }
     const leaveGroupBackFunc = async () => {
-        ///group/{
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
         setLeaveGroupLoading(true);
-        await axios.post(`${mainUrl}/group/${groupId}/leave`, null, config)
-            .then(info => {
-                setShowPopUP(false);
-                setJoined(-1);
-            }).catch(err => {
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/group/${groupId}/leave`, null, config)
+                .then(info => {
+                    setShowPopUP(false);
+                    setJoined(-1);
+                }).catch(err => {
 
-            }).finally(() => {
-                setLeaveGroupLoading(false)
-            })
+                }).finally(() => {
+                    setLeaveGroupLoading(false)
+                })
     } //leave a group from db func
 
     const leaveGroupUiFunc = () => {
@@ -78,43 +82,41 @@ function GroupDetailsHeader({ groupId, groupInfoLoading, groupInfo, joined, setJ
     //get join group requests requests count
     const getReqCountFun = async () => {
         setReqCountLoading(true);
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
         setJoinGroupLoading(true);
-        await axios.get(`${mainUrl}/group/${groupId}/requests/count`, config)
-            .then(info => {
-                setReqCount(info.data.count);
-            }).catch(err => {
-                console.log(err);
-                setReqCount(-1);
-            }).finally(() => {
-                setReqCountLoading(false);
-            })
+        if (!loadingToken)
+            await axios.get(`${mainUrl}/group/${groupId}/requests/count`, config)
+                .then(info => {
+                    setReqCount(info.data.count);
+                }).catch(err => {
+                    console.log(err);
+                    setReqCount(-1);
+                }).finally(() => {
+                    setReqCountLoading(false);
+                })
     }
     const getPostsReqCountFun = async () => {
         setPostsReqCountLoading(true);
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
         setJoinGroupLoading(true);
-        await axios.get(`${mainUrl}/group/${groupId}/posts/requests/count`, config)
-            .then(info => {
-                setPostsReqCount(info.data.count);
-            }).catch(err => {
-                console.log(err);
-                setPostsReqCount(-1);
-            }).finally(() => {
-                setPostsReqCountLoading(false);
-            })
+        if (!loadingToken)
+            await axios.get(`${mainUrl}/group/${groupId}/posts/requests/count`, config)
+                .then(info => {
+                    setPostsReqCount(info.data.count);
+                }).catch(err => {
+                    console.log(err);
+                    setPostsReqCount(-1);
+                }).finally(() => {
+                    setPostsReqCountLoading(false);
+                })
     }
 
     useEffect(() => {

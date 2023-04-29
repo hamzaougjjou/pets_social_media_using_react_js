@@ -1,28 +1,59 @@
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
+
 import { mainUrl } from '../../API';
-import { getCurrentUser, getFriendsFun, refreshLogin } from '../../redux/api';
+// import { getCurrentUser, getFriendsFun } from '../redux/api';
 import Profile from './Profile';
 
+import { getUser, startGetUser, getUserError } from "../../redux/reducers/UserReducer"
+import { getFirends, startGetFirends } from "../../redux/reducers/FriendsSlice";
+import Logic from './Logic';
 
 function Header(props) {
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const navigate = useNavigate();
-    //check if user loged in
-    // const refreshLoginInfo = useSelector(state => state.refreshLogin);
-    // if (!refreshLoginInfo.loading && refreshLoginInfo.error) {
-    //     navigate('/auth');
-    // }
+
+    let noticCount = useSelector(state => state.noticCount.count );
+
+
+    if (!loadingToken && refreshLogin.error) {
+        navigate('/auth');
+    }
 
     // get current user info
     const dispach = useDispatch();
     useEffect(() => {
+
+        //get loged in user informations
+        const getCurrentUser = async (dispatch) => {
+            dispatch(startGetUser());
+            if (refreshLogin.error) {
+                dispatch(getUserError());
+                return false;
+            }
+            let config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+            await axios.get(`${mainUrl}/profile/info`, config)
+                .then(info => {
+                    dispatch(getUser(info.data.user[0]))
+                }).catch(err => {
+                    dispatch(getUserError())
+                });
+        }
         getCurrentUser(dispach);
-        // refreshLogin(dispach);
-        getFriendsFun(dispach);
     }, []);
+
+
 
 
     // const { token, loading } = useSelector(state => state.refreshLogin);
@@ -36,10 +67,6 @@ function Header(props) {
 
     useEffect(() => { //get requests count
         const getRequestsCount = async () => {
-
-            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-            let token = authInfo.token;
-
             let config = {
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -47,18 +74,19 @@ function Header(props) {
             }
             if (!loadingRequestsCount) {
                 setLoadingRequestsCount(true);
-                await axios.get(mainUrl + '/friends/requests/count', config)
-                    .then(info => {
-                        // console.log("info => " , info );
-                        let x = info.data.requests_count;
-                        if (x != requestsCount)
-                            setRequestsCount(x);
-                        setLoadingRequestsCount(false)
-                    }).catch(() => {
-                        setRequestsCount(0);
-                        setLoadingRequestsCount(false)
-                    }
-                    )
+                if (!loadingToken)
+                    await axios.get(mainUrl + '/friends/requests/count', config)
+                        .then(info => {
+                            // console.log("info => " , info );
+                            let x = info.data.requests_count;
+                            if (x != requestsCount)
+                                setRequestsCount(x);
+                            setLoadingRequestsCount(false)
+                        }).catch((err) => {
+                            setRequestsCount(0);
+                            setLoadingRequestsCount(false)
+                        }
+                        )
             }
         }
         getRequestsCount();
@@ -72,33 +100,18 @@ function Header(props) {
     }, [])
 
 
-    useEffect(() => {
-        const refreshLastLogin = async () => {
-            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-            let token = authInfo.token;
-            let config = {
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            }
-            await axios.put(mainUrl + '/login/last/update', null, config)
-                .then(info => {
-                    // console.log(info.data);
-                }).catch(err => {
-                    // console.log(err);
-                })
-        }
-        setInterval(() => {
-            refreshLastLogin();
-        }, 15000);
 
-    }, []);
+
+    // ===============================================
 
     const showMainMenuFunc = () => {
         props.leftAsideShowState.setLeftAsideShow(!props.leftAsideShowState.leftAsideShow);
     }
     return (
         <header className="header d-flex ali-center pad-top-2rem pad-bot-2rem bor-bot back-col-wh">
+
+            <Logic />
+
             {/* <!-- ////////////////////////// --> */}
             <div className="father-logo flex-center">
                 <div className="logo flex-center">
@@ -231,11 +244,21 @@ function Header(props) {
                     </NavLink>
 
                     <NavLink className={myClass} to="/notifications">
-                        <div className="nt" >
-                            <span className="svg-icon svg-icon-1">
-                                <i className="fas fa-bell"></i>
-                            </span>
+
+                        <div className="icon-menu" id="req" >
+                            <i className="fas fa-bell"></i>
+                            {
+                                noticCount > 0 ?
+                                    noticCount < 10 ?
+                                        <p> {noticCount} </p>
+                                        :
+                                        <p> +9</p>
+                                    :
+                                    ''
+                            }
+
                         </div>
+
                     </NavLink>
 
                 </div>
@@ -248,5 +271,6 @@ function Header(props) {
 
 } // header class 
 
-
 export default Header;
+
+// export { getFriendsFun , getCurrentUser } ;

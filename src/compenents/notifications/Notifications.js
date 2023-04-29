@@ -1,35 +1,43 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { NotificationItemLoading } from '../loading/Index'
 import { mainUrl } from "./../../API";
 import NotificationItem from './NotificationItem'
 
-function Notifications() {
+function Notifications(props) {
 
+    const dispatch = useDispatch(); 
+
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [notifications, setNotifications] = useState([]);
     const [loadingNotifications, setLoadingNotifications] = useState(true);
     //get all notifications 
     useEffect(() => { //get requests count
         const getAllNotic = async () => {
             setLoadingNotifications(true);
-            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-            let token = authInfo.token;
 
             let config = {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
             }
+            if (!loadingToken)
+                await axios.get(mainUrl + '/notifications', config)
+                    .then(info => {
+                        // console.log(info.data);
+                        dispatch( {type : 'RESRT' } );
+                        setNotifications(info.data.notifications);
 
-            await axios.get(mainUrl + '/notifications', config)
-                .then(info => {
-                    console.log(info.data);
-                    setNotifications(info.data.notifications);
-                }).catch(err => {
-                    console.log(err);
-                }).finally(() => {
-                    setLoadingNotifications(false);
-                })
+                    }).catch(err => {
+                        console.log(err);
+                    }).finally(() => {
+                        setLoadingNotifications(false);
+                    })
         }
         getAllNotic();
 
@@ -38,19 +46,19 @@ function Notifications() {
 
     //set notification as read
     const readNotice = async () => {
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
+
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
-        await axios.put(mainUrl + '/notifications/read', null, config)
-            .then(info => {
-                console.log(info.data);
-            }).catch(err => {
-                console.log(err);
-            })
+        if (!loadingToken)
+            await axios.put(mainUrl + '/notifications/read', null, config)
+                .then(info => {
+                    // console.log(info.data);
+                }).catch(err => {
+                    console.log(err);
+                })
     }
 
 

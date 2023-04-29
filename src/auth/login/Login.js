@@ -47,7 +47,7 @@ function Login() {
             .then(data => {
                 setLoading(false);
                 if (data.success === true) {
-                    body['token'] = data.token;
+                   // body['token'] = data.token;
                     localStorage.setItem('authInfo', JSON.stringify(body));
                     navigate('/');
                 }

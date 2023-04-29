@@ -4,8 +4,14 @@ import GroupHeader from './GroupHeader';
 import { GroupItemLoading } from '../loading/Index';
 import { mainUrl } from '../../API';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function MainGroups() {
+  // =============AUTH================
+  let refreshLogin = useSelector(state => state.refreshLogin);
+  let token = refreshLogin.token;
+  let loadingToken = refreshLogin.loading;
+  // =============================
 
   const [loadingGroups, setLoadingGroups] = useState(false);
   const [groups, setGroups] = useState([]);
@@ -14,28 +20,28 @@ function MainGroups() {
 
   useEffect(() => {
     const getGroups = async () => {
-      let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-      let token = authInfo.token;
+
       let config = {
         headers: {
           'Authorization': 'Bearer ' + token
         }
       }
       setLoadingGroups(true);
-      await axios.get( `${mainUrl}/groups/${start}/${searchQuery}`, config)
-        .then(info => {
-          console.log(info.data);
-          setGroups(info.data.groups);
-        }).catch(err => {
-          console.log(err);
-        }).finally(() => {
-          setLoadingGroups(false)
-        })
+      if (!loadingToken)
+        await axios.get(`${mainUrl}/groups/${start}/${searchQuery}`, config)
+          .then(info => {
+            // console.log(info.data);
+            setGroups(info.data.groups);
+          }).catch(err => {
+            console.log(err);
+          }).finally(() => {
+            setLoadingGroups(false)
+          })
     }
 
     getGroups();
 
-  }, [ searchQuery ])
+  }, [searchQuery])
 
   return (
     <div className="body-posts d-flex body2 body">
@@ -53,19 +59,19 @@ function MainGroups() {
               </>
               :
               groups.length > 0 ?
-              <>
-                {
+                <>
+                  {
 
-                  groups.map((group, i) => {
-                    return <GroupItem group={group} key={i} />
-                  })
+                    groups.map((group, i) => {
+                      return <GroupItem group={group} key={i} />
+                    })
 
-                }
-              </>
-              :
-              <>
-                <h3>Nothing to show</h3>
-              </>
+                  }
+                </>
+                :
+                <>
+                  <h3>Nothing to show</h3>
+                </>
           }
 
         </div>

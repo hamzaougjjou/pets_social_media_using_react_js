@@ -10,53 +10,56 @@ import SimplePostHeader from '../posts/SimplePostHeader';
 import TextPost from '../posts/TextPost';
 
 function PostItem() {
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [commentCount, setCommentCount] = useState(null);
     const [postContent, setPostContent] = useState('');
     const [postInfo, setPostInfo] = useState({});
     const [loading, setLoading] = useState(true);
     const [likesCount, setLikesCount] = useState(null);
     const [postLiked, setPostLiked] = useState(false);
-    // const { token } = useSelector(state => state.refreshLogin);
-
+    
     const { id } = useParams();
 
     //get post information from back end 
     useEffect(() => {
         const getPostInfo = async () => {
             setLoading(true);
-            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-            let token = authInfo.token;
             let config = {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
             }
-            await axios.get(`${mainUrl}/post/${id}`, config)
-                .then(res => {
-                    console.log(res.data);
-                    setPostInfo({
-                        postType: res.data.post.post_type,
-                        post: res.data.post,
-                        user: {
-                            id: res.data.post.user_id,
-                            name: res.data.post.name,
-                            profile_img: res.data.post.profile_img,
-                            created_at: res.data.post.created_at,
-                            time: res.data.post.time
-                        }
-                    });
-                    setLikesCount(res.data.post.likes_count);
-                    setCommentCount(res.data.post.comments_count);
-                    if (res.data.post.liked === 1 || res.data.post.liked === true)
-                        setPostLiked(true)
+            if (!loadingToken)
+                await axios.get(`${mainUrl}/post/${id}`, config)
+                    .then(res => {
+                        console.log(res.data);
+                        setPostInfo({
+                            postType: res.data.post.post_type,
+                            post: res.data.post,
+                            user: {
+                                id: res.data.post.user_id,
+                                name: res.data.post.name,
+                                profile_img: res.data.post.profile_img,
+                                created_at: res.data.post.created_at,
+                                time: res.data.post.time
+                            }
+                        });
+                        setLikesCount(res.data.post.likes_count);
+                        setCommentCount(res.data.post.comments_count);
+                        if (res.data.post.liked === 1 || res.data.post.liked === true)
+                            setPostLiked(true)
 
-                }).catch(err => {
-                    console.error(err);
-                    console.error("Ooops Somthing went wrong ..");
-                }).
-                finally(() => {
-                    setLoading(false);
-                })
+                    }).catch(err => {
+                        console.error(err);
+                        console.error("Ooops Somthing went wrong ..");
+                    }).
+                    finally(() => {
+                        setLoading(false);
+                    })
         }
         getPostInfo();
     }, [])
@@ -83,19 +86,18 @@ function PostItem() {
 
 
         }
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
-        await axios.post(`${mainUrl}/post/${postInfo.post.post_id}/like`, null, config)
-            .then(res => {
-                console.log("like info ", res.data);
-            }).catch(err => {
-                console.error("Ooops Somthing went wrong ..");
-            })
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/post/${postInfo.post.post_id}/like`, null, config)
+                .then(res => {
+                    console.log("like info ", res.data);
+                }).catch(err => {
+                    console.error("Ooops Somthing went wrong ..");
+                })
 
     }
 
@@ -136,7 +138,7 @@ function PostItem() {
                                 </div>
                                 <div className="comment-post flex-center bo-rad">
                                     <div className="tooltip bo-rad flex-center">
-                                        { commentCount }
+                                        {commentCount}
                                     </div>
                                     <i className="fa-solid fa-comment" >
                                     </i>

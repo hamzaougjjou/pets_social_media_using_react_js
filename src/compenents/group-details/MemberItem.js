@@ -1,13 +1,18 @@
 
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { mainUrl, storageUrl } from '../../API';
 import profile from "./../../assets/img/profile.jpg"
 
 function MemberItem({ member, groupId, groupInfoLoading, groupInfo }) {
 
-    // console.log(groupInfo);
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
 
     const [sendFriendRequestLoading, setSendFriendRequestLoading] = useState(false);
     const [removeMemberLoading, setRemoveMemberLoading] = useState(false);
@@ -18,45 +23,41 @@ function MemberItem({ member, groupId, groupInfoLoading, groupInfo }) {
 
     const sendFriendRequest = async (request_to) => {
         setSendFriendRequestLoading(true);
-        //get auth info
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'multipart/form-data'
             }
         }
-        await axios.post(mainUrl + '/friends/request/send', { "request_to": request_to }, config)
-            .then(info => {
-                console.log(info.data);
-            })
-            .catch(err => {
-            }).finally(() => {
-                setSendFriendRequestLoading(false);
-            });
+        if (!loadingToken)
+            await axios.post(mainUrl + '/friends/request/send', { "request_to": request_to }, config)
+                .then(info => {
+                    console.log(info.data);
+                })
+                .catch(err => {
+                }).finally(() => {
+                    setSendFriendRequestLoading(false);
+                });
     }
     const removeMember = async (request_to) => {
         setRemoveMemberLoading(true);
-        //get auth info
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'multipart/form-data'
             }
         }
-        await axios.post(mainUrl + `/group/${groupId}/members/remove`, { "user_id": member.user_id }, config)
-            .then(info => {
-                console.log(info.data);
-            })
-            .catch(err => {
-                console.log(err);
-            }).finally(() => {
-                setRemoveMemberLoading(false);
-                console.log("removeMember");
-            });
+        if (!loadingToken)
+            await axios.post(mainUrl + `/group/${groupId}/members/remove`, { "user_id": member.user_id }, config)
+                .then(info => {
+                    console.log(info.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                }).finally(() => {
+                    setRemoveMemberLoading(false);
+                    console.log("removeMember");
+                });
     }
 
     return (

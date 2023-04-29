@@ -8,6 +8,12 @@ import profile from "./../../../assets/img/profile.jpg"
 import ReplyCommentItem from './ReplyCommentItem';
 
 function CommentItem(props) {
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
+
     const [replyCommentUiDisplay, setReplyCommentUiDisplay] = useState(false);
     const [startUploadinCommentReplay, setStartUploadinCommentReplay] = useState(false);
     let rcontentReplyInptRef = useRef();
@@ -23,8 +29,6 @@ function CommentItem(props) {
     const createCommentReply = async () => { //creact a new commwnt replay
         let formData = new FormData();
         formData.append("content", rcontentReplyInptRef.current.value.trim());
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -32,23 +36,22 @@ function CommentItem(props) {
             }
         }
         setStartUploadinCommentReplay(true)
-        await axios.post(`${mainUrl}/comment/${props.comment.id}/replay`, formData, config)
-            .then(res => {
-                rcontentReplyInptRef.current.value = "";
-                setMyCommentReplies([...myCommentReplies, res.data.comment_reply]);
-            }).catch(err => {
-                console.log("error");
-            }).finally(() => {
-                // setX(!x);
-                setCreateMyCommentRepliesLoading(false);
-                setStartUploadinCommentReplay(false);
-            })
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/comment/${props.comment.id}/replay`, formData, config)
+                .then(res => {
+                    rcontentReplyInptRef.current.value = "";
+                    setMyCommentReplies([...myCommentReplies, res.data.comment_reply]);
+                }).catch(err => {
+                    console.log("error");
+                }).finally(() => {
+                    // setX(!x);
+                    setCreateMyCommentRepliesLoading(false);
+                    setStartUploadinCommentReplay(false);
+                })
     }
     // ============================================
     const getCommentReplies = async () => {
-        setReplyCommentUiDisplay(true) ; //show input to replay to comment
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
+        setReplyCommentUiDisplay(true); //show input to replay to comment
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -57,15 +60,16 @@ function CommentItem(props) {
         }
         setStartLoadingCommentReplies(true);
         setCommentRepliesLoading(true);
-        await axios.get(`${mainUrl}/comment/${props.comment.id}/replies`, config)
-            .then(res => {
-                console.log(res.data);
-                setCommentReplies(res.data.comment_replies);
-            }).catch(err => {
-                console.log(err);
-            }).finally(() => {
-                setCommentRepliesLoading(false);
-            })
+        if (!loadingToken)
+            await axios.get(`${mainUrl}/comment/${props.comment.id}/replies`, config)
+                .then(res => {
+                    console.log(res.data);
+                    setCommentReplies(res.data.comment_replies);
+                }).catch(err => {
+                    console.log(err);
+                }).finally(() => {
+                    setCommentRepliesLoading(false);
+                })
     }
     let allCommentReliesTemplate = commentReplies.map((comment, i) => {
         const user = { id: comment.user_id, name: comment.name, profile_img: comment.profile_img };
@@ -101,7 +105,6 @@ function CommentItem(props) {
                             <span onClick={getCommentReplies}>See replies</span>
 
                         }
-
                         <span>{props.comment.time}</span>
                     </div>
 

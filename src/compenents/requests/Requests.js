@@ -1,37 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import RequestItem from './RequestItem'
-import profile from "./../../assets/img/profile.jpg"
+// import profile from "./../../assets/img/profile.jpg"
 import { RequestItemLoading } from '../loading/Index'
 import axios from 'axios';
 import { mainUrl } from '../../API';
 import ReqNotExists from './ReqNotExists';
+import { useSelector } from 'react-redux';
 
 function Requests() {
-
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [loading, setLoading] = useState(true);
     const [requests, setRequests] = useState([]);
     const [requestsExists, setRequestsExists] = useState(false);
 
     useEffect(() => {
         const getAllRequests = async () => {
-            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-            let token = authInfo.token;
             let config = {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
             }
-            await axios.get(mainUrl + "/friends/requests/all", config)
-                .then(info => {
-                    console.log(info.data);
-                    if (info.data.success === true) {
-                        setRequests(info.data.requests);
-                        if (info.data.requests.length === 0) {
-                            setRequestsExists(false);
+            if (!loadingToken)
+                await axios.get(mainUrl + "/friends/requests/all", config)
+                    .then(info => {
+                        console.log(info.data);
+                        if (info.data.success === true) {
+                            setRequests(info.data.requests);
+                            if (info.data.requests.length === 0) {
+                                setRequestsExists(false);
+                            }
                         }
-                    }
-                    setLoading(false);
-                })
+                        setLoading(false);
+                    })
         }
         getAllRequests();
     }, [])

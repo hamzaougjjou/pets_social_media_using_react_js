@@ -3,8 +3,9 @@ import React from 'react'
 
 function Page2( {initState , setInitState , data} ) {
 
-  console.log(data);
-  console.log("page 2 " , initState );
+  // console.log(data);
+  // console.log("page 2 " , initState );
+  
   const updateBirthDay = (e)=>{
     
   }

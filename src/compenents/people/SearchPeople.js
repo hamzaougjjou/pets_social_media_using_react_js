@@ -3,7 +3,7 @@ import React, { useRef } from 'react'
 function SearchPeople({ setSearchQuery }) {
     const searchInpt = useRef()
     let searchFunc = ()=>{
-        console.log( searchInpt.current.value.trim() );
+        // console.log( searchInpt.current.value.trim() );
         setSearchQuery( searchInpt.current.value.trim() )
     }
     const inptOnChange = (e)=>{

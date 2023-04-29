@@ -3,8 +3,15 @@ import profile from "./../../assets/img/profile.jpg"
 import { storageUrl } from '../../API';
 import { mainUrl } from '../../API';
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
 function RequestItem(props) {
+
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
+
     let profile_img = props.data.profile_img === null ? profile : storageUrl + "/" + props.data.profile_img;
     let dateTime = new Date(props.data.sent_at.trim())
     var months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
@@ -15,23 +22,22 @@ function RequestItem(props) {
         //friends/requests/{id}/accept
         //get auth info
         setAcceptLoading(true);
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'multipart/form-data'
             }
         }
-        await axios.put(`${mainUrl}/friends/requests/${req_id}/accept`,null,config)
-            .then(info => {
-                console.log(info.data);
-                setAcceptLoading(false);
-            }).catch((err) => {
-                console.log("error");
-                console.log(err);
-                setAcceptLoading(false);
-            });
+        if (!loadingToken)
+            await axios.put(`${mainUrl}/friends/requests/${req_id}/accept`, null, config)
+                .then(info => {
+                    console.log(info.data);
+                    setAcceptLoading(false);
+                }).catch((err) => {
+                    console.log("error");
+                    console.log(err);
+                    setAcceptLoading(false);
+                });
     }
 
     let deleteRedFun = (req_id) => {
@@ -71,7 +77,7 @@ function RequestItem(props) {
                 {
                     deleteLoading ?
                         <button className="button-error1 bot-req" style={{ opacity: '.6', cursor: 'default' }}>Deletet&nbsp;
-                        <i className="fa-solid fa-user-slash"></i>
+                            <i className="fa-solid fa-user-slash"></i>
                             &nbsp;
                             <i className="fas fa-spinner fa-pulse"></i>
                         </button>

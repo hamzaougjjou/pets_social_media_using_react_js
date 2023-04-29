@@ -1,14 +1,21 @@
 import React, { useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import profile from "./../../assets/img/profile.jpg"
-import cat1 from "./../../assets/img/cat1.jpg"
+
 import { mainUrl, storageUrl } from '../../API'
 import axios from 'axios'
 
 import "./../../assets/css/popUp.css"
 import { LoadingSpinner } from 'video-react'
+import { useSelector } from 'react-redux'
 
 function GroupItem({ group }) {
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
+
     const [joinGroupLoading, setJoinGroupLoading] = useState(false);
     const [leaveGroupLoading, setLeaveGroupLoading] = useState(false);
     const [showPopUp, setShowPopUP] = useState(false);
@@ -18,47 +25,45 @@ function GroupItem({ group }) {
 
 
     const joinGroupFunc = async () => {
-        ///group/{
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
+
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
         setJoinGroupLoading(true);
-        await axios.post(`${mainUrl}/group/${group.id}/join`, null, config)
-            .then(info => {
-                console.log(info.data);
-                if (info.data.success) {
-                    setJoined(0);
-                }
-            }).catch(err => {
-                alert("Ooop somthing went wrong");
-            }).finally(() => {
-                setJoinGroupLoading(false)
-            })
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/group/${group.id}/join`, null, config)
+                .then(info => {
+                    console.log(info.data);
+                    if (info.data.success) {
+                        setJoined(0);
+                    }
+                }).catch(err => {
+                    alert("Ooop somthing went wrong");
+                }).finally(() => {
+                    setJoinGroupLoading(false)
+                })
     }
     const leaveGroupBackFunc = async () => {
-        ///group/{
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
+
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
         setLeaveGroupLoading(true);
-        await axios.post(`${mainUrl}/group/${group.id}/leave`, null, config)
-            .then(info => {
-                console.log(info.data);
-                setShowPopUP(false);
-                setJoined(-1);
-            }).catch(err => {
-
-            }).finally(() => {
-                setLeaveGroupLoading(false)
-            })
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/group/${group.id}/leave`, null, config)
+                .then(info => {
+                    console.log(info.data);
+                    setShowPopUP(false);
+                    setJoined(-1);
+                }).catch(err => {
+                    alert('Ooop somthinf=g went wrong')
+                }).finally(() => {
+                    setLeaveGroupLoading(false)
+                })
     } //leave a group from db func
 
     const leaveGroupUiFunc = () => {

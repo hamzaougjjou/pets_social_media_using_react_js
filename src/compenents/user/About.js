@@ -1,10 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 // clipRule
-function About( { loading, user }) {
+function About({ loading, user }) {
 
-
-    console.log(user);
+    // console.log(user);
 
     return (
         <div className="body d-flex">
@@ -196,7 +195,7 @@ function About( { loading, user }) {
 
                             {/* ------------------------------------------ */}
 
-                           
+
 
                             {/* <!-- ----------------------------------- --> */}
                             <div className="box-about main-box">
@@ -311,7 +310,7 @@ function About( { loading, user }) {
                                 </div>
                             </div>
                             {/* <!-- ------------------------------------------ --> */}
-                            
+
                         </div>
                     </div>
                 </div>

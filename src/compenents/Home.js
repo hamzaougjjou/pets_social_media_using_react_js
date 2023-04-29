@@ -13,8 +13,13 @@ import { mainUrl } from '../API'
 import { useSelector } from 'react-redux'
 
 function Home() {
-    const location = useLocation();
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
 
+    const location = useLocation();
     const [lastPostTemp, setLastPostTemp] = useState('');
 
     const [allPosts, setAllPosts] = useState([]);
@@ -25,15 +30,13 @@ function Home() {
     const [activeOnScroll, setActiveOnScroll] = useState(false);
 
     const { loadingUser, user, errorUser } = useSelector(state => state.getUser);
-    // const {token} = useSelector(state => state.refreshLogin);
-    // // console.log( refreshLogin );
-
+    
     useEffect(() => { //whenuser returned from create new post with new post info
         const lastPost = location.state;
-        console.log(lastPost);
+        //console.log(lastPost);
         if (lastPost != null) {
             const lastPostType = lastPost.type;
-            const user2 = { ...user, created_at: lastPost.created_at , time:'just now'};
+            const user2 = { ...user, created_at: lastPost.created_at, time: 'just now' };
             if (lastPostType === "text") {
                 setLastPostTemp(<Post postType="text" post={lastPost} user={user2} />);
             }
@@ -49,47 +52,45 @@ function Home() {
         const getPostsInfo = async () => {
             setPostsLoading(true);
             setPostsError(false);
-            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-            let token = authInfo.token;
             let config = {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
             }
+            if (!loadingToken)
+                await axios.post(`${mainUrl}/posts/friends/all`, null, config)
+                    .then(info => {
+                        //console.log(info);
+                        setPostsError(false);
+                        let oldPosts = [...allPosts];
+                        info.data.posts.forEach(post => {
+                            oldPosts.push(post);
+                        });
+                        setAllPosts(oldPosts);
+                        setActiveOnScroll(true);
+                        // setNewLoading(false);
+                        setLoadingReq(false);
+                    })
+                    .catch(err => {
+                        //console.log(err);
+                        setPostsError(true);
+                    })
+                    .finally(() => {
+                        setPostsLoading(false);
 
-            await axios.post(`${mainUrl}/posts/friends/all`, null, config)
-                .then(info => {
-                    console.log(info);
-                    setPostsError(false);
-                    let oldPosts = [...allPosts];
-                    info.data.posts.forEach(post => {
-                        oldPosts.push(post);
-                    });
-                    setAllPosts(oldPosts);
-                    setActiveOnScroll(true);
-                    // setNewLoading(false);
-                    setLoadingReq(false);
-                })
-                .catch(err => {
-                    console.log(err);
-                    setPostsError(true);
-                })
-                .finally(() => {
-                    setPostsLoading(false);
-
-                })
+                    })
         }
 
         if (!activeOnScroll)
             getPostsInfo();
 
     }, [activeOnScroll]);
-    // console.log(allPosts);
+    // //console.log(allPosts);
 
     let allPosstsTemplate = [];
 
     if (allPosts.length <= 10 && !loadingReq) {
-        console.log("allPosts.length <= 10");
+        //console.log("allPosts.length <= 10");
         allPosstsTemplate = allPosts.map((post, i) => { //[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
             if (allPosts.length < 11) {
                 let user = {
@@ -111,7 +112,7 @@ function Home() {
 
     let lastPosstsTemplate = [];
     if (allPosts.length > 10) {
-        console.log("allPosts.length > 10")
+        //console.log("allPosts.length > 10")
         lastPosstsTemplate = allPosts.map((post, i) => { //[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
             if (i > 9) {
                 let user = { "id": post.user_id, "name": post.name, "profile_img": post.profile_img, "created_at": post.created_at };
@@ -130,21 +131,21 @@ function Home() {
             allPosstsTemplate.push(post);
         })
 
-        console.log("lastPosstsTemplate = ", lastPosstsTemplate);
+        //console.log("lastPosstsTemplate = ", lastPosstsTemplate);
         lastPosstsTemplate = [];
     }
 
     document.body.onscroll = () => {
         if (window.scrollY > document.body.scrollHeight - 1000) {
             if (activeOnScroll) {
-                console.log(" b => ");
+                //console.log(" b => ");
                 setActiveOnScroll(false)
                 setLoadingReq(true);
             }
 
         }
     }
-    console.log(allPosstsTemplate);
+    //console.log(allPosstsTemplate);
     return (
 
         <div className="body d-flex" id="home-page-container">

@@ -4,8 +4,9 @@ import FrindItem from '../friends/FriendItem';
 import Discussion from './Discussion';
 import NoMessage from './NoMessage';
 import Users from './Users';
-import profile from "./../../assets/img/profile.jpg"
+// import profile from "./../../assets/img/profile.jpg"
 import { useSelector } from 'react-redux';
+import HeaderFriends from './HeaderFriends';
 
 function Messanger() {
 
@@ -14,7 +15,10 @@ function Messanger() {
 
     const { id } = useParams();
     const [paramId, setParamId] = useState(id);
-    
+    useEffect(() => {
+        setParamId(id);
+    }, [paramId]);
+
     useEffect(() => {
         if (friendsData.loading === false && friendsData.error === false) {
             setFriendsInfo(friendsData.friends)
@@ -26,21 +30,26 @@ function Messanger() {
     );
 
     // console.log(id);
-    let whatRender = <NoMessage res={listItems} />;
-    if ( paramId != undefined || paramId!=null){
-        whatRender = <>
-            <Discussion userId={paramId} />
-        </>;
-    }
 
     return (
-        <div className="body d-flex">
+        <div className="body d-flex messanger">
             <main className="main-profile main-chat">
                 <h1>Chat</h1>
+                <HeaderFriends />
                 <div className="body-posts body-ch d-flex">
-                    <Users setParamId={setParamId} />
-                    {/* <!-- ///////////////////// --> */}
-                    {whatRender}
+                    <div className='chats'>
+                        <Users setParamId={setParamId} />
+                    </div>
+
+                    <div className='discussion'>
+                        {
+                            (paramId != undefined || paramId != null) ?
+                                <Discussion userId={paramId} setParamId={setParamId} />
+                                :
+                                <NoMessage res={listItems} />
+                        }
+                    </div>
+
                 </div>
             </main>
         </div>

@@ -8,6 +8,12 @@ import addImgAvatar from './../../assets/img/addImgAvatar.png';
 
 function ChangeProfile({ setShowPopUp }) {
 
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
+
     const { loadingUser, user, errorUser } = useSelector(state => state.getUser);
 
     let cover_img = user.cover_img != null ? storageUrl + "/" + user.cover_img : addImgAvatar;
@@ -65,27 +71,26 @@ function ChangeProfile({ setShowPopUp }) {
             formDta.append("cover_img", coverImg)
         if (profileImg != undefined)
             formDta.append("profile_img", profileImg)
-
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
+            
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
         setUploadLoading(true);
-        await axios.post(`${mainUrl}/profile/profile/change`, formDta, config)
-            .then(info => {
-                console.log(info);
-                window.location.href = '/profile'
-            })
-            .catch(err => {
-                alert("Ooop Somthing went wromg")
-                console.log(err);
-            })
-            .finally(() => {
-                setUploadLoading(false);
-            })
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/profile/profile/change`, formDta, config)
+                .then(info => {
+                    console.log(info);
+                    window.location.href = '/profile'
+                })
+                .catch(err => {
+                    alert("Ooop Somthing went wromg")
+                    console.log(err);
+                })
+                .finally(() => {
+                    setUploadLoading(false);
+                })
     }
 
     return (

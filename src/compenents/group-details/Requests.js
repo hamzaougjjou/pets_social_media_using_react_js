@@ -1,31 +1,36 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { mainUrl } from '../../API';
 import { RequestItemLoading } from '../loading/Index'
 import RequestItem from './RequestItem'
 
 function Requests({ groupId }) {
-
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [loading, setLoading] = useState(true);
     const [requests, setRequests] = useState([]);
-    const [requestsExists, setRequestsExists] = useState(false);
+    // const [requestsExists, setRequestsExists] = useState(false);
 
     useEffect(() => {
         const getAllRequests = async () => {
-            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-            let token = authInfo.token;
+
             let config = {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
             }
-            await axios.get(mainUrl + `/group/${groupId}/requests`, config)
-                .then(info => {
-                    setRequestsExists(true);
-                    setRequests(info.data.MembersRequests);
-                    setLoading(false);
-                    console.log( info.data );
-                })
+            if (!loadingToken)
+                await axios.get(mainUrl + `/group/${groupId}/requests`, config)
+                    .then(info => {
+                        // setRequestsExists(true);
+                        setRequests(info.data.MembersRequests);
+                        setLoading(false);
+                        console.log(info.data);
+                    })
         }
         getAllRequests();
     }, [])
@@ -52,7 +57,7 @@ function Requests({ groupId }) {
                                             return <RequestItem groupId={groupId} request={request} key={i} />
                                         })
                                         :
-                                        <div style={{ textAlign: 'center',color:'yellowgreen',padding:'20px 10px'}}>
+                                        <div style={{ textAlign: 'center', color: 'yellowgreen', padding: '20px 10px' }}>
                                             <h2>there is not a requests to join group</h2>
                                         </div>
                                 }

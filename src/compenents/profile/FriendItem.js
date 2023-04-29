@@ -3,8 +3,13 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { mainUrl, storageUrl } from '../../API';
 import profile from "./../../assets/img/profile.jpg"
-
+import { useSelector } from 'react-redux';
 function FriendItem(props) {
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     let profile_img = props.friend.profile_img === null ? props.friend.profile_img : profile;
     const [showPopUp, setShowPopUP] = useState(false);
     const [deleteFriendLoading, setDeleteFriendLoading] = useState(false);
@@ -16,24 +21,23 @@ function FriendItem(props) {
 
     const deleteFriendFunc = async () => {
         setDeleteFriendLoading(true);
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
-        await axios.delete(`${mainUrl}/friend/${props.friend.user_id}/delete`, config)
-            .then(info => {
-                console.log(info.data);
+        if (!loadingToken)
+            await axios.delete(`${mainUrl}/friend/${props.friend.user_id}/delete`, config)
+                .then(info => {
+                    console.log(info.data);
 
-                setShowPopUP(false);
-                setHideItem(true);
-            }).catch(err => {
-                alert("Ooop somthing went wrong");
-            }).finally(() => {
-                setDeleteFriendLoading(true);
-            })
+                    setShowPopUP(false);
+                    setHideItem(true);
+                }).catch(err => {
+                    alert("Ooop somthing went wrong");
+                }).finally(() => {
+                    setDeleteFriendLoading(true);
+                })
     }
     const deleteFriendUIfunc = () => {
         setShowPopUP(true);

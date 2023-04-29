@@ -8,39 +8,73 @@ import img_input from "./../../assets/img/img_input.jpg"
 import icons8_bing_256 from "./../../assets/img/icons8_bing_256.png"
 import axios from 'axios';
 import { mainUrl } from './../../API';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Register() {
 
-    const [initState, setInitState] = useState({
-        'name': null,
-        'email': null,
-        'password': null,
-        'confirm_password': null,
-        'breed_id': null,
-        'gender': null,
-        'birthday': null,
-        'adrress': null,
-        'profile_img': null,
-        'cover_img': null
-    });
+    let dispatch = useDispatch();
+    /* 
+    breed: null,
+    gender: null,
+    birthday: null,
+    profile_img: null ,
+    cover_img : null
+    */
+    const [fullName, setFullName] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [confirmPassword, setConfirmPassword] = useState(null);
 
-    console.log(initState);
+    const [breed, setBreed] = useState(null);
+    const [gender, setGender] = useState(null);
+    const [birthday, setBirthday] = useState(null);
+    const [profile_img, setProfile_img] = useState(null);
+    const [cover_img, setCover_img] = useState(null);
+
+    // console.log('====================================');
+    console.log(fullName);
+    // console.log('====================================');
+    const state = useSelector((state) => state.RegisterReducer);
+
+    // console.log('====================================');
+    console.log(state);
+    // console.log('====================================');
 
     let goBackArrow = useRef();
     const [breeds, setBreeds] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
-    let [whatRender, setWhatRender] = useState(<Page1 initState={initState} setInitState={setInitState}/>);
-    
+    let [whatRender, setWhatRender] = useState(<Page1 setFullName={setFullName} setEmail={setEmail} setPassword={setPassword} setConfirmPassword={setConfirmPassword} />);
+
     let [btnContText, setBtnContText] = useState(['Continue Registration', '']); //[button text , btn redirect to ]
 
     let registerHander = (e) => {
         e.preventDefault();
+
+        dispatch({
+            type: 'CONTINUE',
+            payload:
+            {
+                fullName: fullName,
+                email: email,
+                password: password,
+                confirmPassword: confirmPassword,
+                breed: breed,
+                gender: gender,
+                birthday: birthday,
+                profile_img: profile_img,
+                cover_img: cover_img
+            }
+        });
+
+
         if (pageNumber < 3) {
             setPageNumber(pageNumber + 1);
-            if (pageNumber === 1)
-                setWhatRender(<Page1 />)
-            else if (pageNumber === 2)
-                setWhatRender(<Page2 data={breeds} />)
+            // if (pageNumber === 1) {
+            //     //setWhatRender(<Page1 setFullName={setFullName} setEmail={setEmail} setPassword={setPassword} setConfirmPassword={setConfirmPassword} />)
+            // }
+            // else if (pageNumber === 2) {
+            //     setWhatRender(<Page2 data={breeds} />)
+            // }
         }
 
     }
@@ -53,17 +87,17 @@ function Register() {
     useEffect(() => {
         switch (pageNumber) {
             case 1:
-                setWhatRender(<Page1 initState={initState} setInitState={setInitState} />)
+                setWhatRender(<Page1 setFullName={setFullName} setEmail={setEmail} setPassword={setPassword} setConfirmPassword={setConfirmPassword} />)
                 break;
             case 2:
-                setWhatRender(<Page2 data={breeds} initState={initState} setInitState={setInitState}/>)
+                setWhatRender(<Page2 data={breeds} />)
                 break;
             case 3:
-                setWhatRender(<Page3 initState={initState} setInitState={setInitState}/>)
+                setWhatRender(<Page3 />)
                 setBtnContText(['Complete', '/auth/virify-email'])
                 break;
             default:
-                setWhatRender(<Page1 initState={initState} setInitState={setInitState}/>)
+                setWhatRender(<Page1 setFullName={setFullName} setEmail={setEmail} setPassword={setPassword} setConfirmPassword={setConfirmPassword} />)
                 break;
         }
 

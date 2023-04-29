@@ -36,6 +36,10 @@ body-posts d-flex po-rel
 req-not-exist-container
 posts-container
 image-profile-1
+body-ch '
+com
+scroll
+background
 */
 :root {
     --main-color: #0094FF;
@@ -117,6 +121,20 @@ html {
 
 *::-webkit-scrollbar-thumb {
     background-color: #E9EDF1;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+.messanger-header-friends::-webkit-scrollbar {
+    background-color: #E9EDF1;
+    height: 8px !important;
+}
+
+.messanger-header-friends::-webkit-scrollbar-thumb {
+    background-color: #d0d4d9;
     border-radius: 8px;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -662,6 +680,7 @@ main {
     background-color: var(--back-col-hov);
     margin-left: 15px;
     font-size: .9rem;
+    word-break: break-all;
 }
 
 .text-com::before {
@@ -2429,7 +2448,51 @@ main {
     }
 }
 
+.body-ch{
+    display: grid;
+    grid-template-columns: 450px 1fr !important;
+}
+
+.body-ch .chats > *,
+.body-ch .discussion > *{
+    width: 100% !important;
+}
 /* /////////////////////////////SETTINGS /////////////////////// */
+
+/* =======================imogies======================= */
+.imogies-container{
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    z-index: 9999999;
+    width: 350px;
+    height: 400px;
+    background-color: #ebeeff;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 15px;
+    padding: 5px !important;
+    cursor: auto;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    /* overflow-x: hidden;   */
+    box-shadow: 0px 0px 50px 0px rgba(79, 15, 158, 0.5);
+}
+.imogies-container > span{
+    cursor: pointer;
+    font-size: xx-large;
+}
+.imogies-container::-webkit-scrollbar {
+    background-color: rgb(199, 199, 199);
+    width: 8px;
+}
+
+.imogies-container::-webkit-scrollbar-thumb {
+    background-color: #0080ff;
+    /* border-radius: 8px; */
+}
+/* =======================imogies======================= */
+
 /* ===============notification header=========================== */
 #req {
     position: relative;

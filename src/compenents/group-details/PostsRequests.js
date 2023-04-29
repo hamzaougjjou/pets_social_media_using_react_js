@@ -1,12 +1,17 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import { mainUrl } from '../../API';
 import { PostItemLoading } from '../loading/Index'
 import ReqPostItem from './ReqPostItem';
 
 function PostsRequests({ groupId }) {
-
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [groupPosts, setGroupPosts] = useState([]);
     const [groupPostsLoading, setGroupPostsLoading] = useState(false);
 
@@ -14,24 +19,22 @@ function PostsRequests({ groupId }) {
         // posts/friends
         const getPostsInfo = async () => {
             setGroupPostsLoading(true);
-            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-            let token = authInfo.token;
             let config = {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
             }
-
-            await axios.post(`${mainUrl}/group/${groupId}/posts/requests`, null, config)
-                .then(info => {
-                    console.log(info.data);
-                    setGroupPosts(info.data.posts)
-                })
-                .catch(err => {
-                })
-                .finally(() => {
-                    setGroupPostsLoading(false);
-                })
+            if (!loadingToken)
+                await axios.post(`${mainUrl}/group/${groupId}/posts/requests`, null, config)
+                    .then(info => {
+                        console.log(info.data);
+                        setGroupPosts(info.data.posts)
+                    })
+                    .catch(err => {
+                    })
+                    .finally(() => {
+                        setGroupPostsLoading(false);
+                    })
         }
         getPostsInfo();
 
@@ -134,7 +137,7 @@ function PostsRequests({ groupId }) {
 
                         groupPosts.length > 0 ?
                             groupPosts.map((post, i) => {
-                                return <ReqPostItem key={i} post={post} groupId={groupId}/>
+                                return <ReqPostItem key={i} post={post} groupId={groupId} />
                             })
                             :
                             <div className="main-box w-full" style={{ width: "100%" }}>

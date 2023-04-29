@@ -12,6 +12,11 @@ import { mainUrl } from '../../API';
 import axios from 'axios';
 
 function User() {
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
 
     const navigate = useNavigate();
     const authUser = useSelector(state => state.getUser);
@@ -28,24 +33,21 @@ function User() {
     useEffect(() => {
         const getUser = async () => {
             setLoading(true);
-            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-            let token = authInfo.token;
-
             let config = {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
             }
-
-            await axios.get(mainUrl + `/user/${id}/info`, config)
-                .then(info => {
-                    console.log(info.data);
-                    setUser(info.data.user);
-                }).catch(err => {
-                    console.log(err);
-                }).finally(() => {
-                    setLoading(false);
-                })
+            if (!loadingToken)
+                await axios.get(mainUrl + `/user/${id}/info`, config)
+                    .then(info => {
+                        console.log(info.data);
+                        setUser(info.data.user);
+                    }).catch(err => {
+                        console.log(err);
+                    }).finally(() => {
+                        setLoading(false);
+                    })
         }
         getUser();
     }, []);

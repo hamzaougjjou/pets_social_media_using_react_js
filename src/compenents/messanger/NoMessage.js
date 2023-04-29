@@ -12,7 +12,7 @@ function NoMessage(props) {
     useEffect(() => {
         let boxNewUserBoxC = document.getElementById("box-new-user-box-c");
         boxNewUserBoxC.addEventListener('click', (e) => {
-            if (e.target == boxNewUserBoxC) {
+            if (e.target === boxNewUserBoxC) {
                 boxNewUserBoxC.style.display = 'none';
             }
 

@@ -9,11 +9,17 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 function Post(props) {
+
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
+
     // console.log(props);
     const [comm, setComment] = useState('');
     const [isCommShow, setIsCommShow] = useState(false);
     const [postContent, setPostContent] = useState('');
-    const { token } = useSelector(state => state.refreshLogin);
     const [commentCount, setCommentCount] = useState(props.post.comments_count);
 
     useEffect(() => { //RENDER POST BODY 
@@ -32,7 +38,7 @@ function Post(props) {
             setIsCommShow(false);
         }
     }
-    
+
     let liked = props.post.liked === 1 || props.post.liked === true;
     let likedClass = "like-container";
     if (liked) {
@@ -59,13 +65,14 @@ function Post(props) {
                 'Content-Type': 'multipart/form-data'
             }
         }
-        await axios.post(`${mainUrl}/post/${props.post.post_id}/like`, null, config)
-            .then(res => {
-                // console.log("like info ", res.data);
-            }).catch(err => {
-                // console.log(err);
-                console.error("Ooops Somthing went wrong ..");
-            })
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/post/${props.post.post_id}/like`, null, config)
+                .then(res => {
+                    // console.log("like info ", res.data);
+                }).catch(err => {
+                    // console.log(err);
+                    console.error("Ooops Somthing went wrong ..");
+                })
 
     }
     // ====================== END LIKE LOGIC SECTION=========================

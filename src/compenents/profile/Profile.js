@@ -31,10 +31,6 @@ function Profile() {
                     
                 </Routes>
 
-
-
-
-
             </main>
         </div>
     )

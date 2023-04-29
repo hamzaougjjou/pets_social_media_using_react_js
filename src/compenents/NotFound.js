@@ -14,7 +14,7 @@ class NotFound extends Component {
           <div className="msg">
             Pga Not Found
             <p style={{ padding: "20px" }}>
-              Let's go
+              Let s go
               <NavLink to="/" style={{ padding: "10px" }}>
                 home
               </NavLink>
@@ -25,7 +25,6 @@ class NotFound extends Component {
       </div>
     );
   }
-  1
 }
 
 export default NotFound;

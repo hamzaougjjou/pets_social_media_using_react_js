@@ -5,9 +5,14 @@ import React, { useRef, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { mainUrl } from '../../API';
+import { useSelector } from 'react-redux';
 
 function ChangePasswordSettings() {
-
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [currentPassState, setCurrentPassState] = useState('password');
     const [newPassState, setNewPassState] = useState('password');
     const navigate = useNavigate();
@@ -63,34 +68,30 @@ function ChangePasswordSettings() {
             setError("new password and confirm password not the same")
             return false;
         }
-        //profile/name/change
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
-        let email = authInfo.email;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
-        await axios.put(`${mainUrl}/profile/password/change`, { "old_password": currentPassword, "password": newPassword }, config)
-            .then(info => {
-                console.log(info);
-                if (info.data.success === true) {
-                    setShowPopUp(true);
-                    let body = {
-                        "email": email,
-                        "password": newPassword,
-                        "token": token
-                    };
-                    localStorage.setItem('authInfo', JSON.stringify(body) );
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            .finally(() => {
-                setLoading(false);
-            })
+        if (!loadingToken)
+            await axios.put(`${mainUrl}/profile/password/change`, { "old_password": currentPassword, "password": newPassword }, config)
+                .then(info => {
+                    console.log(info);
+                    if (info.data.success === true) {
+                        setShowPopUp(true);
+                        let body = {
+                            "email": email,
+                            "password": newPassword
+                        };
+                        localStorage.setItem('authInfo', JSON.stringify(body));
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                })
     }
 
     const doneFunc = () => {

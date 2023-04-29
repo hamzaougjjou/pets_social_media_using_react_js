@@ -9,6 +9,13 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Managers({ groupId, groupInfoLoading, groupInfo }) {
+
+  // =============AUTH================
+  let refreshLogin = useSelector(state => state.refreshLogin);
+  let token = refreshLogin.token;
+  let loadingToken = refreshLogin.loading;
+  // =============================
+
   const currentUser = useSelector(state => state.getUser);
   let my_profile_img = currentUser.user.profile_img === null ? profile : storageUrl + "/" + currentUser.user.profile_img;
 
@@ -16,26 +23,25 @@ function Managers({ groupId, groupInfoLoading, groupInfo }) {
   const [groupMembers, setGroupMembers] = useState([]);
 
   useEffect(() => {
-    const getAllMembers = async () => {
-      let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-      let token = authInfo.token;
+    const getAllMembers = async () => { 
       let config = {
         headers: {
           'Authorization': 'Bearer ' + token
         }
       }
       setLoading(true);
-      await axios.get(mainUrl + `/group/${groupId}/admins`, config)
-        .then(info => {
-          setGroupMembers(info.data.groupAdmins);
-          setLoading(false);
-        })
-        .catch((err) => {
-          alert("Ooop Somthing went wrong")
-        })
-        .finally(() => {
+      if (!loadingToken)
+        await axios.get(mainUrl + `/group/${groupId}/admins`, config)
+          .then(info => {
+            setGroupMembers(info.data.groupAdmins);
+            setLoading(false);
+          })
+          .catch((err) => {
+            alert("Ooop Somthing went wrong")
+          })
+          .finally(() => {
 
-        })
+          })
     }
 
     getAllMembers();

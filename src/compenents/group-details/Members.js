@@ -15,28 +15,32 @@ function Members({ groupId, groupInfoLoading, groupInfo }) {
 
   const [loading, setLoading] = useState(false);
   const [groupMembers, setGroupMembers] = useState([]);
-
+  // =============AUTH================
+  let refreshLogin = useSelector(state => state.refreshLogin);
+  let token = refreshLogin.token;
+  let loadingToken = refreshLogin.loading;
+  // =============================
   useEffect(() => {
     const getAllMembers = async () => {
-      let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-      let token = authInfo.token;
+ 
       let config = {
         headers: {
           'Authorization': 'Bearer ' + token
         }
       }
       setLoading(true);
-      await axios.get(mainUrl + `/group/${groupId}/members`, config)
-        .then(info => {
-          setGroupMembers(info.data.groupMembers);
-          setLoading(false);
-        })
-        .catch((err) => {
-          alert("Ooop Somthing went wrong")
-        })
-        .finally(() => {
+      if (!loadingToken)
+        await axios.get(mainUrl + `/group/${groupId}/members`, config)
+          .then(info => {
+            setGroupMembers(info.data.groupMembers);
+            setLoading(false);
+          })
+          .catch((err) => {
+            alert("Ooop Somthing went wrong")
+          })
+          .finally(() => {
 
-        })
+          })
     }
 
     getAllMembers();

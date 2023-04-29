@@ -4,7 +4,13 @@ import axios from 'axios';
 import { mainUrl } from '../../API';
 import { PostItemLoading } from '../loading/Index';
 import Post from '../posts/Post';
-function Posts( {userId } ) {
+import { useSelector } from 'react-redux';
+function Posts({ userId }) {
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [posts, setPosts] = useState([]);
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
@@ -26,23 +32,24 @@ function Posts( {userId } ) {
                 }
             }
             if (postsExists)
-                await axios.get(`${mainUrl}/user/${userId}/posts/${postsPaginate}`, config)
-                    .then(info => {
-                        if (info.data.success === true) {
-                            // if (info.data.posts.lenght === 0) {
-                            //     setPostsExists(false)
-                            //     return false;
-                            // }
-                            // let newPosts = [...posts, ...info.data.posts];
-                            console.log(info.data.data);
-                            setPosts(info.data.data.posts);
-                            setUser(info.data.data.user);
-                        }
-                        setLoading(false);
-                        setSecondLoading(true);
-                    }).catch(err => {
-                        console.log(err);
-                    })
+                if (!loadingToken)
+                    await axios.get(`${mainUrl}/user/${userId}/posts/${postsPaginate}`, config)
+                        .then(info => {
+                            if (info.data.success === true) {
+                                // if (info.data.posts.lenght === 0) {
+                                //     setPostsExists(false)
+                                //     return false;
+                                // }
+                                // let newPosts = [...posts, ...info.data.posts];
+                                console.log(info.data.data);
+                                setPosts(info.data.data.posts);
+                                setUser(info.data.data.user);
+                            }
+                            setLoading(false);
+                            setSecondLoading(true);
+                        }).catch(err => {
+                            console.log(err);
+                        })
         }
         getPostsInfo();
     }, [postsPaginate]);

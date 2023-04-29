@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import SearchUser from './SearchUser';
+// import SearchUser from './SearchUser';
 import UserItem from './UserItem'
 import profile from "./../../assets/img/profile.jpg"
 import { useSelector } from 'react-redux';
@@ -27,7 +27,7 @@ function Users(props) {
     return (
 
         <div className="left-chat-side main-box">
-            <SearchUser />
+            {/* <SearchUser /> */}
             <div className="freinds freinds-chat">
 
                 {

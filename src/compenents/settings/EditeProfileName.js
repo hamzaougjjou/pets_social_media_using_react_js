@@ -1,10 +1,15 @@
 import axios from 'axios';
 import React, { useRef, useState } from 'react'
-
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { mainUrl } from '../../API';
 
 function EditProfileName() {
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [currentPassState, setCurrentPassState] = useState('password');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -38,26 +43,25 @@ function EditProfileName() {
             return false;
         }
         //profile/name/change
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
-        await axios.post(`${mainUrl}/profile/name/change`, { "password": password, "new_name": newName }, config)
-            .then(info => {
-                console.log(info);
-                if (info.data.success === true) {
-                    setShowPopUp(true);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            .finally(() => {
-                setLoading(false);
-            })
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/profile/name/change`, { "password": password, "new_name": newName }, config)
+                .then(info => {
+                    console.log(info);
+                    if (info.data.success === true) {
+                        setShowPopUp(true);
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                })
     }
 
     const doneFunc = () => {
@@ -76,7 +80,7 @@ function EditProfileName() {
                                 Your Name has been changed
                             </div>
                             <div className='group-item-popup-btns flex-between w-full'>
-                                <button onClick={doneFunc} className="button-ok bot-req bot-fr bot-gro" style={{padding:"10px 20px"}}>
+                                <button onClick={doneFunc} className="button-ok bot-req bot-fr bot-gro" style={{ padding: "10px 20px" }}>
                                     Done
                                 </button>
                             </div>

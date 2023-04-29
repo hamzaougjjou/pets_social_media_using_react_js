@@ -8,6 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function CreatePost({ groupId }) {
+
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+
     const [postType, setPostType] = useState('text');
     const descInpt = useRef();
     const imageInpt = useRef();
@@ -16,7 +21,7 @@ function CreatePost({ groupId }) {
     let [uploading, setUploading] = useState(false);
     let [postingError, setPostingError] = useState("");
     const navigate = useNavigate();
-    const { token } = useSelector(state => state.refreshLogin);
+
     let uploadingImageFromDevice = (e) => {
         setShowLoading(true);
         const reader = new FileReader()
@@ -55,22 +60,23 @@ function CreatePost({ groupId }) {
                 'Content-Type': 'multipart/form-data'
             }
         }
-        await axios.post(mainUrl + '/post/create', formData, config)
-            .then(info => {
-                console.log(info.data);
-                if (info.data.success === true) {
-                    let myData = info.data.data;
-                    myData["post_id"] = myData.id;
-                    myData["likes_count"] = 0;
-                    myData["comments_count"] = 0;
-                    // navigate('posts', { "state": myData });
+        if (!loadingToken)
+            await axios.post(mainUrl + '/post/create', formData, config)
+                .then(info => {
                     console.log(info.data);
-                }
-            }).catch(err => {
-                console.log(err);
-            }).finally(() => {
-                setUploading(false);
-            })
+                    if (info.data.success === true) {
+                        let myData = info.data.data;
+                        myData["post_id"] = myData.id;
+                        myData["likes_count"] = 0;
+                        myData["comments_count"] = 0;
+                        // navigate('posts', { "state": myData });
+                        console.log(info.data);
+                    }
+                }).catch(err => {
+                    console.log(err);
+                }).finally(() => {
+                    setUploading(false);
+                })
     }
 
     return (

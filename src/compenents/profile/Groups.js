@@ -7,46 +7,48 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 function Groups() {
-
+  // =============AUTH================
+  let refreshLogin = useSelector(state => state.refreshLogin);
+  let token = refreshLogin.token;
+  let loadingToken = refreshLogin.loading;
+  // =============================
   const [loadingGroups, setLoadingGroups] = useState(false);
   const [groups, setGroups] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [start, setStart] = useState(0);
-  const { user , loading } = useSelector(state => state.getUser);
+  const { user, loading } = useSelector(state => state.getUser);
 
-  console.log(user);
 
   useEffect(() => {
     const getGroups = async () => {
-      let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-      let token = authInfo.token;
       let config = {
         headers: {
           'Authorization': 'Bearer ' + token
         }
       }
       setLoadingGroups(true);
-      if ( loading ) {
+      if (loading) {
         return false;
       }
-      await axios.get( `${mainUrl}/user/${user.id}/groups/${start}/${searchQuery}`, config)
-      
-      ///user/{user_id}/groups/{start?}/{q?}
-        .then(info => {
-          console.log(info.data);
-          if(info.data.success === true ){
-            setGroups(info.data.groups);
-          }
-        }).catch(err => {
-          console.log(err);
-        }).finally(() => {
-          setLoadingGroups(false);
-        })
+      if (!loadingToken)
+        await axios.get(`${mainUrl}/user/${user.id}/groups/${start}/${searchQuery}`, config)
+
+          ///user/{user_id}/groups/{start?}/{q?}
+          .then(info => {
+            console.log(info.data);
+            if (info.data.success === true) {
+              setGroups(info.data.groups);
+            }
+          }).catch(err => {
+            console.log(err);
+          }).finally(() => {
+            setLoadingGroups(false);
+          })
     }
 
     getGroups();
 
-  }, [ searchQuery  , loading ])
+  }, [searchQuery, loading])
 
   return (
     <div className="body-posts d-flex body2 body w-full">
@@ -54,7 +56,7 @@ function Groups() {
 
         <GroupHeader setSearchQuery={setSearchQuery} />
 
-        <div className="boxs-freind boxs-group w-full" style={{alignItems:"flex-start"}}>
+        <div className="boxs-freind boxs-group w-full" style={{ alignItems: "flex-start" }}>
           {
             loadingGroups ?
               <>
@@ -64,19 +66,19 @@ function Groups() {
               </>
               :
               groups.length > 0 ?
-              <>
-                {
+                <>
+                  {
 
-                  groups.map((group, i) => {
-                    return <GroupItem group={group} key={i} />
-                  })
+                    groups.map((group, i) => {
+                      return <GroupItem group={group} key={i} />
+                    })
 
-                }
-              </>
-              :
-              <>
-                <h3 className='txt-center'>لم تنظم بعد الى اي مجموعة</h3>
-              </>
+                  }
+                </>
+                :
+                <>
+                  <h3 className='txt-center'>لم تنظم بعد الى اي مجموعة</h3>
+                </>
           }
 
 

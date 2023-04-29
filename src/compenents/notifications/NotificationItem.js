@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { mainUrl } from '../../API';
 import AcceptFriendNotic from './AcceptFriendNotic';
 import CommentNotic from './CommentNotic';
@@ -10,7 +11,11 @@ import ReplayCommentNotic from './ReplayCommentNotic';
 
 
 function NotificationItem({ notic }) {
-
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [noticItem, setNoticeItem] = useState('');
     const [itemOpacity, setItemOpacity] = useState(1);
     const [itemDeleted, setItemDeleted] = useState(false);
@@ -35,22 +40,21 @@ function NotificationItem({ notic }) {
 
     const deleteNotice = async () => {
         setItemOpacity(0.4);
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
-        await axios.delete(mainUrl + `/notification/${notic.id}/delete`, config)
-            .then(info => {
-                // console.log(info.data);
-                setItemDeleted(true);
-            }).catch(err => {
-                alert('Ooop Error to delete notification');
-            }).finally(() => {
-                setItemOpacity(1);
-            })
+        if (!loadingToken)
+            await axios.delete(mainUrl + `/notification/${notic.id}/delete`, config)
+                .then(info => {
+                    // console.log(info.data);
+                    setItemDeleted(true);
+                }).catch(err => {
+                    alert('Ooop Error to delete notification');
+                }).finally(() => {
+                    setItemOpacity(1);
+                })
     }
 
 

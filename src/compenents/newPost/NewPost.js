@@ -9,68 +9,117 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function NewPost() {
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [postType, setPostType] = useState('text');
     const descInpt = useRef();
-    const imageInpt = useRef();
+    const fileInpt = useRef();
     let [file, setFile] = useState('');
+
+    let [videoFile, setVideoFile] = useState({ video: null });
+
     let [showLoading, setShowLoading] = useState(false);
     let [uploading, setUploading] = useState(false);
     let [postingError, setPostingError] = useState("");
+    let [fileExtensionError, setFileExtensionError] = useState(false);
     const navigate = useNavigate();
-    const { token } = useSelector(state => state.refreshLogin);
+
     let uploadingImageFromDevice = (e) => {
+
+        setVideoFile( { ...videoFile , video : e.target.files[0] } ); 
+        
         setShowLoading(true);
         const reader = new FileReader()
+
         reader.addEventListener("load", () => {
-            setFile(reader.result);
+            setFileExtensionError(false);
+            if (reader.result.toLocaleLowerCase().indexOf('image/') != -1)
+                setPostType('image')
+            else if (reader.result.toLocaleLowerCase().indexOf('video/') != -1)
+                setPostType('video')
+            else
+                setFileExtensionError(true)
+            // setFile( e.target.files[0] );
+            setFile( reader.result );
+
+            setShowLoading(false);
         })
         reader.readAsDataURL(e.target.files[0]);
-        setPostType('image')
-        setShowLoading(false);
     }
 
     const createPost = async (e) => {
         e.preventDefault();
+
+        if (fileExtensionError) {
+            fileInpt.current.file = '';
+            setPostType('text');
+            setUploading(false);
+            setPostingError('invalid file only images and videos are allowed')
+            return false;
+        }
+
         setUploading(true);
         const formData = new FormData();
 
-        if (postType === 'text') {
+        if (postType.toLocaleLowerCase() === 'text') {
             formData.append('type', 'text');
             if (descInpt.current.value.trim().length < 1) {
                 setPostingError('write somthing ...');
+                setUploading(false);
                 descInpt.current.focus();
                 return 0;
             }
             formData.append('description', descInpt.current.value.trim());
         }
-        if (postType === 'image') {
-            formData.append('image', imageInpt.current.files[0]);
+        if (postType.toLocaleLowerCase() === 'image') {
+            formData.append('image', fileInpt.current.files[0] );
             if (descInpt.current.value.trim().length > 0) {
                 formData.append('description', descInpt.current.value.trim());
             }
         }
+        if (postType.toLocaleLowerCase() === 'video') {
+
+            console.log('====================================');
+            console.log( videoFile );
+            console.log('====================================');
+
+            formData.append('video', videoFile );
+           // if (descInpt.current.value.trim().length > 0)
+                formData.append('description', "descInpt.current.value.trim()");
+            
+        }
+
+
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'multipart/form-data'
             }
         }
-        await axios.post(mainUrl + '/post/create', formData, config)
-            .then(info => {
-                console.log(info.data);
-                if (info.data.success === true) {
-                    let myData = info.data.data;
-                    myData["post_id"] = myData.id;
-                    myData["likes_count"] = 0;
-                    myData["comments_count"] = 0;
-                    navigate('/', { "state": myData });
-                }
-            }).catch(err => {
-                console.log(err);
+        if (!loadingToken)
+            await axios.post(mainUrl + '/post/create', formData, config)
+                .then(info => {
+                    console.log(info.data);
+                    if (info.data.success === true) {
+                        let myData = info.data.data;
+                        myData["post_id"] = myData.id;
+                        myData["likes_count"] = 0;
+                        myData["comments_count"] = 0;
+                        navigate('/', { "state": myData });
+                    }
+                }).catch(err => {
+                    console.log(err);
+                    setPostingError('something went wrong');
+                }).finally(() => {
+                    setUploading(false);
+                })
+    }
 
-            }).finally(() => {
-                setUploading(false);
-            })
+    const goBackFunc = () => {
+        navigate(-1);
     }
 
     return (
@@ -100,12 +149,27 @@ function NewPost() {
 
                         <AccountInfo />
 
+                        {/* <div
+                            style={{
+                                color: 'red',
+                                minHeight: '25px',
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                paddingBottom: '20px'
+                            }}
+                        >
+                            {
+                                fileExtensionError && <p>invalid file only images and videos are allowed</p>
+                            }
+
+                        </div> */}
+
                         <form action="" onSubmit={createPost}>
                             <div className="box-wr">
                                 <textarea onChange={() => setPostingError('')} name="description" ref={descInpt} id="" placeholder="Write your post..."
                                     className="bor-col bo-rad d-block input-shap w-full wr-post"></textarea>
                                 <div className="icon-wr-post">
-                                    <input type="file" name="imageInpt" ref={imageInpt} id="file-post" onChange={uploadingImageFromDevice} />
+                                    <input type="file" name="fileInpt" ref={fileInpt} id="file-post" onChange={uploadingImageFromDevice} />
 
                                     <label htmlFor="file-post"><i className="fa-solid fa-images"></i></label>
                                     <i className="fa-solid fa-user-tag"></i>
@@ -114,12 +178,23 @@ function NewPost() {
                                 </div>
                             </div>
                             <br />
-                            <b style={{ textAlign: 'center', color: 'red' }}>{postingError}</b>
+                            <b style={{ textAlign: 'center', color: 'red' }}>
+                                {postingError}
+                            </b>
+
                             <div className="image-post d-flex justify-start" style={{ justifyContent: 'start', flexWrap: 'wrap', gap: '20px' }}>
 
-                                <img src={file} alt="" className="bo-rad" id='image' />
+                                {
+                                    (postType === 'video' && !showLoading) ?
+                                        <>video</>
+                                        :
+                                        (postType === 'image' && !showLoading) ?
+                                            <img src={file} alt="" className="bo-rad" id='image' />
+                                            :
+                                            null
+                                }
 
-                                {showLoading ? <Loading /> : ""}
+                                {showLoading && <Loading />}
 
                             </div>
                             <br />
@@ -130,7 +205,7 @@ function NewPost() {
                                     Public
                                 </label>
                                 <div className="button-help d-flex">
-                                    <button className="button-cancel">Cancel</button>
+                                    <button onClick={goBackFunc} className="button-cancel">Cancel</button>
 
                                     {
                                         uploading ?

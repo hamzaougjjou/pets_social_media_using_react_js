@@ -1,25 +1,27 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 
 
-function Page1({ initState, setInitState }) {
+function Page1( props) {
 
-    console.log("page 1 ", initState);
+    const dispatch = useDispatch();
+
 
     return (
         <div className='sub-reg-c'>
             <input
-                onChange={(e1) => setInitState({ ...initState, "name": e1.target.value.trim() })}
+                onChange={(e) => props.setFullName(e.target.value.trim())}
                 type="text" placeholder="Full Name" />
             <input
-                onChange={(e2) => setInitState({ ...initState, "email": e2.target.value.trim() })}
+                onChange={(e) => props.setEmail(e.target.value.trim())}
                 type="email" placeholder="Email" />
             <input
-                onChange={(e3) => setInitState({ ...initState, "password": e3.target.value.trim() })}
+                onChange={(e) => props.setPassword(e.target.value.trim())}
                 type="password" placeholder="Password" />
             <input
-                onChange={(e4) => setInitState({ ...initState, "confirm_password": e4.target.value.trim() })}
+                onChange={(e) => props.setConfirmPassword(e.target.value.trim())}
+
                 type="password" placeholder="Confirm Password" />
             <div className='frgt-pss-reg-c'>
                 <Link to="/auth/forget-password">Forgot Password ?</Link>

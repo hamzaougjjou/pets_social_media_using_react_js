@@ -10,6 +10,7 @@ import "./assets/css/main.css";
 import "./assets/css/media.css";
 import "./assets/css/normalize.css";
 import "./assets/fontOwsome/css/all.css";
+import "./assets/css/responsive.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

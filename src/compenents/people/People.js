@@ -7,15 +7,17 @@ import PeopleItem from './PeopleItem'
 import SearchPeople from './SearchPeople'
 
 function People() {
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [usersNotFound, setUsersNotFound] = useState(false);
-
-  let refreshLogin = useSelector(state => state.refreshLogin);
-  let token = refreshLogin.token;
-  let loadingToken = refreshLogin.loading;
 
   useEffect(() => {
 
@@ -32,6 +34,7 @@ function People() {
           'Content-Type': 'multipart/form-data'
         }
       }
+      
       if (!loadingToken)
         await axios.post(mainUrl + '/search/users', formData, config)
           .then(info => {
@@ -53,7 +56,7 @@ function People() {
           })
     }
     getOrSearchUsers();
-  }, [searchQuery, token])
+  }, [searchQuery])
   // style={{ maxWidth: "1200px", marginInline: "auto", padding: "20px" }}
 
   return (

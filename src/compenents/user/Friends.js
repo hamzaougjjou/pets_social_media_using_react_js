@@ -7,38 +7,42 @@ import axios from 'axios';
 import { PeapleItemLoading } from '../loading/Index';
 import { useSelector } from 'react-redux'
 import FriendsNotExists from './FriendsNotExists';
-function Friends({userId}) {
 
+function Friends({ userId }) {
+  // =============AUTH================
+  let refreshLogin = useSelector(state => state.refreshLogin);
+  let token = refreshLogin.token;
+  let loadingToken = refreshLogin.loading;
+  // =============================
   const [friends, setFriends] = useState([]);
-  const [friendsData , setFriendsData ] = useState(
+  const [friendsData, setFriendsData] = useState(
     {
-      "loading" : true,
-      "error":false
+      "loading": true,
+      "error": false
     }
   );
 
   useEffect(() => {
     const getFriendsInfo = async () => {
-      let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-      let token = authInfo.token;
       let config = {
         headers: {
           'Authorization': 'Bearer ' + token
         }
       }
-      await axios.get(mainUrl + `/user/${userId}/friends`, config)
-        .then(info => {
-          setFriends(info.data.friends);
-          setFriendsData({ ...friendsData , "error":false })
-        }).catch(err => {
-          console.log("error");
-          setFriendsData({ ...friendsData , "error":true })
-        }).finally( ()=>{
-          setFriendsData({ ...friendsData , "loading":false })
-        })
+      if (!loadingToken)
+        await axios.get(mainUrl + `/user/${userId}/friends`, config)
+          .then(info => {
+            setFriends(info.data.friends);
+            setFriendsData({ ...friendsData, "error": false })
+          }).catch(err => {
+            // console.log("error");
+            setFriendsData({ ...friendsData, "error": true })
+          }).finally(() => {
+            setFriendsData({ ...friendsData, "loading": false })
+          })
     }
     getFriendsInfo();
-  } , [] );
+  }, []);
 
   let listFriends = '';
   if (friendsData.loading === false && friendsData.error === false) {

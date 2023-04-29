@@ -6,8 +6,14 @@ import cat1 from "./../../assets/img/cat1.jpg";
 
 import axios from 'axios';
 import { mainUrl, storageUrl } from '../../API';
+import { useSelector } from 'react-redux';
 
 function Files({ userId }) {
+  // =============AUTH================
+  let refreshLogin = useSelector(state => state.refreshLogin);
+  let token = refreshLogin.token;
+  let loadingToken = refreshLogin.loading;
+  // =============================
   const [showPopUp, setShowPopUp] = useState(false);
   const [currentOverlayImage, setCurrentOverlayImage] = useState(null);
   const [currentOverlayIndex, setCurrentOverlayIndex] = useState(0);
@@ -27,22 +33,21 @@ function Files({ userId }) {
   useEffect(() => {
     const getProfiles = async () => {
       setLoadingProfileImages(true);
-      let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-      let token = authInfo.token;
       let config = {
         headers: {
           'Authorization': 'Bearer ' + token
         }
       }
-      await axios.get(`${mainUrl}/user/${userId}/images/profile`, config)
-        .then(info => {
-          // console.log(info.data);
-          setProfileImages(info.data.images);
-        }).catch(err => {
-          console.log(err);
-        }).finally(() => {
-          setLoadingProfileImages(false);
-        })
+      if (!loadingToken)
+        await axios.get(`${mainUrl}/user/${userId}/images/profile`, config)
+          .then(info => {
+            // console.log(info.data);
+            setProfileImages(info.data.images);
+          }).catch(err => {
+            console.log(err);
+          }).finally(() => {
+            setLoadingProfileImages(false);
+          })
     }
 
     getProfiles();
@@ -51,21 +56,20 @@ function Files({ userId }) {
   useEffect(() => {
     const getProfiles = async () => {
       setLoadingCoverImages(true);
-      let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-      let token = authInfo.token;
       let config = {
         headers: {
           'Authorization': 'Bearer ' + token
         }
       }
-      await axios.get(`${mainUrl}/user/${userId}/images/cover`, config)
-        .then(info => {
-          setCoverImages(info.data.images)
-        }).catch(err => {
-          console.log(err);
-        }).finally(() => {
-          setLoadingCoverImages(false);
-        })
+      if (!loadingToken)
+        await axios.get(`${mainUrl}/user/${userId}/images/cover`, config)
+          .then(info => {
+            setCoverImages(info.data.images)
+          }).catch(err => {
+            console.log(err);
+          }).finally(() => {
+            setLoadingCoverImages(false);
+          })
     }
 
     getProfiles();
@@ -74,21 +78,20 @@ function Files({ userId }) {
   useEffect(() => {
     const getProfiles = async () => {
       setLoadingPostsImages(true);
-      let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-      let token = authInfo.token;
       let config = {
         headers: {
           'Authorization': 'Bearer ' + token
         }
       }
-      await axios.get(`${mainUrl}/user/${userId}/images/posts`, config)
-        .then(info => {
-          setPostsImages(info.data.images);
-        }).catch(err => {
-          console.log("Ooop something went wrong");
-        }).finally(() => {
-          setLoadingPostsImages(false);
-        })
+      if (!loadingToken)
+        await axios.get(`${mainUrl}/user/${userId}/images/posts`, config)
+          .then(info => {
+            setPostsImages(info.data.images);
+          }).catch(err => {
+            console.log("Ooop something went wrong");
+          }).finally(() => {
+            setLoadingPostsImages(false);
+          })
     }
 
     getProfiles();

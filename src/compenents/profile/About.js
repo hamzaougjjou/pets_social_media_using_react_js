@@ -6,7 +6,7 @@ function About() {
 
     const { loading, user, error } = useSelector(state => state.getUser);
     // let profile_img = user.profile_img === null ? profile : storageUrl + "/" + user.profile_img;
-    console.log(user);
+    // console.log(user);
 
     return (
         <div className="body d-flex">

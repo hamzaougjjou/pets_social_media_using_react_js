@@ -4,6 +4,10 @@ import { NavLink } from 'react-router-dom';
 
 function LeftAside(props) {
 
+    // console.log('====================================');
+    // console.log('somthing ... ' , props );
+    // console.log('====================================');
+
     const { loading, error, friends } = useSelector(state => state.getFriends);
     const userInfo = useSelector(state => state.getUser);
     let leftSideContainet = useRef();
@@ -11,24 +15,22 @@ function LeftAside(props) {
     if(props.leftAsideShowState.leftAsideShow){
         leftSideContainet.current.style.display = "block";
         leftSideContainet.current.style.animationDirection= "alternate";
-        console.log( props.leftAsideShowState.leftAsideShow );
+        // console.log( props.leftAsideShowState.leftAsideShow );
     }
 
-    let hideMenuFun =  ()=>{
+    // let hideMenuFun =  ()=>{
         
-        leftSideContainet.current.style.animationDirection= "reverse";
-        leftSideContainet.current.style.animationName = "leftSideContainer";
-        leftSideContainet.current.style.animationDuration = "0.5s";
-        setTimeout(() => {
-             leftSideContainet.current.style.display = "none";
-              props.leftAsideShowState.setLeftAsideShow( false );
-        }, 500);
-       
-       
-    }
+    //     leftSideContainet.current.style.animationDirection= "reverse";
+    //     leftSideContainet.current.style.animationName = "leftSideContainer";
+    //     leftSideContainet.current.style.animationDuration = "0.5s";
+    //     setTimeout(() => {
+    //          leftSideContainet.current.style.display = "none";
+    //           props.leftAsideShowState.setLeftAsideShow( false );
+    //     }, 500);
+    // }
 
     return (
-        <div className="left-side-container" ref={leftSideContainet} onClick={hideMenuFun}>
+        <div className="left-side-container" ref={leftSideContainet} >
             <aside className="aside-left aside-left1">
                 <ul className="first-menu">
                     <li>Public</li>

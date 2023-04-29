@@ -13,10 +13,15 @@ import Loading from '../Loading';
 import { GroupRequests } from './Requests';
 import CreatePost from './CreatePost';
 import PostsRequests from './PostsRequests';
+import { useSelector } from 'react-redux';
 
 function GroupDetails() {
-    
-    
+
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const { groupId } = useParams();
     const [groupInfoLoading, setGroupInfoLoading] = useState(true);
     const [groupInfo, setGroupInfo] = useState({});
@@ -25,25 +30,25 @@ function GroupDetails() {
 
     useEffect(() => {
         const getGroupInfo = async () => {
-            let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-            let token = authInfo.token;
             let config = {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
             }
             setGroupInfoLoading(true);
-            await axios.get(`${mainUrl}/group/${groupId}`, config)
-                .then(info => {
-                    setGroupInfo(info.data.group);
-                    setJoined(info.data.group.joined);
 
-                }).catch(err => {
-                    console.log(err);
-                    alert("Somthing went wrong")
-                }).finally(() => {
-                    setGroupInfoLoading(false)
-                })
+            if (!loadingToken)
+                await axios.get(`${mainUrl}/group/${groupId}`, config)
+                    .then(info => {
+                        setGroupInfo(info.data.group);
+                        setJoined(info.data.group.joined);
+
+                    }).catch(err => {
+                        console.log(err);
+                        alert("Somthing went wrong")
+                    }).finally(() => {
+                        setGroupInfoLoading(false)
+                    })
         }
         getGroupInfo();
     }, []);

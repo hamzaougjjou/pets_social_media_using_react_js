@@ -7,6 +7,13 @@ import { CommentItemLoading } from '../loading/Index';
 import CommentItem from './comments/CommentItem';
 
 function Comments(props) {
+
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
+
     const post_id = props.postId;
     const [comments, setComments] = useState([]);
     const [loadingComments, setLoadingComments] = useState(false);
@@ -24,8 +31,6 @@ function Comments(props) {
     const contentRef = useRef();
 
     useEffect(() => { //get all comments for post
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -34,20 +39,21 @@ function Comments(props) {
         }
         async function fetchData() {
             setLoadingComments(true);
-            await axios.get(`${mainUrl}/post/${post_id}/comments`, config)
-                .then(res => {
-                    console.log(res.data);
-                    setComments(res.data.comments);
-                }).catch(err => {
-                    console.log(err);
-                }).finally(() => {
-                    setLoadingComments(false);
-                })
+            if (!loadingToken)
+                await axios.get(`${mainUrl}/post/${post_id}/comments`, config)
+                    .then(res => {
+                        console.log(res.data);
+                        setComments(res.data.comments);
+                    }).catch(err => {
+                        console.log(err);
+                    }).finally(() => {
+                        setLoadingComments(false);
+                    })
         }
         fetchData();
     }, [x]);
     let allCommTemplate = comments.map((comment, i) => {
-        const user = { id:comment.user_id, name:comment.name , profile_img:comment.profile_img };
+        const user = { id: comment.user_id, name: comment.name, profile_img: comment.profile_img };
         return <CommentItem user={user} comment={comment} key={i} />
     }
     );
@@ -58,8 +64,7 @@ function Comments(props) {
             return false;
         formData.append("post_id", post_id); //post_id
         formData.append("content", contentRef.current.value.trim());
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
+
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -68,20 +73,21 @@ function Comments(props) {
         }
         setStartCreatingComment(true)
         setCreateCommentLoading(true);
-        await axios.post(`${mainUrl}/post/comment/create`, formData, config)
-            .then(res => {
-                console.log(res.data);
-                setCreateCommentError(false);
-                setLastComments([...lastComments, res.data.comment]);
-                contentRef.current.value = "";
-                props.setCommentCount(props.commentCount + 1);
+        if (!loadingToken)
+            await axios.post(`${mainUrl}/post/comment/create`, formData, config)
+                .then(res => {
+                    console.log(res.data);
+                    setCreateCommentError(false);
+                    setLastComments([...lastComments, res.data.comment]);
+                    contentRef.current.value = "";
+                    props.setCommentCount(props.commentCount + 1);
 
-            }).catch(err => {
-                console.log(err);
-                setCreateCommentError(true)
-            }).finally(() => {
-                setCreateCommentLoading(false);
-            })
+                }).catch(err => {
+                    console.log(err);
+                    setCreateCommentError(true)
+                }).finally(() => {
+                    setCreateCommentLoading(false);
+                })
     }
 
     return (

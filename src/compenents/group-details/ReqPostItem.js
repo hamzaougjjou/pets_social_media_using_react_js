@@ -1,10 +1,15 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import { mainUrl } from '../../API';
 import Post from '../posts/Post'
 
 function ReqPostItem({ post, groupId }) {
-
+    // =============AUTH================
+    let refreshLogin = useSelector(state => state.refreshLogin);
+    let token = refreshLogin.token;
+    let loadingToken = refreshLogin.loading;
+    // =============================
     const [hidePostItem, setHidePostItem] = useState(false);
     const [acceptPostLoading, setAcceptPostLoading] = useState(false);
     const [deletetPostLoading, setDeletetLoading] = useState(false);
@@ -15,27 +20,26 @@ function ReqPostItem({ post, groupId }) {
     }
 
     const acceptPostFun = async (postId) => {
-        setAcceptPostLoading(true);
-        let authInfo = JSON.parse(localStorage.getItem('authInfo'));
-        let token = authInfo.token;
+        setAcceptPostLoading(true); 
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         }
-        await axios.put(`${mainUrl}/group/${groupId}/post/${postId}/accept`, null, config)
-            .then(info => {
-                console.log("accepted");
-                if (info.data.success) {
-                    setHidePostItem(true);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            .finally(() => {
-                setAcceptPostLoading(false);
-            })
+        if (!loadingToken)
+            await axios.put(`${mainUrl}/group/${groupId}/post/${postId}/accept`, null, config)
+                .then(info => {
+                    console.log("accepted");
+                    if (info.data.success) {
+                        setHidePostItem(true);
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+                .finally(() => {
+                    setAcceptPostLoading(false);
+                })
     }
     return (
         <>
